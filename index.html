@@ -10,42 +10,41 @@
 <meta property="og:description" content="Женский психологический ретрит на берегу Днестра, 19–22 августа. Всего 14 мест.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23FAF6EE'/%3E%3Ccircle cx='50' cy='42' r='15' fill='%23B99A4E'/%3E%3Cpath d='M-4 74 C16 54 30 59 50 65 C69 59 84 54 104 74 L104 104 L-4 104Z' fill='%237D8B6A'/%3E%3Ccircle cx='50' cy='50' r='47' fill='none' stroke='%23B99A4E' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&family=Akshar:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="assets/place-terrace.webp">
 <meta name="theme-color" content="#F6F2EC" media="(prefers-color-scheme:light)">
 <meta name="theme-color" content="#1B1116" media="(prefers-color-scheme:dark)">
 <script>document.documentElement.classList.add('js')</script>
 <style>
 :root{
-  --bg:#F6F2EC; --bg2:#EDE4DA; --white:#FFFFFF;
-  --ink:#2B1A22; --muted:#665058;
-  --rose:#7D8B6A; --rose-deep:#5F6E4C; --blush:#E7E2D9; --gold:#B99A4E; --deep:#2A1C13; --on-deep:#F4EBE8;
-  --line:rgba(43,26,34,.14); --line-soft:rgba(43,26,34,.07);
-  --shadow:0 38px 84px -48px rgba(43,26,34,.5); --shadow-sm:0 14px 32px -20px rgba(43,26,34,.4);
+  --bg:#F3F3F3; --bg2:#E9E9E9; --white:#FFFFFF;
+  --ink:#141414; --muted:#565656;
+  --rose:#D24F4F; --rose-deep:#B23A3A; --blush:#F7DEDE; --gold:#BC5858; --deep:#29332F; --on-deep:#F3F3F3;
+  --line:rgba(20,20,20,.14); --line-soft:rgba(20,20,20,.07);
+  --shadow:0 38px 84px -48px rgba(20,20,20,.4); --shadow-sm:0 14px 32px -20px rgba(20,20,20,.32);
   --maxw:1180px; --read:62ch;
-  --serif:"Onest","Segoe UI",system-ui,sans-serif; --sans:"Onest","Segoe UI",system-ui,sans-serif;
-  --h1:clamp(2.35rem,1.5rem+3vw,3.5rem);
-  --h2:clamp(1.7rem,1.2rem+1.9vw,2.55rem);
-  --h3:clamp(1.22rem,1.05rem+.55vw,1.5rem);
-  --lede:clamp(1.1rem,1.02rem+.4vw,1.28rem);
+  --serif:"Poppins","Segoe UI",system-ui,sans-serif; --sans:"Roboto","Segoe UI",system-ui,sans-serif;
+  --h1:clamp(2.9rem,1.5rem + 4.6vw,5.4rem);
+  --h2:clamp(2rem,1.3rem + 2.8vw,3.5rem);
+  --h3:clamp(1.25rem,1.05rem + .6vw,1.6rem);
+  --lede:clamp(1.1rem,1.02rem + .45vw,1.32rem);
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#1B1116; --bg2:#241820; --white:#291B23;
-  --ink:#F3E7E2; --muted:#BE9FAB;
-  --blush:#33302A;
+  --bg:#181818; --bg2:#212121; --white:#242424;
+  --ink:#F3F3F3; --muted:#A8A8A8;
+  --blush:#3A2626;
   --line:rgba(243,231,226,.16); --line-soft:rgba(243,231,226,.08);
   --shadow:0 38px 84px -48px rgba(0,0,0,.72); --shadow-sm:0 14px 32px -20px rgba(0,0,0,.55);
 }}
 :root[data-theme="dark"]{
-  --bg:#1B1116; --bg2:#241820; --white:#291B23;
-  --ink:#F3E7E2; --muted:#BE9FAB;
-  --blush:#33302A;
+  --bg:#181818; --bg2:#212121; --white:#242424;
+  --ink:#F3F3F3; --muted:#A8A8A8;
+  --blush:#3A2626;
   --line:rgba(243,231,226,.16); --line-soft:rgba(243,231,226,.08);
   --shadow:0 38px 84px -48px rgba(0,0,0,.72); --shadow-sm:0 14px 32px -20px rgba(0,0,0,.55);
 }
-:root[data-palette="sage"]{--rose:#7D8B6A;--rose-deep:#5F6E4C;--gold:#B99A4E}
-:root[data-palette="slate"]{--rose:#6E8AA0;--rose-deep:#54708A;--gold:#C2A667}
-:root[data-palette="lavender"]{--rose:#8E7BA6;--rose-deep:#6E5C8A;--gold:#BFA463}
+/* gruppa: single coral palette */
+.palswitch,.mm-pal{display:none!important}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:82px;-webkit-tap-highlight-color:transparent}
 a,button,summary,label,.btn{touch-action:manipulation}
@@ -53,10 +52,10 @@ a,button,summary,label,.btn{touch-action:manipulation}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark}}
 :root[data-theme="dark"]{color-scheme:dark}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:400;
-  font-size:clamp(16.5px,1rem+.15vw,18px);line-height:1.62;-webkit-font-smoothing:antialiased;font-synthesis:none;overflow-x:hidden}
+  font-size:clamp(16.5px,1rem + .15vw,18px);line-height:1.62;-webkit-font-smoothing:antialiased;font-synthesis:none;overflow-x:hidden}
 img{max-width:100%;display:block}a{color:inherit;text-decoration:none}
 h1,h2,h3{font-family:var(--serif);font-weight:700;margin:0;line-height:1.08;letter-spacing:-.03em;text-wrap:balance}
-h1{font-size:var(--h1);font-weight:800;line-height:1.02;letter-spacing:-.038em}h2.t{font-size:var(--h2);margin:.3em 0 0}h3{font-size:var(--h3)}
+h1{font-size:var(--h1);font-weight:800;line-height:1.0;letter-spacing:-.04em}h2.t{font-size:var(--h2);margin:.3em 0 0;color:var(--rose);font-weight:700;letter-spacing:-.035em}h3{font-size:var(--h3);font-weight:600}
 p{margin:0}
 html[lang="ru"] [data-lang="ro"],html[lang="ro"] [data-lang="ru"]{display:none!important}
 .wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(20px,5.5vw,52px)}
@@ -74,7 +73,7 @@ section{padding-block:clamp(60px,8vw,104px)}
 .micro{font-size:.92rem;color:var(--muted)}
 
 .topbar{background:var(--deep);color:var(--on-deep);text-align:center;font-size:.8rem;font-weight:500;padding:.62em 1em;letter-spacing:.005em}
-.hdr{position:fixed;top:0;left:0;right:0;z-index:60;padding:clamp(10px,1.6vw,16px) clamp(12px,3vw,24px) 0;pointer-events:none}
+.hdr{position:sticky;top:0;z-index:60;padding:clamp(10px,1.6vw,16px) clamp(12px,3vw,24px) 0;pointer-events:none}
 .hdr-in{pointer-events:auto;max-width:1160px;margin-inline:auto;display:flex;align-items:center;justify-content:space-between;gap:14px;
   height:58px;padding:0 9px 0 20px;border-radius:20px;
   background:color-mix(in srgb,var(--bg) 74%,transparent);
@@ -99,7 +98,7 @@ section{padding-block:clamp(60px,8vw,104px)}
 .mm-pal{display:flex;align-items:center;gap:14px;margin-top:26px}
 .mm-pal .mm-lab{font-weight:600;color:var(--muted)}
 .mmenu .palswitch button{width:26px;height:26px;padding:8px}
-.logo{display:inline-flex;align-items:center;gap:.5em;font-family:'Fraunces',var(--serif),serif;font-weight:600;font-size:1.5rem;letter-spacing:.2px;color:var(--ink)}
+.logo{display:inline-flex;align-items:center;gap:.5em;font-family:var(--serif);font-weight:700;font-size:1.5rem;letter-spacing:-.02em;color:var(--ink)}
 .logo .logomark{width:1.7em;height:1.7em;flex:0 0 auto}
 .logo span{line-height:1}
 .icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--ink);font-size:1.05rem;line-height:1}
@@ -114,28 +113,26 @@ section{padding-block:clamp(60px,8vw,104px)}
 .mmenu a.btn{margin-top:22px;color:#fff;font-size:1.05rem;justify-content:center;width:100%;padding:.9em 1.5em}
 
 /* HERO */
-.hero{position:relative;min-height:90svh;display:flex;align-items:flex-end;overflow:hidden;color:#F5EFE7;padding-bottom:clamp(46px,8vh,96px)}
-.hero-bg{position:absolute;inset:0;z-index:-2;background:#20180F}
-.hero-bg video,.hero-bg .kb{width:100%;height:100%;object-fit:cover;filter:blur(7px) brightness(.62) saturate(1.08);transform:scale(1.14)}
-.hero-bg .kb{background-size:cover;background-position:center;animation:kb 24s ease-in-out infinite alternate}
-@keyframes kb{from{transform:scale(1.12) translate(0,0)}to{transform:scale(1.34) translate(-3%,-4%)}}
-.hero-scrim{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(24,17,10,.4),rgba(24,17,10,.26) 42%,rgba(24,17,10,.78))}
-.hero-inner{max-width:760px;position:relative}
-.hero .kick{color:rgba(245,239,231,.82);font-weight:600;font-size:.92rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1.1em}
-.hero h1{color:#fff;font-size:clamp(2.5rem,1.5rem+4.3vw,4.7rem);line-height:1.03;letter-spacing:-.03em;text-shadow:0 2px 40px rgba(0,0,0,.35)}
-.hero h1 em{font-style:normal;color:var(--gold)}
-.hero .sub{font-size:clamp(1.12rem,1rem+.7vw,1.45rem);color:rgba(245,239,231,.9);margin-top:.85em;max-width:34ch;line-height:1.42}
-.hero .sub b{color:var(--gold);font-weight:700}
-.hero-meta{margin-top:1.6em;display:flex;flex-wrap:wrap;gap:.4em 1em;font-size:.98rem;color:rgba(245,239,231,.82)}
-.hero-meta b{color:#fff;font-weight:700}.hero-meta .d{width:5px;height:5px;border-radius:50%;background:var(--gold);align-self:center;display:inline-block}
-.hero-cta{display:flex;flex-wrap:wrap;gap:12px 16px;margin-top:2em;align-items:center}
-.hero .arrow{color:#F5EFE7}.hero .arrow:hover{color:#fff}
-.count{margin-top:1.4em;display:inline-flex;align-items:center;gap:.5em;font-size:.92rem;color:rgba(245,239,231,.85);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:.55em 1em;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-.count b{font-weight:700;color:#fff;font-variant-numeric:tabular-nums}
-.hero-scroll{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);color:rgba(245,239,231,.72);font-size:1.5rem;text-decoration:none;animation:bob 1.9s ease-in-out infinite}
-.hero-scroll:hover{color:#fff}
-@keyframes bob{0%,100%{transform:translateX(-50%)}50%{transform:translateX(-50%) translateY(7px)}}
-@media (prefers-reduced-motion:reduce){.hero-bg video{display:none}.hero-bg .kb{animation:none}.hero-scroll{animation:none}}
+.hero{position:relative;overflow:hidden;padding-block:clamp(24px,4vw,56px)}
+.hero-grid{display:grid;gap:clamp(28px,4.5vw,56px);align-items:center;position:relative;z-index:1}
+@media(min-width:920px){.hero-grid{grid-template-columns:1.08fr .92fr}}
+.hero .kick{color:var(--ink);font-family:var(--serif);font-weight:600;font-size:1.05rem;margin-bottom:.5em}
+.hero h1{color:var(--rose);font-size:var(--h1);font-weight:800;line-height:.98;letter-spacing:-.045em}
+.hero h1 em{font-style:normal;color:var(--ink)}
+.hero .sub{font-size:clamp(1.15rem,1rem + .7vw,1.5rem);color:var(--ink);margin-top:.7em;max-width:30ch;line-height:1.34;font-weight:500}
+.hero .sub b{color:var(--rose)}
+.hero-meta{margin-top:1.4em;display:flex;flex-wrap:wrap;gap:.4em 1em;font-size:1rem;color:var(--muted);font-weight:500}
+.hero-meta b{color:var(--ink);font-weight:700}.hero-meta .d{width:6px;height:6px;border-radius:50%;background:var(--rose);align-self:center;display:inline-block}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px 16px;margin-top:1.8em;align-items:center}
+.hero .arrow{color:var(--rose)}
+.count{margin-top:1.3em;display:inline-flex;align-items:center;gap:.5em;font-size:.95rem;color:var(--muted);background:var(--white);border:1px solid var(--line);border-radius:999px;padding:.5em 1em;font-weight:500}
+.count b{font-weight:700;color:var(--rose);font-variant-numeric:tabular-nums}
+.hero-fig{position:relative;margin:0}
+.hero-fig img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:22px}
+.blob{position:absolute;z-index:0;pointer-events:none}.blob path{fill:var(--rose)}
+.blob.b1{width:150px;height:150px;left:-46px;top:26%}
+.blob.b2{width:100px;height:100px;right:34%;bottom:-14px}
+@media(max-width:640px){.blob.b1{width:96px;height:96px;left:auto;right:14px;top:8px}.blob.b2{display:none}}
 
 .trust{border-block:1px solid var(--line);background:var(--bg2)}
 .trust .wrap{display:flex;flex-wrap:wrap;gap:.6em 2em;justify-content:center;padding-block:20px;font-size:.94rem;color:var(--muted)}
@@ -143,7 +140,7 @@ section{padding-block:clamp(60px,8vw,104px)}
 
 .shead{max-width:720px}
 .poem{margin-top:clamp(26px,3.5vw,44px);max-width:880px}
-.poem p{font-family:var(--serif);font-size:clamp(1.5rem,1.1rem+2.2vw,2.5rem);line-height:1.32;color:var(--ink);font-weight:500}
+.poem p{font-family:var(--serif);font-size:clamp(1.5rem,1.1rem + 2.2vw,2.5rem);line-height:1.32;color:var(--ink);font-weight:500}
 .poem .driva{font-style:normal;color:var(--rose);display:block;margin-top:.3em;font-weight:800}
 
 /* FOR-WHOM qualifier */
@@ -164,7 +161,7 @@ section{padding-block:clamp(60px,8vw,104px)}
 .inc .row{display:grid;grid-template-columns:auto 1fr;gap:6px 20px;padding:22px 0;border-bottom:1px solid var(--line);align-items:baseline}
 @media(min-width:720px){.inc .row{grid-template-columns:210px 1fr}}
 .inc .row p{color:var(--muted);font-size:1rem}
-.playnote{margin-top:24px;font-family:var(--serif);font-style:italic;font-size:clamp(1.2rem,1rem+1vw,1.55rem);color:var(--ink);max-width:760px;font-weight:500}
+.playnote{margin-top:24px;font-family:var(--serif);font-style:italic;font-size:clamp(1.2rem,1rem + 1vw,1.55rem);color:var(--ink);max-width:760px;font-weight:500}
 .playnote b{color:var(--rose);font-style:normal;font-weight:700}
 
 .band{position:relative;height:clamp(260px,40vw,480px);overflow:hidden}
@@ -183,7 +180,7 @@ section{padding-block:clamp(60px,8vw,104px)}
 .hosts{display:grid;gap:clamp(26px,3.5vw,54px);margin-top:clamp(28px,3.5vw,44px)}
 @media(min-width:880px){.hosts{grid-template-columns:.85fr 1.15fr;align-items:start}}
 .hosts .ph img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:16px;box-shadow:var(--shadow)}
-.hosts .why{font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,1.1rem+1.1vw,1.75rem);line-height:1.38;color:var(--ink);margin-bottom:1.3em;font-weight:500}
+.hosts .why{font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,1.1rem + 1.1vw,1.75rem);line-height:1.38;color:var(--ink);margin-bottom:1.3em;font-weight:500}
 .host{padding:22px 0;border-top:1px solid var(--line)}
 .host h3{font-size:1.5rem}.host .role{font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;color:var(--rose);font-weight:700;margin:.3em 0 .6em}
 .host p{color:var(--muted);font-size:.98rem}.host .ig{display:inline-flex;gap:.4em;margin-top:.6em;font-weight:700;font-size:.95rem;color:var(--rose-deep)}
@@ -224,12 +221,12 @@ section{padding-block:clamp(60px,8vw,104px)}
 
 .faq{max-width:880px;margin-top:clamp(26px,3.5vw,44px);border-top:1px solid var(--line)}
 details{border-bottom:1px solid var(--line)}
-summary{cursor:pointer;list-style:none;padding:22px 44px 22px 0;position:relative;font-family:var(--serif);font-weight:700;font-size:clamp(1.15rem,1rem+.6vw,1.4rem)}
+summary{cursor:pointer;list-style:none;padding:22px 44px 22px 0;position:relative;font-family:var(--serif);font-weight:700;font-size:clamp(1.15rem,1rem + .6vw,1.4rem)}
 summary::-webkit-details-marker{display:none}summary::after{content:"+";position:absolute;right:2px;top:50%;transform:translateY(-50%);color:var(--rose);font-size:1.4rem;font-weight:700}
 details[open] summary::after{content:"–"}details p{color:var(--muted);padding:0 0 22px;max-width:70ch}
 
 .final{background:var(--deep);color:var(--on-deep);text-align:center}
-.final h2{color:#fff;font-size:clamp(2rem,1.4rem+3.4vw,3.6rem)}
+.final h2{color:#fff;font-size:clamp(2rem,1.4rem + 3.4vw,3.6rem)}
 .final .lede{color:rgba(244,235,232,.82);margin:1em auto 0}
 .final .hero-cta{justify-content:center;margin-top:1.8em}
 .final .btn-primary{background:var(--rose);color:#fff}.final .btn-primary:hover{filter:brightness(1.12);transform:translateY(-2px)}
@@ -284,22 +281,24 @@ html.js .reveal.in{opacity:1;transform:none}
 
 <main id="top">
 <section class="hero">
-  <div class="hero-bg">
-    <div class="kb" style="background-image:url('assets/place-terrace.webp')"></div>
-  </div>
-  <div class="hero-scrim"></div>
-  <div class="wrap"><div class="hero-inner">
-    <p class="kick"><span data-lang="ru">Женский психологический ретрит · Кишинёв</span><span data-lang="ro">Retreat psihologic pentru femei · Chișinău</span></p>
-    <h1><span data-lang="ru">Отношения со своим <em>внутренним подростком</em></span><span data-lang="ro">Relația cu propriul <em>adolescent interior</em></span></h1>
-    <p class="sub"><span data-lang="ru">3 дня на берегу Днестра, чтобы вернуть себе мечты, лёгкость и <b>драйв</b>.</span><span data-lang="ro">3 zile pe malul Nistrului ca să-ți recapeți visele, ușurința și <b>energia</b>.</span></p>
-    <div class="hero-meta"><span data-lang="ru"><b>19–22 августа</b></span><span data-lang="ro"><b>19–22 august</b></span><i class="d"></i><span data-lang="ru">Вадул-луй-Водэ, берег Днестра</span><span data-lang="ro">Vadul lui Vodă</span><i class="d"></i><span data-lang="ru"><b>14 мест</b></span><span data-lang="ro"><b>14 locuri</b></span></div>
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="#uchastie"><span data-lang="ru">Занять своё место</span><span data-lang="ro">Rezervă un loc</span></a>
-      <a class="arrow" href="#uedesh"><span data-lang="ru">Зачем это мне</span><span data-lang="ro">De ce am nevoie</span> →</a>
+  <svg class="blob b1" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 C57 6 62 15 62 26 C62 34 66 38 74 38 C85 38 94 43 94 50 C94 57 85 62 74 62 C66 62 62 66 62 74 C62 85 57 94 50 94 C43 94 38 85 38 74 C38 66 34 62 26 62 C15 62 6 57 6 50 C6 43 15 38 26 38 C34 38 38 34 38 26 C38 15 43 6 50 6Z"/></svg>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="kick"><span data-lang="ru">Женский психологический ретрит · Кишинёв</span><span data-lang="ro">Retreat psihologic pentru femei · Chișinău</span></p>
+      <h1><span data-lang="ru">Отношения со своим <em>внутренним подростком</em></span><span data-lang="ro">Relația cu propriul <em>adolescent interior</em></span></h1>
+      <p class="sub"><span data-lang="ru">3 дня на берегу Днестра, чтобы вернуть себе мечты, лёгкость и <b>драйв</b>.</span><span data-lang="ro">3 zile pe malul Nistrului ca să-ți recapeți visele, ușurința și <b>energia</b>.</span></p>
+      <div class="hero-meta"><span data-lang="ru"><b>19–22 августа</b></span><span data-lang="ro"><b>19–22 august</b></span><i class="d"></i><span data-lang="ru">Вадул-луй-Водэ, берег Днестра</span><span data-lang="ro">Vadul lui Vodă</span><i class="d"></i><span data-lang="ru"><b>14 мест</b></span><span data-lang="ro"><b>14 locuri</b></span></div>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#uchastie"><span data-lang="ru">Занять своё место</span><span data-lang="ro">Rezervă un loc</span></a>
+        <a class="arrow" href="#uedesh"><span data-lang="ru">Зачем это мне</span><span data-lang="ro">De ce am nevoie</span> →</a>
+      </div>
+      <div class="count"><span data-lang="ru">Ранняя цена 250 € ещё</span><span data-lang="ro">Preț redus 250 € încă</span> <b id="cd">…</b></div>
     </div>
-    <div class="count"><span data-lang="ru">Ранняя цена 250 € ещё</span><span data-lang="ro">Preț redus 250 € încă</span> <b id="cd">…</b></div>
-  </div></div>
-  <a class="hero-scroll" href="#dlya-kogo" aria-label="Листайте вниз">↓</a>
+    <figure class="hero-fig">
+      <img src="assets/hosts-duo.webp" alt="Ведущие ретрита" width="900" height="1125" loading="eager">
+      <svg class="blob b2" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 C57 6 62 15 62 26 C62 34 66 38 74 38 C85 38 94 43 94 50 C94 57 85 62 74 62 C66 62 62 66 62 74 C62 85 57 94 50 94 C43 94 38 85 38 74 C38 66 34 62 26 62 C15 62 6 57 6 50 C6 43 15 38 26 38 C34 38 38 34 38 26 C38 15 43 6 50 6Z"/></svg>
+    </figure>
+  </div>
 </section>
 
 <div class="trust"><div class="wrap">

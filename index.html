@@ -277,7 +277,28 @@ footer .bm{font-family:var(--serif);font-weight:800;color:var(--ink);font-size:1
 
 html.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
 html.js .reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){html.js .reveal{opacity:1!important;transform:none!important;transition:none}*{scroll-behavior:auto!important}.essay img,.btn{transition:none}}
+.applywrap{max-width:640px;margin:clamp(26px,3.5vw,44px) auto 0}
+.applyform{background:var(--white);border:1px solid var(--line);border-radius:20px;padding:clamp(22px,4vw,40px);box-shadow:var(--shadow-sm)}
+.applyform .fld{margin-bottom:18px}
+.applyform>.fld:last-of-type{margin-bottom:22px}
+.applyform label.q{display:block;font-family:var(--serif);font-weight:600;font-size:1rem;margin-bottom:.55em;color:var(--ink);letter-spacing:-.01em}
+.applyform label .req{color:var(--rose)}
+.applyform input,.applyform textarea{width:100%;font:inherit;font-size:1rem;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:.72em .9em;transition:border-color .15s}
+.applyform input:focus,.applyform textarea:focus{outline:none;border-color:var(--rose)}
+.applyform textarea{min-height:88px;resize:vertical}
+.applyform .opts{display:flex;flex-wrap:wrap;gap:9px}
+.applyform .opts label{display:inline-flex;align-items:center;gap:.5em;margin:0;font-weight:500;background:var(--bg);border:1.5px solid var(--line);border-radius:999px;padding:.5em 1.05em;cursor:pointer;transition:.15s}
+.applyform .opts input{width:auto;margin:0;accent-color:var(--rose)}
+.applyform .opts label:has(input:checked){border-color:var(--rose);background:var(--blush);color:var(--rose-deep);font-weight:700}
+.applyform .btn{width:100%;justify-content:center;margin-top:4px}
+.applyform .note{font-size:.88rem;color:var(--muted);text-align:center;margin-top:12px}
+.applyform.sent{display:none}
+.applyok{display:none;text-align:center;padding:clamp(28px,5vw,48px) 20px;background:var(--white);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow-sm)}
+.applyok.show{display:block;animation:fadein .4s ease}
+.applyok h3{color:var(--rose);font-size:1.5rem;margin-bottom:.4em}
+.applyok p{color:var(--muted)}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){html.js .reveal{opacity:1!important;transform:none!important;transition:none}*{scroll-behavior:auto!important}.essay img,.btn{transition:none}.applyok.show{animation:none}}
 </style>
 </head>
 <body>
@@ -464,11 +485,44 @@ html.js .reveal.in{opacity:1;transform:none}
         <li><span data-lang="ru">Бассейн, джакузи, практики у воды</span><span data-lang="ro">Piscină, jacuzzi, practici lângă apă</span></li>
       </ul>
       <div class="reassure"><span data-lang="ru">Сначала — короткая <b>беседа-знакомство</b>. Убедимся, что формат тебе подходит. Предоплата 50% (и 50% в первый день).</span><span data-lang="ro">Mai întâi — o scurtă <b>discuție de cunoaștere</b>. Ne asigurăm că formatul ți se potrivește. Avans 50% (și 50% în prima zi).</span></div>
-      <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSek7jqCBRCsMAqpbUJ21CKll-flR4AmJPreAKw9EFRfr8LQxw/viewform" target="_blank" rel="noopener"><span data-lang="ru">Занять своё место</span><span data-lang="ro">Rezervă un loc</span></a>
+      <a class="btn btn-primary" href="#zayavka"><span data-lang="ru">Занять своё место</span><span data-lang="ro">Rezervă un loc</span></a>
       <p class="seats" data-lang="ru">Всего 14 мест · дальше — беседа-знакомство</p><p class="seats" data-lang="ro">Doar 14 locuri · apoi — discuție de cunoaștere</p>
     </div>
   </div>
 </div></section>
+
+<section id="zayavka"><div class="wrap">
+  <div class="shead center reveal" style="margin-inline:auto"><p class="label" data-lang="ru">Заявка</p><p class="label" data-lang="ro">Cerere</p><h2 class="t" data-lang="ru">Оставь заявку — и мы свяжемся</h2><h2 class="t" data-lang="ro">Lasă o cerere — te contactăm</h2></div>
+  <div class="applywrap reveal">
+    <form class="applyform" id="applyForm" action="https://docs.google.com/forms/d/e/1FAIpQLSek7jqCBRCsMAqpbUJ21CKll-flR4AmJPreAKw9EFRfr8LQxw/formResponse" method="POST" target="drivit_gf">
+      <div class="fld"><label class="q" data-lang="ru">Имя и фамилия <span class="req">*</span></label><label class="q" data-lang="ro">Nume și prenume <span class="req">*</span></label><input type="text" name="entry.1061849023" autocomplete="name" aria-label="Имя и фамилия" required></div>
+      <div class="fld"><label class="q" data-lang="ru">Возраст <span class="req">*</span></label><label class="q" data-lang="ro">Vârsta <span class="req">*</span></label><input type="number" name="entry.2044993673" min="18" max="99" inputmode="numeric" aria-label="Возраст" required></div>
+      <div class="fld"><label class="q" data-lang="ru">Телефон <span class="req">*</span></label><label class="q" data-lang="ro">Telefon <span class="req">*</span></label><input type="tel" name="entry.1940441060" autocomplete="tel" aria-label="Телефон" required></div>
+      <div class="fld"><label class="q">Email <span class="req">*</span></label><input type="email" name="entry.304638394" autocomplete="email" aria-label="Email" required></div>
+      <div class="fld"><label class="q" data-lang="ru">Есть опыт ретритов или терапии? <span class="req">*</span></label><label class="q" data-lang="ro">Ai experiență cu retreaturi sau terapie? <span class="req">*</span></label>
+        <div class="opts">
+          <label><input type="radio" name="entry.282868624" value="Да" required><span data-lang="ru">Да</span><span data-lang="ro">Da</span></label>
+          <label><input type="radio" name="entry.282868624" value="Нет"><span data-lang="ru">Нет</span><span data-lang="ro">Nu</span></label>
+        </div>
+      </div>
+      <div class="fld"><label class="q" data-lang="ru">Что для тебя сейчас важнее всего? <span class="req">*</span></label><label class="q" data-lang="ro">Ce e cel mai important pentru tine acum? <span class="req">*</span></label><textarea name="entry.1380939569" aria-label="Что для тебя сейчас важнее всего?" required></textarea></div>
+      <div class="fld"><label class="q" data-lang="ru">Где удобнее общаться? <span class="req">*</span></label><label class="q" data-lang="ro">Unde e mai comod să comunicăm? <span class="req">*</span></label>
+        <div class="opts">
+          <label><input type="radio" name="entry.697536272" value="Telegram" required>Telegram</label>
+          <label><input type="radio" name="entry.697536272" value="WhatsApp">WhatsApp</label>
+          <label><input type="radio" name="entry.697536272" value="Viber">Viber</label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary"><span data-lang="ru">Отправить заявку</span><span data-lang="ro">Trimite cererea</span></button>
+      <p class="note"><span data-lang="ru">Дальше — короткая беседа-знакомство. Ни к чему не обязывает.</span><span data-lang="ro">Urmează o scurtă discuție de cunoaștere. Fără obligații.</span></p>
+    </form>
+    <div class="applyok" id="applyOk">
+      <h3 data-lang="ru">Спасибо! Заявка получена 🤍</h3><h3 data-lang="ro">Mulțumim! Cererea a fost primită 🤍</h3>
+      <p data-lang="ru">Свяжемся с тобой в ближайшее время в выбранном мессенджере.</p><p data-lang="ro">Te contactăm în curând în mesagerul ales.</p>
+    </div>
+  </div>
+</div></section>
+<iframe name="drivit_gf" title="hidden" style="display:none" aria-hidden="true"></iframe>
 
 <section id="faq"><div class="wrap">
   <div class="shead reveal"><p class="label">FAQ</p><h2 class="t" data-lang="ru">Частые вопросы</h2><h2 class="t" data-lang="ro">Întrebări frecvente</h2></div>
@@ -486,7 +540,7 @@ html.js .reveal.in{opacity:1;transform:none}
   <h2 class="reveal" data-lang="ru">Твой внутренний подросток уже ждёт</h2><h2 class="reveal" data-lang="ro">Adolescentul tău interior deja te așteaptă</h2>
   <p class="lede reveal" data-lang="ru">Первый Drivit, всего 14 мест. Ранняя цена 250 € — только до 27 июля.</p><p class="lede reveal" data-lang="ro">Primul Drivit, doar 14 locuri. Preț redus 250 € — doar până pe 27 iulie.</p>
   <div class="hero-cta reveal">
-    <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSek7jqCBRCsMAqpbUJ21CKll-flR4AmJPreAKw9EFRfr8LQxw/viewform" target="_blank" rel="noopener"><span data-lang="ru">Занять своё место</span><span data-lang="ro">Rezervă un loc</span></a>
+    <a class="btn btn-primary" href="#zayavka"><span data-lang="ru">Занять своё место</span><span data-lang="ro">Rezervă un loc</span></a>
     <a class="arrow" href="https://ig.me/m/kristinarapoport_psy" target="_blank" rel="noopener"><span data-lang="ru">Есть вопросы? Напиши «ПОДРОСТОК»</span><span data-lang="ro">Întrebări? Scrie „ADOLESCENT”</span> →</a>
   </div>
   <div class="socials reveal"><a href="https://instagram.com/lina_tetiusheva.psy" target="_blank" rel="noopener">@lina_tetiusheva.psy</a><a href="https://instagram.com/kristinarapoport_psy" target="_blank" rel="noopener">@kristinarapoport_psy</a></div>
@@ -511,6 +565,7 @@ var EARLY=new Date('2026-07-27T23:59:59+03:00'),MID=new Date('2026-08-06T23:59:5
 function tick(){var el=document.getElementById('cd');if(!el)return;var now=new Date(),t=now<=EARLY?EARLY:(now<=MID?MID:null);if(!t){el.textContent='';return}var d=Math.max(0,t-now),D=Math.floor(d/864e5),H=Math.floor(d%864e5/36e5),M=Math.floor(d%36e5/6e4);el.textContent=D+' дн '+H+' ч '+M+' мин'}tick();setInterval(tick,30000);
 (function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver'in window)){els.forEach(function(e){e.classList.add('in')});return}var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.1});els.forEach(function(e){io.observe(e)})})();
 (function(){var c=document.getElementById('sticky'),h=document.querySelector('.hero');if(!c||!h)return;new IntersectionObserver(function(en){c.classList.toggle('show',!en[0].isIntersecting)}).observe(h)})();
+(function(){var f=document.getElementById('applyForm');if(!f)return;f.addEventListener('submit',function(){setTimeout(function(){f.classList.add('sent');var ok=document.getElementById('applyOk');if(ok){ok.classList.add('show');try{ok.scrollIntoView({block:'center',behavior:'smooth'})}catch(e){}}},450)})})();
 </script>
 </body>
 </html>

@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://drivitmd.github.io/">
 <title>Drivit — женский психологический ретрит · Отношения со своим внутренним подростком</title>
 <meta name="description" content="Drivit — 3 дня в женской компании на берегу Днестра, 19–22 августа. Йога, женские круги, психологические практики, дискотека, фотосессия. Ведущие — Лина Тетюшева и Кристина Рапопорт. Всего 14 мест.">
 <meta property="og:title" content="Drivit — отношения со своим внутренним подростком">
@@ -46,6 +47,8 @@
 <meta name="theme-color" content="#F3F3F3" media="(prefers-color-scheme:light)">
 <meta name="theme-color" content="#181818" media="(prefers-color-scheme:dark)">
 <script>document.documentElement.classList.add('js')</script>
+<!-- Google Analytics 4 — вставь свой Measurement ID вместо G-XXXXXXXXXX (пока плейсхолдер — трекинг не активен) -->
+<script>window.GA_ID='G-XXXXXXXXXX';(function(g){if(g.indexOf('X')>-1)return;var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id='+g;document.head.appendChild(s);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config',g)})(window.GA_ID);</script>
 <style>
 :root{
   --bg:#F3F3F3; --bg2:#E9E9E9; --white:#FFFFFF;
@@ -539,6 +542,7 @@ function tick(){var el=document.getElementById('cd');if(!el)return;var now=new D
 (function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver'in window)){els.forEach(function(e){e.classList.add('in')});return}var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.1});els.forEach(function(e){io.observe(e)})})();
 (function(){var c=document.getElementById('sticky'),h=document.querySelector('.hero');if(!c||!h)return;new IntersectionObserver(function(en){c.classList.toggle('show',!en[0].isIntersecting)}).observe(h)})();
 (function(){var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach(function(e){e.src=e.dataset.tallySrc})};if("undefined"!=typeof Tally)v();else if(null==d.querySelector('script[src="'+w+'"]')){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s)}})();
+document.addEventListener('click',function(e){var t=e.target.closest?e.target.closest('a.btn-primary, #sticky a.btn'):null;if(t&&window.gtag){window.gtag('event','click_zayavka',{cta_location:t.closest('#sticky')?'sticky':t.closest('.hero')?'hero':t.closest('.hdr')?'header':t.closest('.final')?'final':t.closest('#uchastie')?'price':'page'})}},true);
 </script>
 </body>
 </html>

@@ -225,7 +225,7 @@ footer .bm{font-family:var(--serif);font-weight:800;color:var(--ink);font-size:1
 .f-col h4{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink);margin:0 0 .85em;font-weight:700}
 .f-col a,.f-col span{display:block;margin-bottom:.5em}
 .f-col a{color:var(--rose-deep);font-weight:600}.f-col a:hover{color:var(--rose)}
-.f-cta{margin-top:1.1em}
+.f-col a.f-cta{display:inline-flex;color:#fff;margin-top:1.1em}
 .f-legal{grid-column:1/-1;border-top:1px solid var(--line-soft);padding-top:18px;margin-top:8px;font-size:.85rem}
 
 .sticky{position:fixed;left:0;right:0;bottom:0;z-index:70;display:flex;align-items:center;justify-content:space-between;gap:12px;

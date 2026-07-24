@@ -54,7 +54,37 @@
     <p class="lede" style="margin-top:.9em"><span data-lang="ru">Дальше — короткая беседа-знакомство. Ни к чему не обязывает. Всего 14 мест.</span><span data-lang="ro">Urmează o scurtă discuție de cunoaștere. Fără obligații. Doar 14 locuri.</span></p>
   </div>
   <div class="applywrap reveal">
-    <iframe data-tally-src="https://tally.so/embed/44DV2b?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="560" frameborder="0" marginheight="0" marginwidth="0" title="Drivit — заявка на ретрит" style="border:0"></iframe>
+    <form class="applyform" id="applyForm">
+      <div class="fld"><label class="q" data-lang="ru">Имя и фамилия <span class="req">*</span></label><label class="q" data-lang="ro">Nume și prenume <span class="req">*</span></label><input type="text" name="name" autocomplete="name" aria-label="Имя и фамилия" required></div>
+      <div class="fld"><label class="q" data-lang="ru">Возраст <span class="req">*</span></label><label class="q" data-lang="ro">Vârsta <span class="req">*</span></label><input type="number" name="age" min="18" max="99" inputmode="numeric" aria-label="Возраст" required></div>
+      <div class="fld"><label class="q" data-lang="ru">Телефон <span class="req">*</span></label><label class="q" data-lang="ro">Telefon <span class="req">*</span></label><input type="tel" name="phone" autocomplete="tel" aria-label="Телефон" required></div>
+      <div class="fld"><label class="q">Email <span class="req">*</span></label><input type="email" name="email" autocomplete="email" aria-label="Email" required></div>
+      <div class="fld"><label class="q" data-lang="ru">Есть опыт ретритов или терапии? <span class="req">*</span></label><label class="q" data-lang="ro">Ai experiență cu retreaturi sau terapie? <span class="req">*</span></label>
+        <div class="opts">
+          <label><input type="radio" name="exp" value="Да" required><span data-lang="ru">Да</span><span data-lang="ro">Da</span></label>
+          <label><input type="radio" name="exp" value="Нет"><span data-lang="ru">Нет</span><span data-lang="ro">Nu</span></label>
+          <label><input type="radio" name="exp" value="Немного"><span data-lang="ru">Немного</span><span data-lang="ro">Puțin</span></label>
+        </div>
+      </div>
+      <div class="fld"><label class="q" data-lang="ru">Что для тебя сейчас важнее всего? <span class="req">*</span></label><label class="q" data-lang="ro">Ce e cel mai important pentru tine acum? <span class="req">*</span></label><textarea name="expect" aria-label="Что для тебя важнее всего" required></textarea></div>
+      <div class="fld"><label class="q" data-lang="ru">Удобный канал для связи <span class="req">*</span></label><label class="q" data-lang="ro">Canal preferat de contact <span class="req">*</span></label>
+        <div class="opts">
+          <label><input type="radio" name="channel" value="Telegram" required>Telegram</label>
+          <label><input type="radio" name="channel" value="WhatsApp">WhatsApp</label>
+          <label><input type="radio" name="channel" value="Viber">Viber</label>
+          <label><input type="radio" name="channel" value="Звонок"><span data-lang="ru">Звонок</span><span data-lang="ro">Apel</span></label>
+        </div>
+      </div>
+      <div class="fld"><label class="q" data-lang="ru">Одна или с подругой? <span class="req">*</span></label><label class="q" data-lang="ro">Singură sau cu o prietenă? <span class="req">*</span></label>
+        <div class="opts">
+          <label><input type="radio" name="friend" value="Одна" required><span data-lang="ru">Одна</span><span data-lang="ro">Singură</span></label>
+          <label><input type="radio" name="friend" value="С подругой"><span data-lang="ru">С подругой</span><span data-lang="ro">Cu o prietenă</span></label>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary"><span data-lang="ru">Отправить заявку</span><span data-lang="ro">Trimite cererea</span></button>
+      <p class="note"><span data-lang="ru">Дальше — короткая беседа-знакомство. Ни к чему не обязывает.</span><span data-lang="ro">Urmează o scurtă discuție de cunoaștere. Fără obligații.</span></p>
+    </form>
+    <iframe name="gfsink" title="reserve" style="display:none" aria-hidden="true"></iframe>
   </div>
 </div></section>
 
@@ -80,8 +110,29 @@
 <script src="assets/site.js"></script>
 <script>
 (function(){
-  function showPay(){var s=document.getElementById('pay');if(!s||s.dataset.shown)return;s.dataset.shown='1';s.style.display='';try{s.scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}if(window.gtag)window.gtag('event','application_submitted');}
-  window.addEventListener('message',function(e){var d=e&&e.data;if(typeof d==='string'&&d.indexOf('FormSubmitted')>-1)showPay();},false);
+  var TG_ENDPOINT=''; /* ← сюда вставить URL Apps Script (/exec) для Telegram; пусто = не шлём */
+  var GF='https://docs.google.com/forms/d/e/1FAIpQLSek7jqCBRCsMAqpbUJ21CKll-flR4AmJPreAKw9EFRfr8LQxw/formResponse';
+  var MAP={name:'entry.1061849023',age:'entry.2044993673',phone:'entry.1940441060',email:'entry.304638394',exp:'entry.282868624',expect:'entry.1380939569',channel:'entry.697536272'};
+  var f=document.getElementById('applyForm');if(!f)return;
+  f.addEventListener('submit',function(ev){
+    ev.preventDefault();
+    if(!f.reportValidity())return;
+    var fd=new FormData(f),d={};fd.forEach(function(v,k){d[k]=v});
+    /* 1) тихий резерв в Google-форму (скрытый iframe) — чтобы заявка не потерялась */
+    try{var gf=document.createElement('form');gf.action=GF;gf.method='POST';gf.target='gfsink';gf.style.display='none';
+      function a(n,v){if(!n)return;var i=document.createElement('input');i.name=n;i.value=v||'';gf.appendChild(i)}
+      a(MAP.name,d.name);a(MAP.age,d.age);a(MAP.phone,d.phone);a(MAP.email,d.email);a(MAP.exp,d.exp);
+      a(MAP.expect,(d.expect||'')+(d.friend?(' | '+d.friend):''));a(MAP.channel,d.channel);
+      document.body.appendChild(gf);gf.submit();
+    }catch(e){}
+    /* 2) Telegram-уведомление через релей (токен на стороне сервера) */
+    if(TG_ENDPOINT){var text='🌿 Новая заявка Drivit\n\n👤 '+(d.name||'')+', '+(d.age||'')+'\n📞 '+(d.phone||'')+'\n✉️ '+(d.email||'')+'\nОпыт: '+(d.exp||'—')+' · Канал: '+(d.channel||'—')+' · '+(d.friend||'—')+'\n\n💬 '+(d.expect||'');
+      try{fetch(TG_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:'text='+encodeURIComponent(text)});}catch(e){}}
+    /* 3) показать блок MIA-QR */
+    f.style.display='none';
+    var s=document.getElementById('pay');if(s){s.style.display='';try{s.scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}}
+    if(window.gtag)window.gtag('event','application_submitted');
+  });
 })();
 </script>
 </body>

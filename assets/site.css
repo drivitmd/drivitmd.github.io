@@ -41,7 +41,7 @@ h1{font-size:var(--h1);font-weight:800;line-height:1.0;letter-spacing:-.04em}h2.
 p{margin:0}
 html[lang="ru"] [data-lang="ro"],html[lang="ro"] [data-lang="ru"]{display:none!important}
 .wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:clamp(20px,5.5vw,52px)}
-section{padding-block:clamp(60px,8vw,104px)}
+section{padding-block:clamp(38px,5vw,66px)}
 .label{font-family:var(--sans);font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose-deep)}
 .lede{font-size:var(--lede);line-height:1.55;color:var(--muted);max-width:var(--read)}
 .center{text-align:center}.center .lede{margin-inline:auto}
@@ -110,8 +110,8 @@ section{padding-block:clamp(60px,8vw,104px)}
 .hero .arrow{color:var(--rose)}
 .count{margin-top:1.3em;display:inline-flex;align-items:center;gap:.5em;font-size:.95rem;color:var(--muted);background:var(--white);border:1px solid var(--line);border-radius:999px;padding:.5em 1em;font-weight:500}
 .count b{font-weight:700;color:var(--rose);font-variant-numeric:tabular-nums}
-.hero-fig{position:relative;margin:0}
-.hero-fig img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:22px}
+.hero-fig{position:relative;margin:0;aspect-ratio:4/5}
+.hero-fig img{width:100%;height:100%;object-fit:cover;border-radius:22px;display:block}
 .blob{position:absolute;z-index:0;pointer-events:none}.blob path{fill:var(--rose)}
 .blob.b1{width:150px;height:150px;left:-46px;top:26%}
 .blob.b2{width:100px;height:100px;right:34%;bottom:-14px}

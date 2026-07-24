@@ -1,35 +1,40 @@
-<!doctype html><html><head><meta charset="utf-8">
-<link href="https://fonts.googleapis.com/css2?family=Onest:wght@500;600;700;800&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;box-sizing:border-box}
-.card{width:1200px;height:630px;position:relative;overflow:hidden;font-family:Onest,sans-serif;color:#F5EFE7}
-.bg{position:absolute;inset:0;background:url('place-terrace.webp') center/cover;filter:blur(3px) brightness(.55) saturate(1.05);transform:scale(1.06)}
-.scrim{position:absolute;inset:0;background:linear-gradient(105deg,rgba(24,17,10,.72),rgba(24,17,10,.32) 70%)}
-.in{position:absolute;inset:0;padding:70px 76px;display:flex;flex-direction:column;justify-content:space-between}
+.card{width:1200px;height:630px;position:relative;overflow:hidden;display:flex;background:#F3F3F3;font-family:Roboto,sans-serif;color:#141414}
+.left{flex:1 1 61%;padding:60px 56px;display:flex;flex-direction:column;justify-content:space-between;position:relative;z-index:2}
+.right{flex:0 0 39%;position:relative}
+.right img{width:100%;height:100%;object-fit:cover;display:block}
+.right::after{content:"";position:absolute;top:0;bottom:0;left:0;width:90px;background:linear-gradient(90deg,#F3F3F3,rgba(243,243,243,0))}
 .logo{display:flex;align-items:center;gap:14px}
-.logo svg{width:52px;height:52px}
-.logo b{font-family:Fraunces,serif;font-weight:600;font-size:38px;letter-spacing:.5px}
-.eyebrow{font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:20px;color:rgba(245,239,231,.85);margin-bottom:14px}
-h1{font-family:Fraunces,serif;font-weight:600;font-size:74px;line-height:1.02;letter-spacing:-.02em;max-width:960px}
-h1 em{font-style:normal;color:#C9A15C}
-.meta{display:flex;gap:22px;align-items:center;margin-top:26px;font-size:24px;color:rgba(245,239,231,.92)}
-.dot{width:6px;height:6px;border-radius:50%;background:#C9A15C}
-.chip{display:inline-flex;align-items:center;gap:10px;margin-top:30px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:12px 22px;font-size:22px;width:fit-content;-webkit-backdrop-filter:blur(6px)}
-.chip b{color:#fff;font-weight:700}
+.logo svg{width:54px;height:54px}
+.logo b{font-family:Poppins,'Segoe UI',system-ui,sans-serif;font-weight:700;font-size:34px;letter-spacing:-.02em}
+.eyebrow{font-family:Poppins,'Segoe UI',system-ui,sans-serif;font-weight:600;font-size:21px;color:#141414;margin-bottom:16px}
+h1{font-family:Poppins,'Segoe UI',system-ui,sans-serif;font-weight:800;font-size:62px;line-height:.98;letter-spacing:-.03em;color:#D24F4F}
+h1 em{font-style:normal;color:#141414}
+.meta{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:24px;font-family:Roboto;font-weight:500;font-size:22px;color:#565656}
+.meta b{color:#141414;font-weight:700}
+.dot{width:7px;height:7px;border-radius:50%;background:#D24F4F;display:inline-block}
+.chip{display:inline-flex;align-items:center;gap:10px;margin-top:28px;background:#B23A3A;color:#fff;border-radius:999px;padding:14px 28px;font-family:Poppins,'Segoe UI',system-ui,sans-serif;font-weight:600;font-size:22px;width:fit-content}
+.blob{position:absolute;width:230px;height:230px;left:-80px;bottom:-56px;z-index:0}
+.blob path{fill:#D24F4F;opacity:.13}
 </style></head><body>
 <div class="card">
-  <div class="bg"></div><div class="scrim"></div>
-  <div class="in">
+  <svg class="blob" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 C57 6 62 15 62 26 C62 34 66 38 74 38 C85 38 94 43 94 50 C94 57 85 62 74 62 C66 62 62 66 62 74 C62 85 57 94 50 94 C43 94 38 85 38 74 C38 66 34 62 26 62 C15 62 6 57 6 50 C6 43 15 38 26 38 C34 38 38 34 38 26 C38 15 43 6 50 6Z"/></svg>
+  <div class="left">
     <div class="logo">
-      <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" fill="#FAF6EE"/><circle cx="50" cy="42" r="15" fill="#B99A4E"/><path d="M-4 74 C16 54 30 59 50 65 C69 59 84 54 104 74 L104 104 L-4 104Z" fill="#7D8B6A"/><path d="M2 82 C22 76 34 86 50 82 C67 78 80 86 98 82" fill="none" stroke="#E8DCC8" stroke-width="4" stroke-linecap="round"/><circle cx="50" cy="50" r="47" fill="none" stroke="#B99A4E" stroke-width="3"/></svg>
+      <svg viewBox="0 0 100 100" aria-hidden="true"><clipPath id="c"><circle cx="50" cy="50" r="43"/></clipPath><g clip-path="url(#c)"><rect width="100" height="100" fill="#FFFFFF"/><circle cx="50" cy="42" r="14" fill="#BC5858"/><path d="M-4 72 C16 52 30 57 50 63 C69 57 84 52 104 72 L104 104 L-4 104Z" fill="#D24F4F"/><path d="M2 82 C22 76 34 86 50 82 C67 78 80 86 98 82" fill="none" stroke="#F7DEDE" stroke-width="4" stroke-linecap="round"/></g><circle cx="50" cy="50" r="45" fill="none" stroke="#BC5858" stroke-width="3"/></svg>
       <b>Drivit</b>
     </div>
     <div>
       <div class="eyebrow">Женский психологический ретрит · Кишинёв</div>
       <h1>Отношения со своим <em>внутренним подростком</em></h1>
-      <div class="meta"><span>19–22 августа</span><i class="dot"></i><span>Вадул-луй-Водэ, берег Днестра</span><i class="dot"></i><span>14 мест</span></div>
-      <div class="chip">🔥 Ранняя цена <b>250 €</b> — до 27 июля</div>
+      <div class="meta"><span><b>19–22 августа</b></span><i class="dot"></i><span>Вадул-луй-Водэ</span><i class="dot"></i><span><b>14 мест</b></span></div>
+      <div class="chip">🔥 Ранняя цена 250 € — до 27 июля</div>
     </div>
   </div>
+  <div class="right"><img src="place-terrace.webp" alt=""></div>
 </div>
 </body></html>

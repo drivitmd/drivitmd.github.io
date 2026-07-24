@@ -10,3 +10,7 @@ Thumbs.db
 *.token
 gh.token.txt
 *.key.txt
+
+_ads.html
+/ads/
+LAUNCH-LOOP.md

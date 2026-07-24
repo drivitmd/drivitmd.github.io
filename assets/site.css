@@ -206,7 +206,7 @@ section{padding-block:clamp(38px,5vw,66px)}
 .pcard{background:var(--white);border-radius:18px;padding:clamp(24px,3vw,34px);box-shadow:var(--shadow-sm)}
 .pcard h3{font-size:1.5rem}
 .pl{list-style:none;margin:1em 0 0;padding:0;display:grid;gap:.6em}.pl li{position:relative;padding-left:1.6em;font-size:1rem}.pl li::before{content:"✓";position:absolute;left:0;color:var(--rose);font-weight:800}
-.reassure{margin-top:1.3em;padding:15px 17px;background:var(--bg2);border-radius:12px;font-size:.96rem;color:var(--muted)}.reassure b{color:var(--ink);font-weight:700}
+.reassure{margin-top:1.3em;padding:15px 18px;background:var(--blush);border-left:4px solid var(--rose);border-radius:10px;font-size:.96rem;color:var(--ink);line-height:1.5}.reassure b{color:var(--rose-deep);font-weight:700}.rz-sub{display:block;margin-top:.45em;color:var(--muted);font-size:.9em}
 .pcard .btn{margin-top:1.3em;width:100%}.seats{margin-top:.9em;font-size:.9rem;color:var(--muted);text-align:center}
 
 .faq{max-width:880px;margin-top:clamp(26px,3.5vw,44px);border-top:1px solid var(--line)}

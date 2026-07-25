@@ -22,8 +22,8 @@
 <meta name="theme-color" content="#F3F3F3" media="(prefers-color-scheme:light)">
 <meta name="theme-color" content="#181818" media="(prefers-color-scheme:dark)">
 <script>document.documentElement.classList.add('js')</script>
-<!-- Google Analytics 4 (G-YB0MC3DGCF) -->
-<script>window.GA_ID='G-YB0MC3DGCF';(function(g){if(g.indexOf('X')>-1)return;var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id='+g;document.head.appendChild(s);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config',g)})(window.GA_ID);</script>
+<!-- Google Analytics 4 (G-YB0MC3DGCF) — загрузка отложена с критического пути (interaction / load+1.2s) -->
+<script>window.GA_ID='G-YB0MC3DGCF';window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config',window.GA_ID);(function(g){if(g.indexOf('X')>-1)return;var done=0,ev=['pointerdown','keydown','scroll','touchstart'];function go(){if(done)return;done=1;ev.forEach(function(e){removeEventListener(e,go)});var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id='+g;document.head.appendChild(s)}ev.forEach(function(e){addEventListener(e,go,{passive:true})});addEventListener('load',function(){setTimeout(go,1200)})})(window.GA_ID);</script>
 <link rel="stylesheet" href="assets/site.css">
 <style>
 .backlink{display:inline-flex;align-items:center;font-weight:600;font-size:.95rem;color:var(--muted);white-space:nowrap}.backlink:hover{color:var(--rose)}

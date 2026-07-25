@@ -15,3 +15,6 @@ _ads.html
 /ads/
 LAUNCH-LOOP.md
 _hostphotos/
+
+# og render intermediate (only og.jpg is served)
+assets/og.png

@@ -1,40 +1,38 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;box-sizing:border-box}
-.card{width:1200px;height:630px;position:relative;overflow:hidden;display:flex;background:#F3F3F3;font-family:Roboto,sans-serif;color:#141414}
-.left{flex:1 1 61%;padding:60px 56px;display:flex;flex-direction:column;justify-content:space-between;position:relative;z-index:2}
-.right{flex:0 0 39%;position:relative}
-.right img{width:100%;height:100%;object-fit:cover;display:block}
-.right::after{content:"";position:absolute;top:0;bottom:0;left:0;width:90px;background:linear-gradient(90deg,#F3F3F3,rgba(243,243,243,0))}
-.logo{display:flex;align-items:center;gap:14px}
-.logo svg{width:54px;height:54px}
-.logo b{font-family:Montserrat,'Segoe UI',system-ui,sans-serif;font-weight:700;font-size:34px;letter-spacing:-.02em}
-.eyebrow{font-family:Montserrat,'Segoe UI',system-ui,sans-serif;font-weight:600;font-size:21px;color:#141414;margin-bottom:16px}
-h1{font-family:Montserrat,'Segoe UI',system-ui,sans-serif;font-weight:800;font-size:62px;line-height:.98;letter-spacing:-.03em;color:#D24F4F}
-h1 em{font-style:normal;color:#141414}
-.meta{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:24px;font-family:Roboto;font-weight:500;font-size:22px;color:#565656}
-.meta b{color:#141414;font-weight:700}
-.dot{width:7px;height:7px;border-radius:50%;background:#D24F4F;display:inline-block}
-.chip{display:inline-flex;align-items:center;gap:10px;margin-top:28px;background:#B23A3A;color:#fff;border-radius:999px;padding:14px 28px;font-family:Montserrat,'Segoe UI',system-ui,sans-serif;font-weight:600;font-size:22px;width:fit-content}
-.blob{position:absolute;width:230px;height:230px;left:-80px;bottom:-56px;z-index:0}
-.blob path{fill:#D24F4F;opacity:.13}
+.card{width:1200px;height:630px;position:relative;overflow:hidden;font-family:Roboto,sans-serif;color:#fff}
+.card .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 16%;display:block}
+.scrim{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(20,16,12,.42) 0%,rgba(20,16,12,0) 22%,rgba(20,16,12,.10) 50%,rgba(20,16,12,.72) 78%,rgba(20,16,12,.92) 100%)}
+.top{position:absolute;top:34px;left:46px;display:flex;align-items:center;gap:14px;z-index:2}
+.top svg{width:52px;height:52px}
+.top b{font-family:Montserrat,'Segoe UI',sans-serif;font-weight:800;font-size:36px;letter-spacing:-.02em;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.4)}
+.bottom{position:absolute;left:46px;right:46px;bottom:40px;z-index:2}
+.eyebrow{font-family:Montserrat,'Segoe UI',sans-serif;font-weight:600;font-size:21px;color:#fff;opacity:.95;margin-bottom:12px;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+h1{font-family:Montserrat,'Segoe UI',sans-serif;font-weight:800;font-size:56px;line-height:.98;letter-spacing:-.03em;color:#fff;text-shadow:0 3px 20px rgba(0,0,0,.55);max-width:16ch}
+h1 em{font-style:normal;color:#FFC9C9}
+.row{display:flex;align-items:center;gap:16px;margin-top:22px;flex-wrap:wrap}
+.meta{font-family:Roboto;font-weight:600;font-size:23px;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.meta b{font-weight:700}
+.chip{display:inline-flex;align-items:center;gap:10px;background:#B23A3A;color:#fff;border-radius:999px;padding:13px 26px;font-family:Montserrat,'Segoe UI',sans-serif;font-weight:700;font-size:22px;box-shadow:0 12px 30px -12px rgba(0,0,0,.6)}
 </style></head><body>
 <div class="card">
-  <svg class="blob" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 C57 6 62 15 62 26 C62 34 66 38 74 38 C85 38 94 43 94 50 C94 57 85 62 74 62 C66 62 62 66 62 74 C62 85 57 94 50 94 C43 94 38 85 38 74 C38 66 34 62 26 62 C15 62 6 57 6 50 C6 43 15 38 26 38 C34 38 38 34 38 26 C38 15 43 6 50 6Z"/></svg>
-  <div class="left">
-    <div class="logo">
-      <svg viewBox="0 0 100 100" aria-hidden="true"><clipPath id="c"><circle cx="50" cy="50" r="43"/></clipPath><g clip-path="url(#c)"><rect width="100" height="100" fill="#FFFFFF"/><circle cx="50" cy="42" r="14" fill="#BC5858"/><path d="M-4 72 C16 52 30 57 50 63 C69 57 84 52 104 72 L104 104 L-4 104Z" fill="#D24F4F"/><path d="M2 82 C22 76 34 86 50 82 C67 78 80 86 98 82" fill="none" stroke="#F7DEDE" stroke-width="4" stroke-linecap="round"/></g><circle cx="50" cy="50" r="45" fill="none" stroke="#BC5858" stroke-width="3"/></svg>
-      <b>Drivit</b>
-    </div>
-    <div>
-      <div class="eyebrow">Женский психологический ретрит · Кишинёв</div>
-      <h1>Отношения со своим <em>внутренним подростком</em></h1>
-      <div class="meta"><span><b>19–22 августа</b></span><i class="dot"></i><span>Вадул-луй-Водэ</span><i class="dot"></i><span><b>14 мест</b></span></div>
-      <div class="chip">🔥 Ранняя цена 250 € — до 27 июля</div>
+  <img class="bg" src="hosts-duo.webp" alt="">
+  <div class="scrim"></div>
+  <div class="top">
+    <svg viewBox="0 0 100 100" aria-hidden="true"><clipPath id="c"><circle cx="50" cy="50" r="43"/></clipPath><g clip-path="url(#c)"><rect width="100" height="100" fill="#FFFFFF"/><circle cx="50" cy="42" r="14" fill="#BC5858"/><path d="M-4 72 C16 52 30 57 50 63 C69 57 84 52 104 72 L104 104 L-4 104Z" fill="#D24F4F"/><path d="M2 82 C22 76 34 86 50 82 C67 78 80 86 98 82" fill="none" stroke="#F7DEDE" stroke-width="4" stroke-linecap="round"/></g><circle cx="50" cy="50" r="45" fill="none" stroke="#BC5858" stroke-width="3"/></svg>
+    <b>Drivit</b>
+  </div>
+  <div class="bottom">
+    <div class="eyebrow">Женский психологический ретрит · Кишинёв</div>
+    <h1>Отношения со своим <em>внутренним подростком</em></h1>
+    <div class="row">
+      <span class="meta"><b>19–22 августа</b> · берег Днестра</span>
+      <span class="chip">🔥 250 € до 27 июля · осталось 7</span>
     </div>
   </div>
-  <div class="right"><img src="hosts-duo.webp" alt="" style="object-position:50% 18%"></div>
 </div>
 </body></html>

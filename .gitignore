@@ -18,3 +18,4 @@ _hostphotos/
 
 # og render intermediate (only og.jpg is served)
 assets/og.png
+_stories.html

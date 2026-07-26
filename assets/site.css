@@ -94,15 +94,15 @@ section{padding-block:clamp(38px,5vw,66px)}
 .logo .wm-cyr i{opacity:0;animation-name:sandIn}
 @keyframes sandOut{
   0%,34%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
-  44%{opacity:0;transform:translateY(.42em) scale(.92);filter:blur(3.5px)}
-  88%{opacity:0;transform:translateY(.42em) scale(.92);filter:blur(3.5px)}
+  44%{opacity:0;transform:translateY(.26em) scale(.975);filter:blur(6.5px)}
+  88%{opacity:0;transform:translateY(.26em) scale(.975);filter:blur(6.5px)}
   98%,100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
 }
 @keyframes sandIn{
-  0%,34%{opacity:0;transform:translateY(-.42em) scale(.92);filter:blur(3.5px)}
+  0%,34%{opacity:0;transform:translateY(-.26em) scale(.975);filter:blur(6.5px)}
   44%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
   88%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
-  98%,100%{opacity:0;transform:translateY(-.42em) scale(.92);filter:blur(3.5px)}
+  98%,100%{opacity:0;transform:translateY(-.26em) scale(.975);filter:blur(6.5px)}
 }
 @media(prefers-reduced-motion:reduce){.logo .wm-w i{animation:none}.logo .wm-cyr{display:none}.logo .wm-lat i{opacity:1}}
 .icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--ink);font-size:1.05rem;line-height:1}

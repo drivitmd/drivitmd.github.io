@@ -54,6 +54,11 @@
 .okcontacts{margin-top:1.5em;text-align:center;font-size:.95rem;color:var(--muted);display:flex;flex-direction:column;gap:.6em}
 .okcontacts .okc-links{display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
 .okcontacts a{font-weight:700;color:var(--rose-deep);border-bottom:1px solid var(--line);padding-block:.35em}
+.chatalt{margin-top:24px}
+.chatalt-or{display:flex;align-items:center;gap:14px;color:var(--muted);font-size:.9rem;margin-bottom:16px;justify-content:center}
+.chatalt-or span{flex:1;height:1px;background:var(--line)}
+.chatalt-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.chatalt-note{font-size:.85rem;color:var(--muted);margin-top:12px;text-align:center}
 </style>
 </head>
 <body>
@@ -105,6 +110,15 @@
       <button type="submit" class="btn btn-primary"><span data-lang="ru">Отправить заявку</span><span data-lang="ro">Trimite cererea</span></button>
       <p class="note"><span data-lang="ru">Твои контакты нужны только для связи по ретриту. Никакого спама.</span><span data-lang="ro">Datele tale sunt doar pentru contactul legat de retreat. Fără spam.</span></p>
     </form>
+    <div class="chatalt">
+      <div class="chatalt-or"><span></span><b data-lang="ru">или напиши нам напрямую</b><b data-lang="ro">sau scrie-ne direct</b><span></span></div>
+      <div class="chatalt-btns">
+        <a class="btn btn-line" data-lang="ru" href="https://wa.me/37369210185?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B7%D0%B0%D0%BF%D0%B8%D1%81%D0%B0%D1%82%D1%8C%D1%81%D1%8F%20%D0%BD%D0%B0%20%D0%B6%D0%B5%D0%BD%D1%81%D0%BA%D0%B8%D0%B9%20%D1%80%D0%B5%D1%82%D1%80%D0%B8%D1%82%20Drivit%20%2819%E2%80%9322%20%D0%B0%D0%B2%D0%B3%D1%83%D1%81%D1%82%D0%B0%29.%20%D0%9C%D0%B5%D0%BD%D1%8F%20%D0%B7%D0%BE%D0%B2%D1%83%D1%82%3A%20" target="_blank" rel="noopener" onclick="if(window.fbq)fbq('track','Contact');if(window.gtag)gtag('event','contact_click');">WhatsApp</a>
+        <a class="btn btn-line" data-lang="ro" href="https://wa.me/37369210185?text=Bun%C4%83%20ziua%21%20Vreau%20s%C4%83%20m%C4%83%20%C3%AEnscriu%20la%20retreatul%20Drivit%20%2819%E2%80%9322%20august%29.%20M%C4%83%20numesc%3A%20" target="_blank" rel="noopener" onclick="if(window.fbq)fbq('track','Contact');if(window.gtag)gtag('event','contact_click');">WhatsApp</a>
+        <a class="btn btn-line" href="https://ig.me/m/kristinarapoport_psy" target="_blank" rel="noopener" onclick="if(window.fbq)fbq('track','Contact');if(window.gtag)gtag('event','contact_click');">Instagram Direct</a>
+      </div>
+      <p class="chatalt-note"><span data-lang="ru">Заявку можно оставить и сообщением — ответим в течение дня.</span><span data-lang="ro">Poți lăsa cererea și printr-un mesaj — răspundem în aceeași zi.</span></p>
+    </div>
     <iframe name="gfsink" title="reserve" style="display:none" aria-hidden="true"></iframe>
   </div>
 </div></section>

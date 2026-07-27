@@ -87,17 +87,17 @@
   <div class="applywrap reveal">
     <form class="applyform" id="applyForm">
       <div class="fld"><label class="q" for="f-name" data-lang="ru">Имя и фамилия <span class="req">*</span></label><label class="q" for="f-name" data-lang="ro">Nume și prenume <span class="req">*</span></label><input type="text" id="f-name" name="name" autocomplete="name" required></div>
-      <div class="fld"><label class="q" for="f-age" data-lang="ru">Возраст</label><label class="q" for="f-age" data-lang="ro">Vârsta</label><input type="number" id="f-age" name="age" min="18" max="99" inputmode="numeric"></div>
+      <div class="fld"><label class="q" for="f-age" data-lang="ru">Возраст <span class="req">*</span></label><label class="q" for="f-age" data-lang="ro">Vârsta <span class="req">*</span></label><input type="number" id="f-age" name="age" min="18" max="99" inputmode="numeric" required></div>
       <div class="fld"><label class="q" for="f-phone" data-lang="ru">Телефон <span class="req">*</span></label><label class="q" for="f-phone" data-lang="ro">Telefon <span class="req">*</span></label><input type="tel" id="f-phone" name="phone" autocomplete="tel" required></div>
-      <div class="fld"><label class="q" for="f-email">Email <span class="opt" data-lang="ru">(необязательно)</span><span class="opt" data-lang="ro">(opțional)</span></label><input type="email" id="f-email" name="email" autocomplete="email"></div>
-      <fieldset class="fld"><legend class="q"><span data-lang="ru">Есть опыт ретритов или терапии?</span><span data-lang="ro">Ai experiență cu retreaturi sau terapie?</span></legend>
+      <div class="fld"><label class="q" for="f-email">Email <span class="req">*</span></label><input type="email" id="f-email" name="email" autocomplete="email" required></div>
+      <fieldset class="fld"><legend class="q"><span data-lang="ru">Есть опыт ретритов или терапии? <span class="req">*</span></span><span data-lang="ro">Ai experiență cu retreaturi sau terapie? <span class="req">*</span></span></legend>
         <div class="opts">
-          <label><input type="radio" name="exp" value="Да"><span data-lang="ru">Да</span><span data-lang="ro">Da</span></label>
+          <label><input type="radio" name="exp" value="Да" required><span data-lang="ru">Да</span><span data-lang="ro">Da</span></label>
           <label><input type="radio" name="exp" value="Нет"><span data-lang="ru">Нет</span><span data-lang="ro">Nu</span></label>
           <label><input type="radio" name="exp" value="Немного"><span data-lang="ru">Немного</span><span data-lang="ro">Puțin</span></label>
         </div>
       </fieldset>
-      <div class="fld"><label class="q" for="f-expect" data-lang="ru">Что для тебя сейчас важнее всего? <span class="opt">(необязательно)</span></label><label class="q" for="f-expect" data-lang="ro">Ce e cel mai important pentru tine acum? <span class="opt">(opțional)</span></label><textarea id="f-expect" name="expect"></textarea></div>
+      <div class="fld"><label class="q" for="f-expect" data-lang="ru">Что для тебя сейчас важнее всего? <span class="req">*</span></label><label class="q" for="f-expect" data-lang="ro">Ce e cel mai important pentru tine acum? <span class="req">*</span></label><textarea id="f-expect" name="expect" required></textarea></div>
       <fieldset class="fld"><legend class="q"><span data-lang="ru">Удобный канал для связи <span class="req">*</span></span><span data-lang="ro">Canal preferat de contact <span class="req">*</span></span></legend>
         <div class="opts">
           <label><input type="radio" name="channel" value="Telegram" required>Telegram</label>
@@ -132,8 +132,9 @@
 <section id="pay" style="display:none"><svg class="zblob zb2" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 6 C57 6 62 15 62 26 C62 34 66 38 74 38 C85 38 94 43 94 50 C94 57 85 62 74 62 C66 62 62 66 62 74 C62 85 57 94 50 94 C43 94 38 85 38 74 C38 66 34 62 26 62 C15 62 6 57 6 50 C6 43 15 38 26 38 C34 38 38 34 38 26 C38 15 43 6 50 6Z"/></svg><div class="wrap">
   <div class="shead center" style="margin-inline:auto">
     <div class="okmark" aria-hidden="true">✓</div>
-    <h2 class="t" data-lang="ru">Заявка принята 🤍</h2><h2 class="t" data-lang="ro">Cererea a fost primită 🤍</h2>
-    <p class="lede" style="margin-top:.8em"><span data-lang="ru">Мы получили твою заявку и свяжемся с тобой в ближайшее время — в удобном для тебя канале.</span><span data-lang="ro">Am primit cererea ta și te vom contacta în curând — pe canalul preferat de tine.</span></p>
+    <h2 class="t" data-lang="ru">Заявка почти готова 🤍</h2><h2 class="t" data-lang="ro">Cererea e aproape gata 🤍</h2>
+    <p class="lede" style="margin-top:.8em"><span data-lang="ru">Нажми кнопку — и заявка со всеми твоими ответами уйдёт нам в WhatsApp. Мы ответим в течение дня.</span><span data-lang="ro">Apasă butonul — și cererea cu toate răspunsurile ne ajunge pe WhatsApp. Răspundem în aceeași zi.</span></p>
+    <a id="paywa" class="btn btn-wa" href="https://wa.me/37369210185" target="_blank" rel="noopener" style="margin-top:1.3em;font-size:1.08rem" onclick="if(window.fbq)fbq('track','Lead')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.2 4.79 1.2h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm0 18.13h-.01c-1.52 0-3.01-.41-4.3-1.18l-.31-.18-3.2.84.85-3.12-.2-.32a8.2 8.2 0 01-1.26-4.36c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 012.41 5.82c0 4.54-3.69 8.29-8.23 8.29zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14 0-.31-.02-.47-.02-.16 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.16 1.75 2.67 4.25 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg><span data-lang="ru">Отправить заявку в WhatsApp</span><span data-lang="ro">Trimite cererea pe WhatsApp</span></a>
   </div>
   <div class="applywrap">
     <div class="okcard">
@@ -195,7 +196,30 @@
     /* 2) Telegram-уведомление через релей (токен на стороне сервера) */
     if(TG_ENDPOINT){var text='🌿 Новая заявка Drivit\n\n👤 '+(d.name||'')+', '+(d.age||'')+'\n📞 '+(d.phone||'')+'\n✉️ '+(d.email||'')+'\nОпыт: '+(d.exp||'—')+' · Канал: '+(d.channel||'—')+' · '+(d.friend||'—')+'\n\n💬 '+(d.expect||'');
       try{fetch(TG_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:'text='+encodeURIComponent(text)});}catch(e){}}
-    /* 3) показать блок MIA-QR */
+    /* 3) НАДЁЖНАЯ доставка заявки в WhatsApp (Google-форма может молча отклонять новые обяз. поля) */
+    var wamsg='🌿 Заявка на ретрит Drivit
+
+'
+      +'Имя: '+(d.name||'—')+'
+'
+      +(d.age?'Возраст: '+d.age+'
+':'')
+      +'Телефон: '+(d.phone||'—')+'
+'
+      +(d.email?'Email: '+d.email+'
+':'')
+      +(d.exp?'Опыт: '+d.exp+'
+':'')
+      +'Канал связи: '+(d.channel||'—')+'
+'
+      +(d.friend?'Формат: '+d.friend+'
+':'')
+      +(d.expect?'
+Что важнее всего: '+d.expect+'
+':'');
+    var waurl='https://wa.me/37369210185?text='+encodeURIComponent(wamsg);
+    var pw=document.getElementById('paywa'); if(pw)pw.href=waurl;
+    try{window.open(waurl,'_blank')}catch(e){}
     f.style.display='none';
     var s=document.getElementById('pay');if(s){s.style.display='';try{s.scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}}
     if(window.gtag)window.gtag('event','application_submitted');

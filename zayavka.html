@@ -178,50 +178,35 @@
 <script src="assets/site.js"></script>
 <script>
 (function(){
-  var TG_ENDPOINT=''; /* ← сюда вставить URL Apps Script (/exec) для Telegram; пусто = не шлём */
+  var TG_ENDPOINT='';
   var GF='https://docs.google.com/forms/d/e/1FAIpQLSek7jqCBRCsMAqpbUJ21CKll-flR4AmJPreAKw9EFRfr8LQxw/formResponse';
   var MAP={name:'entry.1061849023',age:'entry.2044993673',phone:'entry.1940441060',email:'entry.304638394',exp:'entry.282868624',expect:'entry.1380939569',channel:'entry.697536272'};
   var f=document.getElementById('applyForm');if(!f)return;
+  var NL=String.fromCharCode(10);
   f.addEventListener('submit',function(ev){
     ev.preventDefault();
     if(!f.reportValidity())return;
     var fd=new FormData(f),d={};fd.forEach(function(v,k){d[k]=v});
-    /* 1) тихий резерв в Google-форму (скрытый iframe) — чтобы заявка не потерялась */
     try{var gf=document.createElement('form');gf.action=GF;gf.method='POST';gf.target='gfsink';gf.style.display='none';
       function a(n,v){if(!n)return;var i=document.createElement('input');i.name=n;i.value=v||'';gf.appendChild(i)}
       a(MAP.name,d.name);a(MAP.age,d.age);a(MAP.phone,d.phone);a(MAP.email,d.email);a(MAP.exp,d.exp);
       a(MAP.expect,(d.expect||'')+(d.friend?(' | '+d.friend):''));a(MAP.channel,d.channel);
       document.body.appendChild(gf);gf.submit();
     }catch(e){}
-    /* 2) Telegram-уведомление через релей (токен на стороне сервера) */
-    if(TG_ENDPOINT){var text='🌿 Новая заявка Drivit\n\n👤 '+(d.name||'')+', '+(d.age||'')+'\n📞 '+(d.phone||'')+'\n✉️ '+(d.email||'')+'\nОпыт: '+(d.exp||'—')+' · Канал: '+(d.channel||'—')+' · '+(d.friend||'—')+'\n\n💬 '+(d.expect||'');
-      try{fetch(TG_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:'text='+encodeURIComponent(text)});}catch(e){}}
-    /* 3) НАДЁЖНАЯ доставка заявки в WhatsApp (Google-форма может молча отклонять новые обяз. поля) */
-    var wamsg='🌿 Заявка на ретрит Drivit
-
-'
-      +'Имя: '+(d.name||'—')+'
-'
-      +(d.age?'Возраст: '+d.age+'
-':'')
-      +'Телефон: '+(d.phone||'—')+'
-'
-      +(d.email?'Email: '+d.email+'
-':'')
-      +(d.exp?'Опыт: '+d.exp+'
-':'')
-      +'Канал связи: '+(d.channel||'—')+'
-'
-      +(d.friend?'Формат: '+d.friend+'
-':'')
-      +(d.expect?'
-Что важнее всего: '+d.expect+'
-':'');
-    var waurl='https://wa.me/37369210185?text='+encodeURIComponent(wamsg);
-    var pw=document.getElementById('paywa'); if(pw)pw.href=waurl;
+    var L=['Заявка на ретрит Drivit',''];
+    L.push('Имя: '+(d.name||'-'));
+    if(d.age)L.push('Возраст: '+d.age);
+    L.push('Телефон: '+(d.phone||'-'));
+    if(d.email)L.push('Email: '+d.email);
+    if(d.exp)L.push('Опыт: '+d.exp);
+    L.push('Канал связи: '+(d.channel||'-'));
+    if(d.friend)L.push('Формат: '+d.friend);
+    if(d.expect){L.push('');L.push('Что важнее всего: '+d.expect);}
+    var waurl='https://wa.me/37369210185?text='+encodeURIComponent(L.join(NL));
+    var pw=document.getElementById('paywa');if(pw)pw.href=waurl;
     try{window.open(waurl,'_blank')}catch(e){}
     f.style.display='none';
-    var s=document.getElementById('pay');if(s){s.style.display='';try{s.scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}}
+    var sc=document.getElementById('pay');if(sc){sc.style.display='';try{sc.scrollIntoView({behavior:'smooth',block:'start'})}catch(e){}}
     if(window.gtag)window.gtag('event','application_submitted');
     if(window.fbq)fbq('track','Lead');
   });

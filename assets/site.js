@@ -11,3 +11,19 @@ function tick(){var el=document.getElementById('cd');if(!el)return;var now=new D
 (function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver'in window)){els.forEach(function(e){e.classList.add('in')});return}var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.1});els.forEach(function(e){io.observe(e)})})();
 (function(){var c=document.getElementById('sticky'),h=document.querySelector('.hero');if(!c||!h)return;new IntersectionObserver(function(en){c.classList.toggle('show',!en[0].isIntersecting)}).observe(h)})();
 document.addEventListener('click',function(e){var t=e.target.closest?e.target.closest('a.btn-primary, #sticky a.btn'):null;if(t&&window.gtag){window.gtag('event','click_zayavka',{cta_location:t.closest('#sticky')?'sticky':t.closest('.hero')?'hero':t.closest('.hdr')?'header':t.closest('.final')?'final':t.closest('#uchastie')?'price':'page'})}},true);
+
+/* promo pop-up: urgency, index only, once per session */
+(function(){
+  var p=document.getElementById('promo'); if(!p) return;
+  var KEY='drivitPromoSeen';
+  function esc(e){ if(e.key==='Escape') window.closePromo(); }
+  function cleanup(){ clearTimeout(t); window.removeEventListener('scroll',onScroll); document.removeEventListener('mouseout',onLeave); }
+  function open(){ if(!p.hidden) return; try{if(sessionStorage.getItem(KEY))return; sessionStorage.setItem(KEY,'1')}catch(e){} p.hidden=false; p.setAttribute('aria-hidden','false'); document.addEventListener('keydown',esc); cleanup(); }
+  window.closePromo=function(){ p.hidden=true; p.setAttribute('aria-hidden','true'); document.removeEventListener('keydown',esc); };
+  function onScroll(){ if((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight>0.4) open(); }
+  function onLeave(e){ if(e.clientY<=0) open(); }
+  try{ if(sessionStorage.getItem(KEY)) return; }catch(e){}
+  var t=setTimeout(open,12000);
+  window.addEventListener('scroll',onScroll,{passive:true});
+  document.addEventListener('mouseout',onLeave);
+})();

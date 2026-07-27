@@ -315,3 +315,8 @@ html.js .reveal.in{opacity:1;transform:none}
 @keyframes promoFade{from{opacity:0}to{opacity:1}}
 @keyframes promoPop{from{opacity:0;transform:translateY(18px) scale(.96)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.promo-ov,.promo-card{animation:none}}
+/* conversion redesign: chat-first hero */
+.btn-wa{background:#25D366;color:#fff}
+.btn-wa svg{width:1.3em;height:1.3em;fill:currentColor;margin-right:.15em;flex:0 0 auto}
+.btn-wa:hover{background:#20bd5a;transform:translateY(-2px);box-shadow:var(--shadow-sm);filter:none}
+.hero-note{font-size:.92rem;color:var(--muted);margin-top:1em;font-weight:500}

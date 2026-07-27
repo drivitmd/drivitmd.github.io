@@ -23,7 +23,7 @@ document.addEventListener('click',function(e){var t=e.target.closest?e.target.cl
   function onScroll(){ if((window.scrollY+window.innerHeight)/document.documentElement.scrollHeight>0.4) open(); }
   function onLeave(e){ if(e.clientY<=0) open(); }
   try{ if(sessionStorage.getItem(KEY)) return; }catch(e){}
-  var t=setTimeout(open,1500);
+  var t=setTimeout(open,30000);
   window.addEventListener('scroll',onScroll,{passive:true});
   document.addEventListener('mouseout',onLeave);
 })();

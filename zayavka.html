@@ -87,17 +87,17 @@
   <div class="applywrap reveal">
     <form class="applyform" id="applyForm">
       <div class="fld"><label class="q" for="f-name" data-lang="ru">Имя и фамилия <span class="req">*</span></label><label class="q" for="f-name" data-lang="ro">Nume și prenume <span class="req">*</span></label><input type="text" id="f-name" name="name" autocomplete="name" required></div>
-      <div class="fld"><label class="q" for="f-age" data-lang="ru">Возраст <span class="req">*</span></label><label class="q" for="f-age" data-lang="ro">Vârsta <span class="req">*</span></label><input type="number" id="f-age" name="age" min="18" max="99" inputmode="numeric" required></div>
+      <div class="fld"><label class="q" for="f-age" data-lang="ru">Возраст</label><label class="q" for="f-age" data-lang="ro">Vârsta</label><input type="number" id="f-age" name="age" min="18" max="99" inputmode="numeric"></div>
       <div class="fld"><label class="q" for="f-phone" data-lang="ru">Телефон <span class="req">*</span></label><label class="q" for="f-phone" data-lang="ro">Telefon <span class="req">*</span></label><input type="tel" id="f-phone" name="phone" autocomplete="tel" required></div>
-      <div class="fld"><label class="q" for="f-email">Email <span class="req">*</span></label><input type="email" id="f-email" name="email" autocomplete="email" required></div>
-      <fieldset class="fld"><legend class="q"><span data-lang="ru">Есть опыт ретритов или терапии? <span class="req">*</span></span><span data-lang="ro">Ai experiență cu retreaturi sau terapie? <span class="req">*</span></span></legend>
+      <div class="fld"><label class="q" for="f-email">Email <span class="opt" data-lang="ru">(необязательно)</span><span class="opt" data-lang="ro">(opțional)</span></label><input type="email" id="f-email" name="email" autocomplete="email"></div>
+      <fieldset class="fld"><legend class="q"><span data-lang="ru">Есть опыт ретритов или терапии?</span><span data-lang="ro">Ai experiență cu retreaturi sau terapie?</span></legend>
         <div class="opts">
-          <label><input type="radio" name="exp" value="Да" required><span data-lang="ru">Да</span><span data-lang="ro">Da</span></label>
+          <label><input type="radio" name="exp" value="Да"><span data-lang="ru">Да</span><span data-lang="ro">Da</span></label>
           <label><input type="radio" name="exp" value="Нет"><span data-lang="ru">Нет</span><span data-lang="ro">Nu</span></label>
           <label><input type="radio" name="exp" value="Немного"><span data-lang="ru">Немного</span><span data-lang="ro">Puțin</span></label>
         </div>
       </fieldset>
-      <div class="fld"><label class="q" for="f-expect" data-lang="ru">Что для тебя сейчас важнее всего? <span class="req">*</span></label><label class="q" for="f-expect" data-lang="ro">Ce e cel mai important pentru tine acum? <span class="req">*</span></label><textarea id="f-expect" name="expect" required></textarea></div>
+      <div class="fld"><label class="q" for="f-expect" data-lang="ru">Что для тебя сейчас важнее всего? <span class="opt">(необязательно)</span></label><label class="q" for="f-expect" data-lang="ro">Ce e cel mai important pentru tine acum? <span class="opt">(opțional)</span></label><textarea id="f-expect" name="expect"></textarea></div>
       <fieldset class="fld"><legend class="q"><span data-lang="ru">Удобный канал для связи <span class="req">*</span></span><span data-lang="ro">Canal preferat de contact <span class="req">*</span></span></legend>
         <div class="opts">
           <label><input type="radio" name="channel" value="Telegram" required>Telegram</label>
@@ -106,9 +106,9 @@
           <label><input type="radio" name="channel" value="Звонок"><span data-lang="ru">Звонок</span><span data-lang="ro">Apel</span></label>
         </div>
       </fieldset>
-      <fieldset class="fld"><legend class="q"><span data-lang="ru">Одна или с подругой? <span class="req">*</span></span><span data-lang="ro">Singură sau cu o prietenă? <span class="req">*</span></span></legend>
+      <fieldset class="fld"><legend class="q"><span data-lang="ru">Одна или с подругой?</span><span data-lang="ro">Singură sau cu o prietenă?</span></legend>
         <div class="opts">
-          <label><input type="radio" name="friend" value="Одна" required><span data-lang="ru">Одна</span><span data-lang="ro">Singură</span></label>
+          <label><input type="radio" name="friend" value="Одна"><span data-lang="ru">Одна</span><span data-lang="ro">Singură</span></label>
           <label><input type="radio" name="friend" value="С подругой"><span data-lang="ru">С подругой</span><span data-lang="ro">Cu o prietenă</span></label>
         </div>
       </fieldset>

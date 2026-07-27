@@ -334,3 +334,4 @@ html.js .reveal.in{opacity:1;transform:none}
 .quick-ok{margin-top:1.2em;font-weight:700;color:var(--rose-deep);font-size:1.12rem}
 .quick-or{margin-top:1.05em;color:var(--muted);font-size:.94rem}
 .quick-or a{color:#1faa53;font-weight:700;border-bottom:1px solid rgba(37,211,102,.45);padding-bottom:1px}
+.applyform .opt{color:var(--muted);font-weight:400;font-size:.85em}

@@ -27,3 +27,21 @@ document.addEventListener('click',function(e){var t=e.target.closest?e.target.cl
   window.addEventListener('scroll',onScroll,{passive:true});
   document.addEventListener('mouseout',onLeave);
 })();
+/* quick lead form (homepage): name+phone -> Google Form, inline success */
+(function(){
+  var f=document.getElementById('quickForm'); if(!f) return;
+  var GF='https://docs.google.com/forms/d/e/1FAIpQLSek7jqCBRCsMAqpbUJ21CKll-flR4AmJPreAKw9EFRfr8LQxw/formResponse';
+  var M={name:'entry.1061849023',phone:'entry.1940441060',expect:'entry.1380939569'};
+  f.addEventListener('submit',function(ev){
+    ev.preventDefault(); if(!f.reportValidity())return;
+    var fd=new FormData(f),d={}; fd.forEach(function(v,k){d[k]=v});
+    try{var gf=document.createElement('form');gf.action=GF;gf.method='POST';gf.target='gfsink2';gf.style.display='none';
+      function a(n,v){var i=document.createElement('input');i.name=n;i.value=v||'';gf.appendChild(i)}
+      a(M.name,d.name);a(M.phone,d.phone);a(M.expect,'(быстрая заявка с главной / cerere rapidă)');
+      document.body.appendChild(gf);gf.submit();
+    }catch(e){}
+    f.hidden=true; var ok=document.getElementById('quickOk'); if(ok)ok.hidden=false;
+    if(window.gtag)gtag('event','application_submitted',{form:'quick'});
+    if(window.fbq)fbq('track','Lead');
+  });
+})();

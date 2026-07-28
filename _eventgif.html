@@ -1,0 +1,47 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;box-sizing:border-box}
+html,body{background:#000}
+#stage{width:1200px;height:628px;position:relative;overflow:hidden;background:#14100c;font-family:Montserrat,'Segoe UI',sans-serif;color:#fff}
+#bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:42% 44%;will-change:transform;transform-origin:center}
+.scrim{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(18,14,10,.5) 0%,rgba(18,14,10,.28) 42%,rgba(18,14,10,.52) 100%),radial-gradient(120% 92% at 50% 46%,rgba(18,14,10,0) 40%,rgba(18,14,10,.45) 100%)}
+.grain{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.05;mix-blend-mode:multiply;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+.in{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px}
+.bm{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.bm svg{width:40px;height:40px}
+.bm b{font-weight:800;font-size:30px;letter-spacing:-.02em}
+.eyb{font-family:Roboto;font-weight:600;font-size:19px;letter-spacing:.16em;text-transform:uppercase;color:#FFC9C9;margin-bottom:12px}
+h1{font-weight:800;font-size:56px;line-height:1.0;letter-spacing:-.03em;text-shadow:0 3px 20px rgba(0,0,0,.5);max-width:17ch}
+h1 em{font-style:normal;color:#FF9E9E}
+.meta{font-family:Roboto;font-weight:500;font-size:23px;margin-top:16px;color:rgba(255,255,255,.94)}
+.pill{display:inline-flex;align-items:center;background:#D24F4F;color:#fff;border-radius:999px;padding:14px 32px;font-weight:800;font-size:25px;margin-top:26px;will-change:transform;transform-origin:center}
+.cta{font-family:Roboto;font-weight:600;font-size:21px;color:#fff;border-bottom:2px solid rgba(255,255,255,.6);padding-bottom:2px;margin-top:20px}
+</style></head><body>
+<div id="stage">
+  <img id="bg" src="ads/yoga-group.jpg" alt="">
+  <div class="scrim"></div>
+  <div class="in">
+    <span class="bm"><svg viewBox="0 0 100 100"><clipPath id="e1"><circle cx="50" cy="50" r="46"/></clipPath><g clip-path="url(#e1)"><rect width="100" height="100" fill="#fff"/><circle cx="50" cy="42" r="14" fill="#BC5858"/><path d="M-4 72 C16 52 30 57 50 63 C69 57 84 52 104 72 L104 104 L-4 104Z" fill="#D24F4F"/></g><circle cx="50" cy="50" r="47" fill="none" stroke="#BC5858" stroke-width="3"/></svg><b>Drivit</b></span>
+    <div class="eyb">Женский психологический ретрит</div>
+    <h1>Верни себе мечты, лёгкость и <em>драйв</em></h1>
+    <div class="meta">19–22 августа · берег Днестра · для женщин 30–55</div>
+    <span class="pill" id="pill">Цена сейчас 300 € · осталось 5 из 10 мест</span>
+    <div class="cta">Заявка → drivitmd.github.io</div>
+  </div>
+</div>
+<script>
+var T=4.0;
+window.renderFrame=function(t){
+  var ph=t/T; // 0..1 within loop
+  var zoom=1.0+0.03*(0.5-0.5*Math.cos(2*Math.PI*ph));
+  document.getElementById('bg').style.transform='scale('+zoom.toFixed(4)+')';
+  var pulse=0.5-0.5*Math.cos(2*Math.PI*ph);
+  var pill=document.getElementById('pill');
+  pill.style.transform='scale('+(1+0.028*pulse).toFixed(4)+')';
+  pill.style.boxShadow='0 '+(14+10*pulse).toFixed(0)+'px '+(34+18*pulse).toFixed(0)+'px -14px rgba(178,58,58,'+(0.5+0.28*pulse).toFixed(3)+')';
+};
+renderFrame(0);
+</script>
+</body></html>

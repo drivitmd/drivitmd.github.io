@@ -31,6 +31,5 @@ variant-night.html
 # internal specs / design notes
 docs/
 
-# stray source images in repo root (keep local, never serve)
-new1.PNG
-*.PNG
+# stray source screenshot in repo root (keep local, never serve)
+/new1.PNG

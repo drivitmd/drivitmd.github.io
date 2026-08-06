@@ -18,8 +18,15 @@ _hostphotos/
 
 # og render intermediate (only og.jpg is served)
 assets/og.png
-_stories.html
-_fbpage.html
-_series.html
-_promo.html
-_urgent.html
+
+# internal render templates & drafts — keep on disk, never serve on the site
+_*.html
+
+# superseded design experiments — kept local, not published
+v1-antara.html
+v2-yin.html
+variant-day.html
+variant-night.html
+
+# internal specs / design notes
+docs/

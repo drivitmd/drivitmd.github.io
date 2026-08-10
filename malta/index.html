@@ -12,6 +12,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://drivitmd.github.io/malta/">
+<meta name="description" content="Мальта на четыре ночи для трёх пар: программа по дням с таймингом, карта, жильё, еда, смета на пару и три повода.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="image" href="img/valletta-1.avif" fetchpriority="high">
 <title>Drivit Travel — Мальта, 27 сентября — 1 октября 2026</title>
@@ -60,7 +61,9 @@
   --surface2:oklch(.228 .035 240); --tx:oklch(.945 .012 235);
   --tx2:oklch(.745 .021 235); --line:oklch(.345 .032 240);
   --sea:#F08A8A; --sea-soft:#f08a8a1c;
-  --sun:#E39A9A; --wine:#D2685C; --sea-ink:#F08A8A; }
+  --sun:#E39A9A; --wine:#D2685C; --sea-ink:#F8A9A9;
+  /* на тёмной подложке предупреждение и метка колонки уходили ниже 4.5:1 */
+  --warn-ink:#F0A99E; }
 }
 :root[data-theme="dark"]{ --bg:oklch(.203 .034 240); --surface:oklch(.252 .036 240);
   --surface2:oklch(.228 .035 240); --tx:oklch(.945 .012 235);
@@ -76,7 +79,10 @@
 *{box-sizing:border-box}
 :root{color-scheme:light dark}
 a,button,summary,.poi{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth}
+/* без плавной прокрутки: документ длиной до 60 000px, и пролёт через
+   полстраницы читается как швыряние, а касание экрана обрывает его
+   на случайном месте. Переход по ссылке должен быть точным. */
+html{scroll-behavior:auto}
 body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--body);
   font-size:var(--f2);line-height:1.55;-webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility}
@@ -90,6 +96,9 @@ h1{font-size:var(--f6);line-height:1.02}
 h2{font-size:var(--f5);line-height:1.06}
 h3{font-size:var(--f4);line-height:1.15}
 h4{font-size:var(--f3);line-height:1.2}
+/* выгоды стоят сразу под h1, поэтому по разметке это h2 — но по голосу
+   это подзаголовки карточек, кегль оставляем прежний */
+.bh{font-size:var(--f4);line-height:1.15}
 .eyebrow{font-family:var(--mono);font-size:var(--f0);letter-spacing:.16em;
   text-transform:uppercase;color:var(--tx2);margin:0 0 var(--s2);hyphens:none}
 .body-s{font-size:var(--f1);color:var(--tx2)}
@@ -100,7 +109,12 @@ h4{font-size:var(--f3);line-height:1.2}
   display:grid;grid-template-columns:var(--axis) minmax(0,1fr);column-gap:var(--s5)}
 .wrap>*{grid-column:2}
 .rail{grid-column:1;grid-row:span 1}
-section{padding:var(--s6) 0;scroll-margin-top:var(--s7)}
+/* отступ прокрутки должен быть больше шапки, иначе заголовок раздела
+   оказывается под ней. На узких экранах шапка выше — там и запас больше. */
+section{padding:var(--s6) 0;scroll-margin-top:max(var(--s7),86px)}
+@media (max-width:1100px){
+  section{scroll-margin-top:92px}
+}
 /* content-visibility здесь намеренно не используется: браузер оценивает высоту
    ещё не отрисованных разделов (заявляли 1400px при реальных 1900–5750px) и
    промахивался мимо цели при переходе по ссылке навигации. Кадры и так lazy
@@ -144,7 +158,10 @@ section+section{border-top:1px solid var(--line)}
 .bname{font-family:var(--display);font-weight:600;font-size:var(--f2);letter-spacing:-.01em;
   text-transform:none;color:var(--tx)}
 .navtitle{margin-right:auto;color:var(--tx2)}
-.topnav a{text-decoration:none;color:var(--tx2)}
+.topnav a{text-decoration:none;color:var(--tx2);
+  display:inline-flex;align-items:center;min-height:28px}
+/* специфичность: иначе правило выше перебивает высоту логотипа */
+.topnav .brand{min-height:44px}
 .topnav a:hover{color:var(--sea)}
 .navcta{color:var(--bg) !important;background:var(--sea-ink);padding:var(--s2) var(--s3)}
 
@@ -191,8 +208,8 @@ section+section{border-top:1px solid var(--line)}
   align-items:baseline;padding-bottom:var(--s3);border-bottom:1px solid var(--line);
   margin-bottom:var(--s3)}
 .car h3{font-size:var(--f3);margin:0}
-.cartag{grid-column:1;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--sea)}
+.cartag{grid-column:1;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--sea-ink)}
 .carsum{grid-row:1/3;grid-column:2;font-family:var(--display);font-weight:600;
   font-size:var(--f4);align-self:center}
 .car ul{list-style:none;margin:0 0 var(--s3);padding:0}
@@ -276,7 +293,7 @@ section+section{border-top:1px solid var(--line)}
   padding:var(--s2) var(--s4)}
 @media print{ .topnav{display:none !important} }
 
-.skip{position:absolute;left:-9999px;top:0;z-index:var(--z-skip);background:var(--sea);
+.skip{position:absolute;left:-9999px;top:0;z-index:var(--z-skip);background:var(--sea-ink);
   color:var(--bg);padding:var(--s3) var(--s4);font-family:var(--mono);font-size:var(--f0);
   text-decoration:none}
 .skip:focus{left:var(--s3);top:var(--s3)}
@@ -313,6 +330,9 @@ svg.map{display:block;width:100%;height:auto}
 .poi.named text{opacity:1}
 .map.in .isles{opacity:1;transition:opacity .9s ease}
 .poi{cursor:pointer;outline:none}
+/* рамка на самой группе, а не только на точке: так фокус видно
+   и вспомогательным средствам, и глазом */
+.poi:focus-visible{outline:2px solid var(--sea-ink);outline-offset:2px}
 .poi:focus-visible .dot{stroke:var(--sun);stroke-width:3.5}
 .poi .halo,.poi .dot{pointer-events:all}
 .poi text{pointer-events:none;font-family:var(--mono);font-size:13px;fill:var(--tx);opacity:0;
@@ -349,7 +369,7 @@ svg.map{display:block;width:100%;height:auto}
 .lg-node{fill:var(--tx2);opacity:.7}
 /* подсказка по способу ввода: на телефоне «наведите» смысла не имеет */
 .hint-narrow{display:none}
-@media (max-width:980px),(hover:none){
+@media (max-width:1100px),(hover:none){
   .hint-wide{display:none}
   .hint-narrow{display:inline}
 }
@@ -403,7 +423,7 @@ svg.map{display:block;width:100%;height:auto}
 /* призыв к действию: инверсная панель — единственная на всю страницу */
 .cta{background:oklch(.195 .028 240);color:oklch(.965 .012 230);padding:var(--s6) var(--s5);
   border:1px solid oklch(.32 .03 240)}
-.cta h2,.cta li{color:inherit}
+.cta h2{color:inherit}
 /* на тёмном фоне панель должна быть светлее ground, а не темнее */
 @media (prefers-color-scheme:dark){
   .cta{background:oklch(.285 .042 240);border-color:oklch(.44 .045 240)}
@@ -411,17 +431,15 @@ svg.map{display:block;width:100%;height:auto}
 :root[data-theme="dark"] .cta{background:oklch(.285 .042 240);border-color:oklch(.44 .045 240)}
 :root[data-theme="light"] .cta{background:oklch(.195 .028 240);border-color:oklch(.32 .03 240)}
 .cta h2{background:none;padding-bottom:0;margin-bottom:var(--s4)}
-.cta p{color:oklch(.79 .018 230)}
-.cta li::before{color:oklch(.8 .1 235)}
 
 .cta ol{margin:0 0 var(--s5);padding:0;list-style:none;counter-reset:ask}
-.cta li{font-size:var(--f3);color:var(--tx);margin-bottom:var(--s4);max-width:52ch;
+.cta li{font-size:var(--f3);color:inherit;margin-bottom:var(--s4);max-width:52ch;
   counter-increment:ask;display:grid;grid-template-columns:1.6em minmax(0,1fr);gap:var(--s2)}
-.cta li::before{content:counter(ask);font-family:var(--display);color:var(--sea);
+.cta li::before{content:counter(ask);font-family:var(--display);color:oklch(.78 .12 30);
   font-size:var(--f4);line-height:1}
 .cta .whenline{font-family:var(--mono);font-size:var(--f0);letter-spacing:.1em;
   text-transform:uppercase;color:oklch(.82 .1 76);margin:0 0 var(--s4)}
-.cta p{font-size:var(--f1);color:var(--tx2);margin:0;max-width:61.8ch}
+.cta p{font-size:var(--f1);color:oklch(.84 .015 230);margin:0;max-width:61.8ch}
 .proof{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s5);margin-top:var(--s5);
   padding-top:var(--s4);border-top:1px solid var(--line);font-family:var(--mono);
   font-size:var(--f0);letter-spacing:.06em;color:var(--tx2)}
@@ -447,10 +465,10 @@ svg.map{display:block;width:100%;height:auto}
 .tr h3{font-size:var(--f3);margin-bottom:var(--s2)}
 .tr p{font-size:var(--f1);color:var(--tx2);margin:0 0 var(--s3)}
 .tr .flag{font-family:var(--mono);font-size:var(--f0);letter-spacing:.08em;
-  text-transform:uppercase;color:var(--sea);margin:0}
+  text-transform:uppercase;color:var(--sea-ink);margin:0}
 
 /* мальтийское имя места: голос, а не служебная метка */
-.mtname{font-family:var(--display);font-style:italic;font-size:var(--f2);color:var(--sun);
+.mtname{font-family:var(--display);font-style:italic;font-size:var(--f2);color:var(--sea-ink);
   margin:0 0 var(--s1)}
 
 /* таблицы */
@@ -460,12 +478,14 @@ th,td{text-align:left;padding:var(--s3) var(--s4);border-bottom:1px solid var(--
   font-size:var(--f1)}
 th{font-family:var(--mono);font-size:var(--f0);letter-spacing:.1em;text-transform:uppercase;
   color:var(--tx2);font-weight:400;background:var(--surface2);vertical-align:bottom}
-th.pick{color:var(--sea);background:var(--sea-soft)}
+th.pick{color:var(--sea-ink);background:var(--sea-soft)}
 th.pick::before{content:"рекомендую";display:block;font-size:9.5px;letter-spacing:.14em;
   margin-bottom:var(--s1);opacity:.9}
 td:not(:first-child){text-align:right;font-family:var(--mono)}
 td:nth-child(2){background:var(--sea-soft)}
-tr.dim td{color:var(--tx2);font-size:var(--f0);padding-top:0;border-bottom:0}
+/* пояснительная строка приглушена, но 4.36:1 не дотягивало до нормы:
+   гасим прозрачностью самого текста, а не более светлым цветом */
+tr.dim td{color:var(--tx);opacity:.72;font-size:var(--f0);padding-top:0;border-bottom:0}
 tr.sub td{background:var(--surface2)}
 tr.tot td{font-size:var(--f2)}
 tr.big td{font-size:var(--f3);background:var(--sea-soft)}
@@ -486,7 +506,7 @@ tr:last-child td{border-bottom:0}
 .hbody{padding:var(--s4);display:flex;flex-direction:column;gap:var(--s2);flex:1}
 .hbody h3{margin-bottom:var(--s1)}
 .hbody .body-s{flex:1;margin:0}
-.warn-inline{font-size:var(--f0);color:var(--wine);margin:var(--s2) 0;
+.warn-inline{font-size:var(--f1);color:var(--warn-ink,var(--wine));margin:var(--s2) 0;
   padding:var(--s2) var(--s3);
   border:1px solid color-mix(in oklab,var(--wine) 34%,transparent);
   background:color-mix(in oklab,var(--wine) 7%,transparent)}
@@ -521,7 +541,8 @@ tr:last-child td{border-bottom:0}
 .vlinks{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s3);margin:var(--s3) 0 0;
   font-family:var(--mono);font-size:var(--f0);letter-spacing:.04em}
 .vlinks a{color:var(--sea-ink);text-decoration:none;
-  border-bottom:1px solid var(--line);padding:10px 0}
+  border-bottom:1px solid var(--line);padding:10px 6px;min-width:44px;
+  text-align:center}
 .vlinks a:hover{border-bottom-color:currentColor}
 .chip{hyphens:none;font-family:var(--mono);font-size:var(--f0);letter-spacing:.05em;
   border:1px solid var(--line);padding:var(--s1) var(--s3);color:var(--tx2)}
@@ -553,9 +574,12 @@ tr:last-child td{border-bottom:0}
 .fact{margin-top:var(--s4);padding:var(--s3) var(--s4);background:var(--sea-soft);
   border:1px solid var(--line);display:grid;grid-template-columns:20px minmax(0,1fr);
   gap:var(--s3);align-items:start}
-.fact span{width:19px;height:11px;margin-top:.45em;background-color:var(--sun);
-  -webkit-mask:var(--eye) center/contain no-repeat;mask:var(--eye) center/contain no-repeat;
-  text-indent:-999em;overflow:hidden}
+/* глаз Осириса рисуем маской, а слово «Факт» отдаём только читалке:
+   раньше это был настоящий текст, обрезанный рамкой 19×11px */
+.fact>span{width:19px;height:11px;margin-top:.45em;background-color:var(--sun);
+  -webkit-mask:var(--eye) center/contain no-repeat;mask:var(--eye) center/contain no-repeat}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip-path:inset(50%);white-space:nowrap;border:0}
 .fact p{font-size:var(--f1);color:var(--tx2);margin:0}
 
 /* рестораны */
@@ -568,7 +592,7 @@ tr:last-child td{border-bottom:0}
 .rl h4{font-size:var(--f3)}
 .rl .body-s{grid-column:1/-1;margin:0;max-width:61.8ch}
 .rl .fact{grid-column:1/-1}
-.order{font-family:var(--mono);font-size:var(--f0);letter-spacing:.05em;color:var(--sun);
+.order{font-family:var(--mono);font-size:var(--f0);letter-spacing:.05em;color:var(--sea-ink);
   text-transform:uppercase;margin:0;white-space:nowrap}
 .more{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
   text-decoration:none;color:var(--sea-ink);border-bottom:1px solid currentColor;
@@ -604,7 +628,8 @@ tr:last-child td{border-bottom:0}
 .book .sum{font-family:var(--mono);font-size:var(--f1);text-align:right;
   font-variant-numeric:tabular-nums}
 .mini{display:inline-block;font-family:var(--mono);font-size:var(--f0);letter-spacing:.06em;
-  text-transform:uppercase;text-decoration:none;color:var(--sea);border:1px solid var(--sea);
+  text-transform:uppercase;text-decoration:none;color:var(--sea-ink);
+  border:1px solid var(--sea-ink);
   padding:var(--s2) var(--s3)}
 .mini:hover{background:var(--sea-soft)}
 .letters{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(330px,100%),1fr));
@@ -762,13 +787,15 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
 .navmenu summary{display:none}
 .navmenu .navlinks,
 .navmenu:not([open]) .navlinks{display:flex;flex-wrap:wrap;
-  align-items:center;gap:var(--s3) var(--s4)}
+  align-items:center;gap:var(--s3) var(--s4);
+  /* без min-width:0 флекс не даёт строке сжаться, и ссылки уезжают за край */
+  min-width:0}
 .navmenu summary::-webkit-details-marker{display:none}
 .navmenu summary::marker{content:""}
 
 /* меню и зоны нажатия перестраиваются раньше остальной вёрстки:
    в один ряд девять ссылок не укладываются уже около 980px */
-@media (max-width:980px){
+@media (max-width:1100px){
   /* меню: девять ссылок сворачиваются в кнопку «Разделы» */
   .navin{flex-wrap:nowrap;gap:0 var(--s3);justify-content:space-between}
   .navtitle{display:none}
@@ -854,7 +881,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <details class="navmenu">
       <summary><span class="burger" aria-hidden="true"></span>Разделы</summary>
       <div class="navlinks">
-        <a href="#occasions">Поводы</a><a href="#route">Программа</a><a href="#map">Карта</a><a href="#stay">Жильё</a><a href="#food">Еда</a><a href="#car">Машина</a><a href="#budget">Цена</a><a href="#honest">Честно</a><a href="#faq">Вопросы</a>
+        <a href="#occasions">Поводы</a><a href="#flight">Перелёт</a><a href="#stay">Жильё</a><a href="#route">Программа</a><a href="#map">Карта</a><a href="#food">Еда</a><a href="#car">Машина</a><a href="#budget">Цена</a><a href="#book">Бронь</a><a href="#honest">Честно</a><a href="#faq">Вопросы</a>
       </div>
     </details>
   </div>
@@ -882,7 +909,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <p class="line">Перелёт, четыре ночи в Слиме у самой воды, круиз на Комино, еда и дорога на месте.</p>
   </div>
   <div class="benefits">
-    <div><h3>Одна база</h3><p>Живём все четыре ночи в одном месте: сумки распаковываем один раз, а утро начинается у воды в десяти минутах от отеля.</p></div><div><h3>Море и камни каждый день</h3><p>В каждом дне есть и вода, и культура. Не «пляжный день» и отдельно «экскурсионный».</p></div><div><h3>Едим у местных</h3><p>Погреба, пекарни и таверны вместо заведений с фотографиями блюд на входе. Ужин выходит около €22 на человека — ровно столько и стоит в смете.</p></div>
+    <div><h2 class="bh">Одна база</h2><p>Живём все четыре ночи в одном месте: сумки распаковываем один раз, а утро начинается у воды в десяти минутах от отеля.</p></div><div><h2 class="bh">Море и камни каждый день</h2><p>В каждом дне есть и вода, и культура. Не «пляжный день» и отдельно «экскурсионный».</p></div><div><h2 class="bh">Едим у местных</h2><p>Погреба, пекарни и таверны вместо заведений с фотографиями блюд на входе. Ужин выходит около €22 на человека — ровно столько и стоит в смете.</p></div>
   </div>
   <p class="audience">Три пары, 40–50, без детей — и три повода в одни четыре ночи: две годовщины свадьбы и день рождения. Поэтому вечера в программе не случайные.</p>
   <p class="private">Частный план на шестерых. Это не предложение и не реклама: ссылка только
@@ -944,7 +971,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   </div>
   <div class="tw"><table><thead><tr><th>Направление</th><th>Дата</th><th>Вылет</th><th>Прилёт</th><th>В пути</th><th>Пересадки</th></tr></thead><tbody><tr><td>Туда</td><td>вс 27.09</td><td>15:00 KIV</td><td>20:20 MLA</td><td>6 ч 20 м</td><td>1 · Бухарест</td></tr><tr><td>Обратно</td><td>чт 01.10</td><td>21:30 MLA</td><td>07:15 KIV (+1)</td><td>8 ч 45 м</td><td>1 · Бухарест</td></tr></tbody></table></div>
   <div class="two" style="margin-top:var(--s4)">
-    <div class="card"><h4>Ваши даты — лучшая клетка в сетке</h4><p>27.09 — $1&nbsp;597 · 29.09 — $1&nbsp;600 · 26.09 — $1&nbsp;925 · <b>28.09 — $4&nbsp;765</b>. Сдвиг на один день дороже втрое, поэтому даты забираем первыми.</p></div>
+    <div class="card"><h3>Ваши даты — лучшая клетка в сетке</h3><p>27.09 — $1&nbsp;597 · 29.09 — $1&nbsp;600 · 26.09 — $1&nbsp;925 · <b>28.09 — $4&nbsp;765</b>. Сдвиг на один день дороже втрое, поэтому даты забираем первыми.</p></div>
     <div class="card"><h4>Обратный рейс ночной</h4><p>Вылет 21:30, прилёт в Кишинёв 07:15. Плюс: последний день на острове остаётся полным — успеваем и море, и храмы. Минус: спать в самолёте.</p></div>
   </div>
 </div></section>
@@ -1056,7 +1083,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Бассейн Святого Петра</h3>
     <p class="body-s">Плоские белые скалы и вода такой прозрачности, что видно дно. Прыгают с трёх-пяти метров, вылезают по железным скобам. Ни лежаков, ни кафе — только вода и камень.</p>
     <p class="locmeta">день 4 · автобус 81/85, дальше 20 минут пешком или такси €8</p>
-    <div class="fact"><span>факт</span><p>Чашу вымыло само море: известняк здесь мягкий, и волны за тысячи лет вырезали в нём почти правильный бассейн.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Чашу вымыло само море: известняк здесь мягкий, и волны за тысячи лет вырезали в нём почти правильный бассейн.</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Блю-Лагуна">
   <div class="strip s3"><figure><img src="img/lagoon-wide-4.avif" alt="Блю-Лагуна" width="1100" height="825" loading="lazy" decoding="async"></figure><figure><img src="img/boat-private-1.avif" alt="Блю-Лагуна" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/lagoon-wide-2.avif" alt="Блю-Лагуна" width="1100" height="158" loading="lazy" decoding="async"></figure></div>
@@ -1065,7 +1092,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Блю-Лагуна</h3>
     <p class="body-s">Та самая бирюза с открыток: мелко, дно белое, вода светится. Всё решает время — мы выходим первым рейсом, пока лагуна пустая.</p>
     <p class="locmeta">день 3 · круиз €45 с человека от Sliema Ferries</p>
-    <div class="fact"><span>факт</span><p>На Комино постоянно живёт меньше десяти человек, а остров назван по тмину, который здесь рос. Здесь снимали «Графа Монте-Кристо».</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>На Комино постоянно живёт меньше десяти человек, а остров назван по тмину, который здесь рос. Здесь снимали «Графа Монте-Кристо».</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Плиты Тинье">
   <div class="strip s3"><figure><img src="img/swim-sliema-2.avif" alt="Плиты Тинье" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/ferry-sliema-1.avif" alt="Плиты Тинье" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/swim-sliema-1.avif" alt="Плиты Тинье" width="1100" height="268" loading="lazy" decoding="async"></figure></div>
@@ -1074,7 +1101,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Плиты Тинье</h3>
     <p class="body-s">Самое быстрое купание поездки: плиты с лестницами в воду в десяти минутах от отеля. Рядом променад, кофе и мороженое.</p>
     <p class="locmeta">день 2 и запасной вариант дня 5 · паром 5 минут, €2.80 туда-обратно</p>
-    <div class="fact"><span>факт</span><p>Форт Тинье, что стоит на мысу, — последнее укрепление, построенное рыцарями на Мальте, в 1792 году, за шесть лет до их изгнания.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Форт Тинье, что стоит на мысу, — последнее укрепление, построенное рыцарями на Мальте, в 1792 году, за шесть лет до их изгнания.</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Голубой грот">
   <div class="strip s3"><figure><img src="img/blue-grotto-1.avif" alt="Голубой грот" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/boat-cruise-1.avif" alt="Голубой грот" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/blue-grotto-2.avif" alt="Голубой грот" width="1100" height="825" loading="lazy" decoding="async"></figure></div>
@@ -1083,7 +1110,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Голубой грот</h3>
     <p class="body-s">Не пляж, а морские пещеры, куда лодочники заводят по утреннему свету. У причала есть где искупаться в узкой бухте между скалами.</p>
     <p class="locmeta">день 5 · автобус 74, ≈50 минут · лодка около €10 с человека, только до 11 утра</p>
-    <div class="fact"><span>факт</span><p>Вода светится не сама: свет отражается от белого песчаного дна и подсвечивает пещеру изнутри.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Вода светится не сама: свет отражается от белого песчаного дна и подсвечивает пещеру изнутри.</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Гхайн-Туффиха">
   <div class="strip s3"><figure><img src="img/ghajn-x-1.avif" alt="Гхайн-Туффиха" width="1100" height="604" loading="lazy" decoding="async"></figure><figure><img src="img/ghajn-tuffieha-1.avif" alt="Гхайн-Туффиха" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/ghajn-tuffieha-2.avif" alt="Гхайн-Туффиха" width="1100" height="733" loading="lazy" decoding="async"></figure></div>
@@ -1092,7 +1119,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Гхайн-Туффиха</h3>
     <p class="body-s">Сто девяносто ступеней вниз отсекают ленивых, поэтому здесь тихо, хотя рядом людный Golden Bay. Глина, сосны и лучший закат западного берега.</p>
     <p class="locmeta">в программу не входит · автобус 44 из Валлетты, около часа</p>
-    <div class="fact"><span>факт</span><p>Название переводится как «источник яблок» — по роднику, который бил у подножия склона.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Название переводится как «источник яблок» — по роднику, который бил у подножия склона.</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Рамла">
   <div class="strip s3"><figure><img src="img/ramla-x-1.avif" alt="Рамла" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/ramla-3.avif" alt="Рамла" width="1100" height="727" loading="lazy" decoding="async"></figure><figure><img src="img/ramla-x-4.avif" alt="Рамла" width="1100" height="733" loading="lazy" decoding="async"></figure></div>
@@ -1101,7 +1128,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Рамла</h3>
     <p class="body-s">Красно-оранжевый песок, каких на Мальте больше нет. С базой в Слиме не добраться — это причина вернуться на Гозо уже с ночёвкой.</p>
     <p class="locmeta">только Гозо · в эти четыре дня не попадаем</p>
-    <div class="fact"><span>факт</span><p>Под пляжем лежит римская вилла, а над ним — пещера, которую на острове называют пещерой Калипсо из «Одиссеи».</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Под пляжем лежит римская вилла, а над ним — пещера, которую на острове называют пещерой Калипсо из «Одиссеи».</p></div>
   </div>
 </article></div>
 </div></section>
@@ -1118,7 +1145,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Валлетта</h3>
     <p class="body-s">Весь город обходится пешком за полчаса. После восьми вечера туристы уезжают в Слиму, и улицы с деревянными балконами остаются вам почти в одиночестве.</p>
     <p class="locmeta">каждый день · пешком</p>
-    <div class="fact"><span>факт</span><p>Валлетту начали строить в 1566 году, сразу после Великой осады, и это первый в Европе город, спланированный целиком по сетке ещё до первого камня.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Валлетту начали строить в 1566 году, сразу после Великой осады, и это первый в Европе город, спланированный целиком по сетке ещё до первого камня.</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Собор Святого Иоанна">
   <div class="strip s3"><figure><img src="img/st-johns-1.avif" alt="Собор Святого Иоанна" width="1100" height="825" loading="lazy" decoding="async"></figure><figure><img src="img/stjohns-x-1.avif" alt="Собор Святого Иоанна" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/st-johns-2.avif" alt="Собор Святого Иоанна" width="1100" height="825" loading="lazy" decoding="async"></figure></div>
@@ -1127,7 +1154,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Собор Святого Иоанна</h3>
     <p class="body-s">Снаружи глухая крепость, внутри золото от пола до потолка, а под ногами — надгробные плиты рыцарей из цветного мрамора, по которым разрешено ходить.</p>
     <p class="locmeta">день 2 · вход около €15, аудиогид включён</p>
-    <div class="fact"><span>факт</span><p>Плит в полу почти четыреста. В оратории висит «Обезглавление Иоанна Крестителя» — самое большое полотно Караваджо и единственное, которое он подписал.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Плит в полу почти четыреста. В оратории висит «Обезглавление Иоанна Крестителя» — самое большое полотно Караваджо и единственное, которое он подписал.</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Верхние сады Барракка">
   <div class="strip s3"><figure><img src="img/barrakka-0.avif" alt="Верхние сады Барракка" width="1100" height="825" loading="lazy" decoding="async"></figure><figure><img src="img/barrakka-x-1.avif" alt="Верхние сады Барракка" width="1100" height="258" loading="lazy" decoding="async"></figure><figure><img src="img/barrakka-1.avif" alt="Верхние сады Барракка" width="1100" height="324" loading="lazy" decoding="async"></figure></div>
@@ -1136,7 +1163,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Верхние сады Барракка</h3>
     <p class="body-s">Лучшая точка на Гранд-Харбор и Три города. Прямо под террасой стоит Батарея салютов.</p>
     <p class="locmeta">день 2 · вход бесплатный, залп в 12:00 и 16:00</p>
-    <div class="fact"><span>факт</span><p>Батарея работает с XVI века и считается одной из старейших действующих в мире. Приходите за десять минут: пушку заряжают на глазах.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Батарея работает с XVI века и считается одной из старейших действующих в мире. Приходите за десять минут: пушку заряжают на глазах.</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Три города">
   <div class="strip s3"><figure><img src="img/three-cities-1.avif" alt="Три города" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/birgu-1.avif" alt="Три города" width="1100" height="765" loading="lazy" decoding="async"></figure><figure><img src="img/birgu-2.avif" alt="Три города" width="1100" height="827" loading="lazy" decoding="async"></figure></div>
@@ -1145,7 +1172,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Три города</h3>
     <p class="body-s">То, чем была Валлетта до Валлетты: набережная с яхтами, форт и ни одной сувенирной лавки. Ехать лодкой через Гранд-Харбор.</p>
     <p class="locmeta">день 4, вечер · лодка 5 минут, около €2 туда-обратно</p>
-    <div class="fact"><span>факт</span><p>Биргу получил второе имя Витториоза — «Победоносный» — за то, что выстоял осаду 1565 года. Форт Сант-Анджело старше Валлетты на несколько веков.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Биргу получил второе имя Витториоза — «Победоносный» — за то, что выстоял осаду 1565 года. Форт Сант-Анджело старше Валлетты на несколько веков.</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Марсашлокк">
   <div class="strip s3"><figure><img src="img/mxlokk-wide-2.avif" alt="Марсашлокк" width="1100" height="734" loading="lazy" decoding="async"></figure><figure><img src="img/marsaxlokk-2.avif" alt="Марсашлокк" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/luzzu-1.avif" alt="Марсашлокк" width="1100" height="825" loading="lazy" decoding="async"></figure></div>
@@ -1154,7 +1181,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Марсашлокк</h3>
     <p class="body-s">Живая рыбацкая деревня, а не декорация: лодки уходят ночью, рыбу продают утром, к обеду остаются кофе и таверны у воды.</p>
     <p class="locmeta">день 4, утро · автобус 81/85</p>
-    <div class="fact"><span>факт</span><p>Название значит «южный порт»: xlokk — это сирокко, ветер из Африки. Глаза, нарисованные на носу каждой луццу, — оберег, доставшийся мальтийцам от финикийцев.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Название значит «южный порт»: xlokk — это сирокко, ветер из Африки. Глаза, нарисованные на носу каждой луццу, — оберег, доставшийся мальтийцам от финикийцев.</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Хаджар-Ким и Мнайдра">
   <div class="strip s3"><figure><img src="img/hagar-qim-1.avif" alt="Хаджар-Ким и Мнайдра" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/temple-wide-3.avif" alt="Хаджар-Ким и Мнайдра" width="1100" height="825" loading="lazy" decoding="async"></figure><figure><img src="img/hagar-qim-2.avif" alt="Хаджар-Ким и Мнайдра" width="1100" height="733" loading="lazy" decoding="async"></figure></div>
@@ -1163,7 +1190,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Хаджар-Ким и Мнайдра</h3>
     <p class="body-s">Два храмовых комплекса на обрыве над морем, рядом с гротом. Стоят под навесами: дожди уже начали разъедать камень.</p>
     <p class="locmeta">день 5 · один билет на оба, около €10</p>
-    <div class="fact"><span>факт</span><p>Им 5 600 лет — старше пирамид Гизы. Мнайдра выстроена так, что в равноденствие солнце входит точно в главный проход.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Им 5 600 лет — старше пирамид Гизы. Мнайдра выстроена так, что в равноденствие солнце входит точно в главный проход.</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Цитадель Гозо">
   <div class="strip s3"><figure><img src="img/cittadella-3.avif" alt="Цитадель Гозо" width="1100" height="763" loading="lazy" decoding="async"></figure><figure><img src="img/cittadella-1.avif" alt="Цитадель Гозо" width="1100" height="770" loading="lazy" decoding="async"></figure><figure><img src="img/cittadella-2.avif" alt="Цитадель Гозо" width="1100" height="713" loading="lazy" decoding="async"></figure></div>
@@ -1172,7 +1199,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Цитадель Гозо</h3>
     <p class="body-s">Крепость на скале в середине второго острова: по стенам обходишь весь Гозо взглядом, внизу — рынок и сырные лавки.</p>
     <p class="locmeta">день 3 · остановка в круизе</p>
-    <div class="fact"><span>факт</span><p>До 1637 года всем жителям Гозо было предписано ночевать внутри стен: остров грабили корсары, и однажды в рабство увели почти всё население.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>До 1637 года всем жителям Гозо было предписано ночевать внутри стен: остров грабили корсары, и однажды в рабство увели почти всё население.</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Мдина">
   <div class="strip s3"><figure><img src="img/mdina-1.avif" alt="Мдина" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/mdina-2.avif" alt="Мдина" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/mdina-3.avif" alt="Мдина" width="1100" height="733" loading="lazy" decoding="async"></figure></div>
@@ -1181,7 +1208,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Мдина</h3>
     <p class="body-s">Молчаливый город: машин нет, улицы шириной в размах рук, к вечеру почти пусто.</p>
     <p class="locmeta">альтернатива дня 5 · автобус 51/52/53, около 35 минут</p>
-    <div class="fact"><span>факт</span><p>Мдина была столицей Мальты до 1571 года, сейчас внутри стен живёт около трёхсот человек. Именно её показывали как Королевскую Гавань в первом сезоне «Игры престолов».</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Мдина была столицей Мальты до 1571 года, сейчас внутри стен живёт около трёхсот человек. Именно её показывали как Королевскую Гавань в первом сезоне «Игры престолов».</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Солеварни Гозо">
   <div class="strip s3"><figure><img src="img/marsalforn-x-1.avif" alt="Солеварни Гозо" width="1100" height="825" loading="lazy" decoding="async"></figure><figure><img src="img/marsalforn-1.avif" alt="Солеварни Гозо" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/marsalforn-2.avif" alt="Солеварни Гозо" width="1100" height="733" loading="lazy" decoding="async"></figure></div>
@@ -1190,7 +1217,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Солеварни Гозо</h3>
     <p class="body-s">Шахматная доска из квадратов, вырубленных в береговой скале. Соль сгребают вручную и продают тут же.</p>
     <p class="locmeta">Гозо · если круиз заходит в Марсалфорн</p>
-    <div class="fact"><span>факт</span><p>Эти бассейны рубят в камне уже несколько сотен лет, и метод не изменился: море заливает квадраты, солнце забирает воду, соль остаётся.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Эти бассейны рубят в камне уже несколько сотен лет, и метод не изменился: море заливает квадраты, солнце забирает воду, соль остаётся.</p></div>
   </div>
 </article><article class="loc reveal" data-poi="Сельский Гозо">
   <div class="strip s3"><figure><img src="img/gozo-country-3.avif" alt="Сельский Гозо" width="1100" height="789" loading="lazy" decoding="async"></figure><figure><img src="img/gozo-x-3.avif" alt="Сельский Гозо" width="1100" height="825" loading="lazy" decoding="async"></figure><figure><img src="img/gozo-x-2.avif" alt="Сельский Гозо" width="1100" height="825" loading="lazy" decoding="async"></figure></div>
@@ -1199,7 +1226,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Сельский Гозо</h3>
     <p class="body-s">Между точками на карте — то, за чем сюда едут во второй раз: террасы с сухими стенками, деревни в один храм и полное отсутствие спешки.</p>
     <p class="locmeta">на будущую поездку</p>
-    <div class="fact"><span>факт</span><p>Стенки складывают без раствора, камень к камню, — так на Мальте держат землю на склонах со времён рыцарей.</p></div>
+    <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Стенки складывают без раствора, камень к камню, — так на Мальте держат землю на склонах со времён рыцарей.</p></div>
   </div>
 </article></div>
 </div></section>
@@ -1214,84 +1241,84 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   <h4>Nenu the Artisan Baker</h4>
   <p class="order">€€ · фтира с тунцом</p>
   <p class="body-s">Фтира из дровяной печи в бывшей пекарне: тонкое тесто, тунец, каперсы, оливки. Сюда идут ужинать семьями, а не фотографировать еду.</p>
-  <div class="fact"><span>факт</span><p>Мальтийская фтира с 2020 года внесена в список нематериального наследия ЮНЕСКО.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Мальтийская фтира с 2020 года внесена в список нематериального наследия ЮНЕСКО.</p></div>
   <p class="vlinks"><a href="https://tanenu.com/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Nenu%20the%20Artisan%20Baker%20Malta" target="_blank" rel="noopener">на карте</a><a href="https://www.facebook.com/nenuthebaker" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/nenuthebaker" target="_blank" rel="noopener">Instagram</a></p>
 </article><article class="reveal">
   <figure class="vshot"><img src="img/venue-legligin.avif" alt="Зал: Legligin" width="1100" height="733" loading="lazy" decoding="async"></figure>
   <h4>Legligin</h4>
   <p class="order">€€ · сет дня и местное вино</p>
   <p class="body-s">Погреб без меню: хозяин приносит семь-восемь мальтийских закусок одну за другой, пока не скажете «хватит». Лучший вечер поездки за свои деньги.</p>
-  <div class="fact"><span>факт</span><p>Всё вино — мальтийское, включая автохтонные сорта Ġellewża и Girgentina, которых больше нигде нет.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Всё вино — мальтийское, включая автохтонные сорта Ġellewża и Girgentina, которых больше нигде нет.</p></div>
   <p class="vlinks"><a href="https://legliginmalta.com/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Legligin%20Malta" target="_blank" rel="noopener">на карте</a><a href="https://www.facebook.com/Legligin" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/legliginrestaurant" target="_blank" rel="noopener">Instagram</a></p>
 </article><article class="reveal">
   
   <h4>Trabuxu Wine Bar</h4>
   <p class="order">€ · бокал и доска</p>
   <p class="body-s">Каменный погреб под улицей, сырные доски и вино по бокалам. Сидят после ужина, а не вместо него.</p>
-  <div class="fact"><span>факт</span><p>Trabuxu по-мальтийски — «пробочник». Погребу больше трёхсот лет.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Trabuxu по-мальтийски — «пробочник». Погребу больше трёхсот лет.</p></div>
   <p class="vlinks"><a href="https://trabuxu.com.mt/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Trabuxu%20Wine%20Bar%20Malta" target="_blank" rel="noopener">на карте</a></p>
 </article><article class="reveal">
   <figure class="vshot"><img src="img/venue-thepub.avif" alt="Зал: The Pub" width="1100" height="828" loading="lazy" decoding="async"></figure>
   <h4>The Pub</h4>
   <p class="order">€ · Cisk на разлив</p>
   <p class="body-s">Крошечный бар на Archbishop Street, четыре стола и стены в вырезках. Дешёвое пиво и разговоры с местными.</p>
-  <div class="fact"><span>факт</span><p>В 1999 году здесь умер Оливер Рид во время съёмок «Гладиатора» — паб этим тихо гордится.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>В 1999 году здесь умер Оливер Рид во время съёмок «Гладиатора» — паб этим тихо гордится.</p></div>
   <p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=The%20Pub%20Malta" target="_blank" rel="noopener">на карте</a></p>
 </article><article class="reveal">
   <figure class="vshot"><img src="img/venue-suq.avif" alt="Зал: Is-Suq tal-Belt" width="1024" height="672" loading="lazy" decoding="async"></figure>
   <h4>Is-Suq tal-Belt</h4>
   <p class="order">€€ · рыба, паста, вино</p>
   <p class="body-s">Городской рынок, переделанный в фуд-холл: мальтийские прилавки рядом с обычными, цены нормальные, можно есть по-разному за одним столом.</p>
-  <div class="fact"><span>факт</span><p>Викторианский чугунный рынок 1861 года стоял заброшенным десятилетия и открылся заново в 2018-м.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Викторианский чугунный рынок 1861 года стоял заброшенным десятилетия и открылся заново в 2018-м.</p></div>
   <p class="vlinks"><a href="https://issuqtalbelt.com/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Is-Suq%20tal-Belt%20Malta" target="_blank" rel="noopener">на карте</a><a href="https://www.facebook.com/suqtalbelt" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/suqtalbelt" target="_blank" rel="noopener">Instagram</a></p>
 </article><article class="reveal">
   <figure class="vshot"><img src="img/venue-cordina.avif" alt="Зал: Caffè Cordina" width="1100" height="407" loading="lazy" decoding="async"></figure>
   <h4>Caffè Cordina</h4>
   <p class="order">€ · кофе и кассата</p>
   <p class="body-s">Кофе и мальтийские сладости на площади Республики. Да, туристов много — но мальтийцы всё равно приходят сюда за кассатой.</p>
-  <div class="fact"><span>факт</span><p>Работает с 1837 года, старейшая кофейня острова.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Работает с 1837 года, старейшая кофейня острова.</p></div>
   <p class="vlinks"><a href="https://caffecordina.com/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Caff%C3%A8%20Cordina%20Malta" target="_blank" rel="noopener">на карте</a><a href="https://www.facebook.com/CaffeCordina" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/caffecordina" target="_blank" rel="noopener">Instagram</a></p>
 </article></div></div><div class="zone"><h3>Рядом с маршрутом</h3><div class="rl"><article class="reveal">
   
   <h4>Таверны на набережной Марсашлокка</h4>
   <p class="order">€€ · улов дня</p>
   <p class="body-s">Обед дня 4: рыба дня, картошка, стакан вина, столы у самой воды. Меню одно, на мальтийском и английском — это хороший знак.</p>
-  <div class="fact"><span>факт</span><p>В сентябре на всех прилавках лампуки — золотая корифена, которую ловят только с конца августа по ноябрь.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>В сентябре на всех прилавках лампуки — золотая корифена, которую ловят только с конца августа по ноябрь.</p></div>
   <p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=%D0%A2%D0%B0%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%20%D0%BD%D0%B0%20%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%BE%D0%B9%20%D0%9C%D0%B0%D1%80%D1%81%D0%B0%D1%88%D0%BB%D0%BE%D0%BA%D0%BA%D0%B0%20Malta" target="_blank" rel="noopener">на карте</a></p>
 </article><article class="reveal">
   <figure class="vshot"><img src="img/venue-donberto.avif" alt="Зал: Don Berto" width="1100" height="334" loading="lazy" decoding="async"></figure>
   <h4>Don Berto</h4>
   <p class="order">€€ · паста с морепродуктами</p>
   <p class="body-s">Биргу, набережная. Паста и рыба, яхты в двух метрах от стола, ни одного стенда с фотографиями блюд.</p>
-  <div class="fact"><span>факт</span><p>Стоит в бывших складах напротив форта Сант-Анджело — того самого, что держал осаду 1565 года.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Стоит в бывших складах напротив форта Сант-Анджело — того самого, что держал осаду 1565 года.</p></div>
   <p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=Don%20Berto%20Malta" target="_blank" rel="noopener">на карте</a></p>
 </article><article class="reveal">
   <figure class="vshot"><img src="img/venue-takris.avif" alt="Зал: Ta’ Kris" width="1100" height="620" loading="lazy" decoding="async"></figure>
   <h4>Ta’ Kris</h4>
   <p class="order">€€ · кролик в вине</p>
   <p class="body-s">Слима, в переулке за променадом, в помещении старой пекарни. Мальтийская домашняя еда: кролик, брагиоли, тушёная рыба.</p>
-  <div class="fact"><span>факт</span><p>Печь сохранилась от пекарни, которая работала здесь до 1970-х.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Печь сохранилась от пекарни, которая работала здесь до 1970-х.</p></div>
   <p class="vlinks"><a href="https://www.takrisrestaurant.com/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Ta%E2%80%99%20Kris%20Malta" target="_blank" rel="noopener">на карте</a><a href="https://www.facebook.com/TaKrisrestaurant" target="_blank" rel="noopener">Facebook</a></p>
 </article><article class="reveal">
   <figure class="vshot"><img src="img/venue-serkin.avif" alt="Зал: Crystal Palace, он же «Serkin»" width="1100" height="619" loading="lazy" decoding="async"></figure>
   <h4>Crystal Palace, он же «Serkin»</h4>
   <p class="order">€ · пастиззи с рикоттой</p>
   <p class="body-s">Рабат у Мдины. Пастиззи из окна почти круглосуточно, стоят таксисты, рабочие и полицейские. Самая честная еда на острове.</p>
-  <div class="fact"><span>факт</span><p>Пастиззи стоит около сорока центов, и это единственное место, куда мальтийцы приезжают ночью специально за завтраком.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Пастиззи стоит около сорока центов, и это единственное место, куда мальтийцы приезжают ночью специально за завтраком.</p></div>
   <p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=Crystal%20Palace%2C%20%D0%BE%D0%BD%20%D0%B6%D0%B5%20%C2%ABSerkin%C2%BB%20Malta" target="_blank" rel="noopener">на карте</a></p>
 </article><article class="reveal">
   <figure class="vshot"><img src="img/venue-tarikardu.avif" alt="Зал: Ta’ Rikardu" width="1100" height="825" loading="lazy" decoding="async"></figure>
   <h4>Ta’ Rikardu</h4>
   <p class="order">€ · платтер и графин</p>
   <p class="body-s">Гозо, внутри Цитадели. Тарелка своего овечьего сыра, помидоры, каперсы, галеты и графин вина — и вид со стены.</p>
-  <div class="fact"><span>факт</span><p>Сыр джбейна делают из молока собственных овец, вино — со своего участка под стенами.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Сыр джбейна делают из молока собственных овец, вино — со своего участка под стенами.</p></div>
   <p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=Ta%E2%80%99%20Rikardu%20Malta" target="_blank" rel="noopener">на карте</a></p>
 </article><article class="reveal">
   
   <h4>Клуб духового оркестра</h4>
   <p class="order">€ · Cisk и Kinnie</p>
   <p class="body-s">В каждой деревне есть każin — клуб с баром, где пиво стоит вдвое дешевле, а гости в основном соседи. Заходить можно всем, достаточно поздороваться.</p>
-  <div class="fact"><span>факт</span><p>Духовые оркестры на Мальте соревнуются между приходами больше ста лет, и клуб — центр этой конкуренции.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Духовые оркестры на Мальте соревнуются между приходами больше ста лет, и клуб — центр этой конкуренции.</p></div>
   <p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=%D0%9A%D0%BB%D1%83%D0%B1%20%D0%B4%D1%83%D1%85%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE%20%D0%BE%D1%80%D0%BA%D0%B5%D1%81%D1%82%D1%80%D0%B0%20Malta" target="_blank" rel="noopener">на карте</a></p>
 </article></div></div>
 </div></section>
@@ -1303,24 +1330,24 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   </div>
   <div class="rl"><article class="reveal">
   <figure class="vshot"><img src="img/venue-meridiana.avif" alt="Зал: Meridiana, Та-Кали" width="1100" height="731" loading="lazy" decoding="async"></figure>
-  <h4>Meridiana, Та-Кали</h4>
+  <h3>Meridiana, Та-Кали</h3>
   <p class="order">€€ · дегустация с экскурсией</p>
   <p class="body-s">Виноградник в двадцати минутах от Мдины: экскурсия по рядам и дегустация за столом среди лоз. Совмещается с днём Молчаливого города.</p>
-  <div class="fact"><span>факт</span><p>Лозы посажены на месте военного аэродрома Та-Кали времён Второй мировой. Девятнадцать гектаров, мерло и сира на мальтийском камне.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Лозы посажены на месте военного аэродрома Та-Кали времён Второй мировой. Девятнадцать гектаров, мерло и сира на мальтийском камне.</p></div>
   <p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=Meridiana%2C%20%D0%A2%D0%B0-%D0%9A%D0%B0%D0%BB%D0%B8%20Malta" target="_blank" rel="noopener">на карте</a></p>
 </article><article class="reveal">
   
-  <h4>Ta’ Mena, Гозо</h4>
+  <h3>Ta’ Mena, Гозо</h3>
   <p class="order">€€ · дегустация с закусками</p>
   <p class="body-s">Семейное хозяйство под Шарой: вино, оливковое масло, каперсы и варенье делают тут же. Дегустация на террасе среди своих полей, без автобусных групп.</p>
-  <div class="fact"><span>факт</span><p>Конец сентября — самый сбор урожая: если повезёт, попадёте на vendemmia и увидите, как виноград идёт под пресс в тот же день.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Конец сентября — самый сбор урожая: если повезёт, попадёте на vendemmia и увидите, как виноград идёт под пресс в тот же день.</p></div>
   <p class="vlinks"><a href="https://tamena-gozo.com/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Ta%E2%80%99%20Mena%2C%20%D0%93%D0%BE%D0%B7%D0%BE%20Malta" target="_blank" rel="noopener">на карте</a><a href="https://www.facebook.com/tamenagozo" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/tamena.gozo" target="_blank" rel="noopener">Instagram</a></p>
 </article><article class="reveal">
   <figure class="vshot"><img src="img/venue-marsovin.avif" alt="Зал: Marsovin, Паола" width="1100" height="734" loading="lazy" decoding="async"></figure>
-  <h4>Marsovin, Паола</h4>
+  <h3>Marsovin, Паола</h3>
   <p class="order">€€ · тур по погребам</p>
   <p class="body-s">Исторические подземные погреба недалеко от Три города: экскурсия под сводами и дегустация там, где вино лежит с двадцатых годов.</p>
-  <div class="fact"><span>факт</span><p>Дом Marsovin основан в 1919 году, сразу после Первой мировой, и до сих пор держит те же подвалы под Паолой.</p></div>
+  <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Дом Marsovin основан в 1919 году, сразу после Первой мировой, и до сих пор держит те же подвалы под Паолой.</p></div>
   <p class="vlinks"><a href="https://marsovinwinery.com/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Marsovin%2C%20%D0%9F%D0%B0%D0%BE%D0%BB%D0%B0%20Malta" target="_blank" rel="noopener">на карте</a><a href="https://www.facebook.com/marsovinwinery" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/marsovinwinery" target="_blank" rel="noopener">Instagram</a></p>
 </article></div>
 </div></section>
@@ -1332,54 +1359,6 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   </div>
   <div class="taste">
     <div class="t reveal"><figure><img src="img/food-lampuki-1.avif" alt="Лампуки" width="1100" height="733" loading="lazy" decoding="async"></figure><div><h3>Лампуки</h3><p>Золотая корифена, пик которой приходится ровно на наши даты: берите на гриле или в пироге с каперсами и оливками.</p></div></div><div class="t reveal"><figure><img src="img/food-ftira-2.avif" alt="Фтира" width="1100" height="733" loading="lazy" decoding="async"></figure><div><h3>Фтира</h3><p>Плоская мальтийская лепёшка с тунцом, каперсами и помидором. Правильную пекут в дровяной печи, и она держит форму, а не разваливается.</p></div></div><div class="t reveal"><figure><img src="img/food-pastizzi-1.avif" alt="Пастиззи" width="1100" height="733" loading="lazy" decoding="async"></figure><div><h3>Пастиззи</h3><p>Слоёные пирожки с рикоттой или гороховым пюре, около сорока центов штука. Завтрак местных и спасение бюджета.</p></div></div><div class="t reveal"><figure><img src="img/food-gbejniet-2.avif" alt="Джбейна" width="1100" height="733" loading="lazy" decoding="async"></figure><div><h3>Джбейна</h3><p>Овечий сыр Гозо: свежий, сушёный или в чёрном перце. Ищите на рынке в Виктории и в лавках Марсашлокка.</p></div></div><div class="t reveal"><figure><img src="img/food-fenek-2.avif" alt="Стуффат тал-фенек" width="1100" height="825" loading="lazy" decoding="async"></figure><div><h3>Стуффат тал-фенек</h3><p>Кролик, тушёный в вине с чесноком, — национальное блюдо. Едят его как застолье, фенкату: сначала паста в соусе, потом мясо.</p></div></div><div class="t reveal"><figure><img src="img/food-kinnie-2.avif" alt="Kinnie и Cisk" width="1100" height="825" loading="lazy" decoding="async"></figure><div><h3>Kinnie и Cisk</h3><p>Горько-апельсиновая газировка на травах с 1952 года и местный лагер. Просить нужно именно их, а не привозные бренды.</p></div></div>
-  </div>
-</div></section>
-
-<section id="budget"><div class="wrap">
-  <div class="shead">
-    <h2>Два варианта, один маршрут</h2>
-    <p>Отель, море и культурная программа в обоих одинаковые. Разница — в багаже, катере, машине и в том, сколько стоит ужин.</p>
-  </div>
-  <div class="tw"><table><thead><tr><th>Статья</th><th class="pick">До €1 300 на пару</th><th>До €2 000 на пару</th></tr></thead><tbody><tr><td>Перелёт на шестерых</td><td>€1 221</td><td>€1 470</td></tr><tr class="dim"><td>— багаж</td><td>ручная кладь</td><td>плюс чемоданы</td></tr><tr><td>Жильё: три сьюта, четыре ночи</td><td>€1 308</td><td>€1 308</td></tr><tr><td>Эко-налог, платится в отеле</td><td>€12</td><td>€12</td></tr><tr><td>Дорога из аэропорта и обратно</td><td>€57</td><td>€120</td></tr><tr class="dim"><td>— как едем</td><td>минивэн туда, автобус обратно</td><td>минивэн оба раза</td></tr><tr><td>Комино и Блю-Лагуна</td><td>€270</td><td>€450</td></tr><tr class="dim"><td>— на чём</td><td>круиз от Слимы</td><td>свой катер</td></tr><tr><td>Лодка в грот и билет в храмы</td><td>€120</td><td>€120</td></tr><tr><td>Автобусы, паром, карта Tallinja</td><td>€120</td><td>€120</td></tr><tr><td>Минивэн на два дня</td><td>доплата +€185</td><td>€235</td></tr><tr><td>Экскурсия по Мдине с катакомбами</td><td>—</td><td>€153</td></tr><tr><td>Ужины, четыре вечера</td><td>€528</td><td>€912</td></tr><tr><td>Предоплата за жильё</td><td>уточняется</td><td>уточняется</td></tr><tr><td>Обеды, кофе, вода</td><td>€300</td><td>€456</td></tr><tr><td>Поводы: просекко, торт, цветы</td><td>по желанию</td><td>по желанию</td></tr><tr class="dim"><td>— кто платит</td><td>каждая пара за свой</td><td>каждая пара за свой</td></tr><tr class="sub"><td>Итого без резерва</td><td>€3 936</td><td>€5 321</td></tr><tr class=""><td>Резерв 10 %</td><td>—</td><td>€532</td></tr><tr class="tot"><td>Итого на шестерых</td><td>€3 936</td><td>€5 853</td></tr><tr class="big"><td>На пару</td><td>€1 312</td><td>€1 951</td></tr><tr class=""><td>На человека</td><td>€656</td><td>€976</td></tr></tbody></table></div>
-</div></section>
-
-<section id="logistics"><div class="wrap">
-  <div class="shead"><h2>Мелочи, которые ломают бюджет</h2></div>
-  <div class="two"><div class="card reveal"><h3>Автобусы — весь транспорт</h3><p>Из Валлетты идёт почти всё: Марсашлокк — 81 и 85 (35–40 минут, проверено), Голубой грот — 74, Мдина и Рабат — 51, 52, 53, Golden Bay — 44. Номера и расписание сверяйте в приложении Tallinja: сетка меняется по сезонам.</p></div><div class="card reveal"><h3>Паром вместо автобуса</h3><p>Слима — Валлетта через Марсамшетт: пять минут и €2.80 туда-обратно, каждые полчаса. До 31 октября действует летнее расписание: из Слимы примерно до 23:45, из Валлетты до полуночи, — поэтому ужины в городе паром закрывает спокойно, такси не нужно. По воскресеньям начинает на два часа позже. В Три города через Гранд-Харбор — те же пять минут, около €2. <b>Расписание на 1 октября сверяем отдельно: с этой даты часть морских маршрутов уходит на зимний график.</b></p></div><div class="card reveal"><h3>Машина не нужна каждый день</h3><p>База в Слиме, и почти всё закрывают автобус с паромом. В Валлетту машину не завести: парковки внутри стен нет, улицы узкие, движение левостороннее. Минивэн берём отдельной доплатой на дни 4 и 5.</p></div><div class="card reveal"><h3>Дорога из аэропорта</h3><p>Фиксированное такси около €30, минивэн на шестерых с багажом €45. В смете заложен минивэн при прилёте и автобус X2 обратно: €57 на группу.</p></div><div class="card reveal"><h3>Эко-налог</h3><p>€0.50 с человека старше 18 за ночь, не больше €5 за поездку. На шестерых за четыре ночи — €12, платится в отеле и в цену брони не входит.</p></div><div class="card reveal"><h3>Погода и вода</h3><p>Конец сентября: воздух 26–28 °C, море около 25 °C — теплее, чем в июне. Вечером у воды свежо, возьмите по одной тёплой вещи.</p></div></div>
-</div></section>
-
-<section id="book"><div class="wrap">
-  <div class="shead">
-    <h2>Шесть шагов и три письма</h2>
-    <p>Сначала то, что дорожает и разбирается, последним — то, что отменяется бесплатно. Письма готовы, подставьте имя.</p>
-  </div>
-  <div class="book">
-    <div class="reveal"><div class="n">1</div><div class="when">сегодня</div>
-      <div><h3>Билеты на шестерых</h3><p>Соседний день сетки стоит втрое дороже. Шесть мест одним заказом, затем проверить два заказа по три. Багаж — только ручная кладь, иначе плюс €249.</p><a class="mini" href="https://www.kiwi.com/en/search/results/chisinau-moldova/malta-malta/2026-09-27/2026-10-01?adults=6" target="_blank" rel="noopener">Открыть поиск →</a></div>
-      <div class="sum">€1 221</div></div><div class="reveal"><div class="n">2</div><div class="when">сегодня</div>
-      <div><h3>Two Pillows — три приватных сьюта</h3><p>Письмо №1: письменное подтверждение, что это три отдельных сьюта с санузлом внутри номера, и одна итоговая сумма со всеми налогами. Там же — условия отмены и предоплаты, минивэн из аэропорта, заезд в 21:30, поздний выезд и хранение багажа 1 октября.</p><a class="mini" href="https://www.directbooker.ai/book/CKu2VxgBIPOhASgEeTfk01EyIPMT?pjc5UA" target="_blank" rel="noopener">Прямая бронь →</a></div>
-      <div class="sum">€1 308</div></div><div class="reveal"><div class="n">3</div><div class="when">до 20 августа</div>
-      <div><h3>Круиз на Комино, вторник 29.09</h3><p>От Sliema Ferries, рейтинг 4.39 при 2 298 отзывах. Пять минут на пароме вместо часа в автобусе до Буджиббы. Просим самый ранний выход.</p><a class="mini" href="https://www.booking.com/attractions/mt/pr9tkk28t7yl-gozo-comino-and-blue-lagoon-cruise.en-gb.html?start_date=2026-09-27&end_date=2026-10-01&selected_currency=EUR&aid=8132308" target="_blank" rel="noopener">Забронировать →</a></div>
-      <div class="sum">€270</div></div><div class="reveal"><div class="n">4</div><div class="when">до 10 сентября</div>
-      <div><h3>Nenu, понедельник 28.09, 20:00 — два повода в один вечер</h3><p>Стол на шестерых в тихом зале: годовщина Домбровских и день рождения Алексея. Сначала уточняем день закрытия: в Валлетте кухни нередко не работают в воскресенье или понедельник. Если закрыто — переносим вечер в Ta’ Kris в Слиме, туда даже паром не нужен.</p><a class="mini" href="https://www.nenuthebaker.com/" target="_blank" rel="noopener">Сайт →</a></div>
-      <div class="sum">в бюджете</div></div><div class="reveal"><div class="n">5</div><div class="when">до 10 сентября</div>
-      <div><h3>Legligin, среда 30.09, 20:00 — годовщина Рапопорт</h3><p>Письмо №3: стол на шестерых, мальтийский сет и тихий угол. В брони спрашиваем цену сета с человека — от неё зависит строка ужинов.</p><a class="mini" href="https://legliginmalta.com/" target="_blank" rel="noopener">Сайт →</a></div>
-      <div class="sum">в бюджете</div></div><div class="reveal"><div class="n">6</div><div class="when">по желанию</div>
-      <div><h3>Экскурсия по Мдине с катакомбами</h3><p>€25.50 с человека, рейтинг 4.76 при 182 отзывах. Входит только в вариант до €2 000, отмена свободная — можно решать на месте.</p><a class="mini" href="https://www.booking.com/attractions/mt/prlv7ogpimiy-mdina-and-rabat-walking-tour.en-gb.html?start_date=2026-09-27&end_date=2026-10-01&selected_currency=EUR&aid=8132308" target="_blank" rel="noopener">Посмотреть →</a></div>
-      <div class="sum">+€153</div></div><div class="reveal"><div class="n">7</div><div class="when">до 20 сентября</div>
-      <div><h3>Минивэн, если берём доплату</h3><p>В сентябре минивэнов на острове мало, поэтому заранее. Нужны права, карта под залог и один водитель в договоре. Забираем утром 30 сентября, сдаём 1 октября.</p></div>
-      <div class="sum">+€185</div></div><div class="reveal"><div class="n">8</div><div class="when">на месте</div>
-      <div><h3>Автобусы, паром, грот, храмы</h3><p>Ничего бронировать не нужно: карта Tallinja в первый день, паром по билету на причале, лодка в грот и билет в храмы — утром по погоде.</p></div>
-      <div class="sum">€240</div></div>
-  </div>
-</div></section>
-
-<section id="cta"><div class="wrap">
-  <div class="cta">
-    <h2>Что нужно от вас</h2>
-    <p class="whenline">До конца недели</p>
-    <ol><li>Подтвердить даты: 27 сентября — 1 октября.</li><li>Решить по багажу: летим с одной ручной кладью или добираем чемоданы.</li></ol>
-    <p>Билеты на эти даты дешевле соседних, но цена растёт по мере выборки мест. Как только даты и багаж подтверждены — бронирую и присылаю подтверждения.</p>
   </div>
 </div></section>
 
@@ -1432,6 +1411,49 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   </aside>
 </div></section>
 
+<section id="budget"><div class="wrap">
+  <div class="shead">
+    <h2>Два варианта, один маршрут</h2>
+    <p>Отель, море и культурная программа в обоих одинаковые. Разница — в багаже, катере, машине и в том, сколько стоит ужин.</p>
+  </div>
+  <div class="tw"><table><thead><tr><th>Статья</th><th class="pick">До €1 300 на пару</th><th>До €2 000 на пару</th></tr></thead><tbody><tr><td>Перелёт на шестерых</td><td>€1 221</td><td>€1 470</td></tr><tr class="dim"><td>— багаж</td><td>ручная кладь</td><td>плюс чемоданы</td></tr><tr><td>Жильё: три сьюта, четыре ночи</td><td>€1 308</td><td>€1 308</td></tr><tr><td>Эко-налог, платится в отеле</td><td>€12</td><td>€12</td></tr><tr><td>Дорога из аэропорта и обратно</td><td>€57</td><td>€120</td></tr><tr class="dim"><td>— как едем</td><td>минивэн туда, автобус обратно</td><td>минивэн оба раза</td></tr><tr><td>Комино и Блю-Лагуна</td><td>€270</td><td>€450</td></tr><tr class="dim"><td>— на чём</td><td>круиз от Слимы</td><td>свой катер</td></tr><tr><td>Лодка в грот и билет в храмы</td><td>€120</td><td>€120</td></tr><tr><td>Автобусы, паром, карта Tallinja</td><td>€120</td><td>€120</td></tr><tr><td>Минивэн на два дня</td><td>доплата +€185</td><td>€235</td></tr><tr><td>Экскурсия по Мдине с катакомбами</td><td>—</td><td>€153</td></tr><tr><td>Ужины, четыре вечера</td><td>€528</td><td>€912</td></tr><tr><td>Предоплата за жильё</td><td>уточняется</td><td>уточняется</td></tr><tr><td>Обеды, кофе, вода</td><td>€300</td><td>€456</td></tr><tr><td>Поводы: просекко, торт, цветы</td><td>по желанию</td><td>по желанию</td></tr><tr class="dim"><td>— кто платит</td><td>каждая пара за свой</td><td>каждая пара за свой</td></tr><tr class="sub"><td>Итого без резерва</td><td>€3 936</td><td>€5 321</td></tr><tr class=""><td>Резерв 10 %</td><td>—</td><td>€532</td></tr><tr class="tot"><td>Итого на шестерых</td><td>€3 936</td><td>€5 853</td></tr><tr class="big"><td>На пару</td><td>€1 312</td><td>€1 951</td></tr><tr class=""><td>На человека</td><td>€656</td><td>€976</td></tr></tbody></table></div>
+</div></section>
+
+<section id="logistics"><div class="wrap">
+  <div class="shead"><h2>Мелочи, которые ломают бюджет</h2></div>
+  <div class="two"><div class="card reveal"><h3>Автобусы — весь транспорт</h3><p>Из Валлетты идёт почти всё: Марсашлокк — 81 и 85 (35–40 минут, проверено), Голубой грот — 74, Мдина и Рабат — 51, 52, 53, Golden Bay — 44. Номера и расписание сверяйте в приложении Tallinja: сетка меняется по сезонам.</p></div><div class="card reveal"><h3>Паром вместо автобуса</h3><p>Слима — Валлетта через Марсамшетт: пять минут и €2.80 туда-обратно, каждые полчаса. До 31 октября действует летнее расписание: из Слимы примерно до 23:45, из Валлетты до полуночи, — поэтому ужины в городе паром закрывает спокойно, такси не нужно. По воскресеньям начинает на два часа позже. В Три города через Гранд-Харбор — те же пять минут, около €2. <b>Расписание на 1 октября сверяем отдельно: с этой даты часть морских маршрутов уходит на зимний график.</b></p></div><div class="card reveal"><h3>Машина не нужна каждый день</h3><p>База в Слиме, и почти всё закрывают автобус с паромом. В Валлетту машину не завести: парковки внутри стен нет, улицы узкие, движение левостороннее. Минивэн берём отдельной доплатой на дни 4 и 5.</p></div><div class="card reveal"><h3>Дорога из аэропорта</h3><p>Фиксированное такси около €30, минивэн на шестерых с багажом €45. В смете заложен минивэн при прилёте и автобус X2 обратно: €57 на группу.</p></div><div class="card reveal"><h3>Эко-налог</h3><p>€0.50 с человека старше 18 за ночь, не больше €5 за поездку. На шестерых за четыре ночи — €12, платится в отеле и в цену брони не входит.</p></div><div class="card reveal"><h3>Погода и вода</h3><p>Конец сентября: воздух 26–28 °C, море около 25 °C — теплее, чем в июне. Вечером у воды свежо, возьмите по одной тёплой вещи.</p></div></div>
+</div></section>
+
+<section id="book"><div class="wrap">
+  <div class="shead">
+    <h2>Шесть шагов и три письма</h2>
+    <p>Сначала то, что дорожает и разбирается, последним — то, что отменяется бесплатно. Письма готовы, подставьте имя.</p>
+  </div>
+  <div class="book">
+    <div class="reveal"><div class="n">1</div><div class="when">сегодня</div>
+      <div><h3>Билеты на шестерых</h3><p>Соседний день сетки стоит втрое дороже. Шесть мест одним заказом, затем проверить два заказа по три. Багаж — только ручная кладь, иначе плюс €249.</p><a class="mini" href="https://www.kiwi.com/en/search/results/chisinau-moldova/malta-malta/2026-09-27/2026-10-01?adults=6" target="_blank" rel="noopener">Открыть поиск →</a></div>
+      <div class="sum">€1 221</div></div><div class="reveal"><div class="n">2</div><div class="when">сегодня</div>
+      <div><h3>Two Pillows — три приватных сьюта</h3><p>Письмо №1: письменное подтверждение, что это три отдельных сьюта с санузлом внутри номера, и одна итоговая сумма со всеми налогами. Там же — условия отмены и предоплаты, минивэн из аэропорта, заезд в 21:30, поздний выезд и хранение багажа 1 октября.</p><a class="mini" href="https://www.directbooker.ai/book/CKu2VxgBIPOhASgEeTfk01EyIPMT?pjc5UA" target="_blank" rel="noopener">Прямая бронь →</a></div>
+      <div class="sum">€1 308</div></div><div class="reveal"><div class="n">3</div><div class="when">до 20 августа</div>
+      <div><h3>Круиз на Комино, вторник 29.09</h3><p>От Sliema Ferries, рейтинг 4.39 при 2 298 отзывах. Пять минут на пароме вместо часа в автобусе до Буджиббы. Просим самый ранний выход.</p><a class="mini" href="https://www.booking.com/attractions/mt/pr9tkk28t7yl-gozo-comino-and-blue-lagoon-cruise.en-gb.html?start_date=2026-09-27&end_date=2026-10-01&selected_currency=EUR&aid=8132308" target="_blank" rel="noopener">Забронировать →</a></div>
+      <div class="sum">€270</div></div><div class="reveal"><div class="n">4</div><div class="when">до 10 сентября</div>
+      <div><h3>Nenu, понедельник 28.09, 20:00 — два повода в один вечер</h3><p>Стол на шестерых в тихом зале: годовщина Домбровских и день рождения Алексея. Сначала уточняем день закрытия: в Валлетте кухни нередко не работают в воскресенье или понедельник. Если закрыто — переносим вечер в Ta’ Kris в Слиме, туда даже паром не нужен.</p><a class="mini" href="https://www.nenuthebaker.com/" target="_blank" rel="noopener">Сайт →</a></div>
+      <div class="sum">в бюджете</div></div><div class="reveal"><div class="n">5</div><div class="when">до 10 сентября</div>
+      <div><h3>Legligin, среда 30.09, 20:00 — годовщина Рапопорт</h3><p>Письмо №3: стол на шестерых, мальтийский сет и тихий угол. В брони спрашиваем цену сета с человека — от неё зависит строка ужинов.</p><a class="mini" href="https://legliginmalta.com/" target="_blank" rel="noopener">Сайт →</a></div>
+      <div class="sum">в бюджете</div></div><div class="reveal"><div class="n">6</div><div class="when">по желанию</div>
+      <div><h3>Экскурсия по Мдине с катакомбами</h3><p>€25.50 с человека, рейтинг 4.76 при 182 отзывах. Входит только в вариант до €2 000, отмена свободная — можно решать на месте.</p><a class="mini" href="https://www.booking.com/attractions/mt/prlv7ogpimiy-mdina-and-rabat-walking-tour.en-gb.html?start_date=2026-09-27&end_date=2026-10-01&selected_currency=EUR&aid=8132308" target="_blank" rel="noopener">Посмотреть →</a></div>
+      <div class="sum">+€153</div></div><div class="reveal"><div class="n">7</div><div class="when">до 20 сентября</div>
+      <div><h3>Минивэн, если берём доплату</h3><p>В сентябре минивэнов на острове мало, поэтому заранее. Нужны права, карта под залог и один водитель в договоре. Забираем утром 30 сентября, сдаём 1 октября.</p></div>
+      <div class="sum">+€185</div></div><div class="reveal"><div class="n">8</div><div class="when">на месте</div>
+      <div><h3>Автобусы, паром, грот, храмы</h3><p>Ничего бронировать не нужно: карта Tallinja в первый день, паром по билету на причале, лодка в грот и билет в храмы — утром по погоде.</p></div>
+      <div class="sum">€240</div></div>
+  </div>
+</div></section>
+
+
+
+
+
 <section id="honest"><div class="wrap">
   <div class="shead">
     <h2>Честно: что может поехать</h2>
@@ -1455,6 +1477,15 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   </div>
   <div class="faq">
     <details><summary>А если кто-то не может именно в эти даты?</summary><p>Даты — единственное, что нельзя сдвинуть без потери денег. Соседний день в сетке стоит втрое дороже: 27 сентября — $1 597 на шестерых с чемоданами, 28 сентября — $4 765. Поэтому вопрос номер один именно про даты.</p></details><details><summary>Почему без чемоданов?</summary><p>Тот же рейс с чемоданами дороже на €249 на группу. Четыре ночи в тёплом сентябре спокойно живут в ручной клади. Если для кого-то это принципиально, добираем багаж и считаем по второму варианту сметы.</p></details><details><summary>Что значит «бутик-хостел»? Мы будем жить с чужими людьми?</summary><p>Нет. У Two Pillows есть и общие номера, но мы берём три приватных сьюта: спальня, зона с креслом, свой санузел, у одного из них — своя терраса. В письме отдельно просим письменное подтверждение типа номера.</p></details><details><summary>Почему не отель в самой Валлетте?</summary><p>Вариант внутри стен есть и он на €36 дешевле, но там дормы с нарами, очень маленькие санузлы, ресепшен только днём и кондиционер без регулировки. Мы в Слиме, до Валлетты пять минут на пароме, а купаться можно прямо у дома.</p></details><details><summary>Мы точно успеем и море, и культуру?</summary><p>В каждом дне заложено и то и другое, и это проверено по расписаниям: утро — вода, день — камни, вечер — еда. Исключение только день прилёта, самолёт садится в 20:20.</p></details><details><summary>Нужна машина?</summary><p>Нет. Везде доезжаем автобусом и паромом, а в Валлетте машина только мешает — парковки внутри стен нет. Во втором варианте сметы машина берётся на два дня, для западных пляжей.</p></details><details><summary>Насколько твёрдые эти цены?</summary><p>Сняты 10 августа в трёх независимых каналах и действительны на момент брони, не дольше. Перелёт показан в долларах, как в источнике, и пересчитан по курсу около 0.92. Жильё и круиз бронируются сразу, всё остальное — со свободной отменой.</p></details><details><summary>Что если испортится погода?</summary><p>На Мальте важен не дождь, а ветер, и он бьёт по разным дням. Северный закрывает Комино и Блю-Лагуну: тогда вместо круиза — Гозо своим паромом из Чирквеввы или Три города. Юго-восточный закрывает юг: лодки в грот не выходят, и день 5 идёт по плану Б — Мдина, катакомбы и пастиззи в «Serkin». Купание в обоих случаях переносим на плиты Тинье, они защищены бухтой. Решение принимаем утром того же дня, у круиза берём тариф со свободной отменой.</p></details>
+  </div>
+</div></section>
+
+<section id="cta"><div class="wrap">
+  <div class="cta">
+    <h2>Что нужно от вас</h2>
+    <p class="whenline">До конца недели</p>
+    <ol><li>Подтвердить даты: 27 сентября — 1 октября.</li><li>Решить по багажу: летим с одной ручной кладью или добираем чемоданы.</li></ol>
+    <p>Билеты на эти даты дешевле соседних, но цена растёт по мере выборки мест. Как только даты и багаж подтверждены — бронирую и присылаю подтверждения.</p>
   </div>
 </div></section>
 </main>
@@ -1502,6 +1533,11 @@ document.head.insertAdjacentHTML('beforeend',
   onScroll();
 
   var links = [].slice.call(document.querySelectorAll('.topnav a[href^="#"]'));
+  // выбрал раздел — панель закрывается, иначе накрывает то, куда пришёл
+  var menu = document.querySelector('.navmenu');
+  if (menu) links.forEach(function (a) {
+    a.addEventListener('click', function () { menu.removeAttribute('open'); });
+  });
   var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
   if ('IntersectionObserver' in window) {
     var navIO = new IntersectionObserver(function (rows) {

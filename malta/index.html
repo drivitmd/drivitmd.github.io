@@ -89,7 +89,9 @@ body{margin:0;background:var(--bg);color:var(--tx);font-family:var(--body);
 img{display:block;max-width:100%}
 a{color:var(--sea)}
 :focus-visible{outline:2px solid var(--sea);outline-offset:3px}
-p{margin:0 0 var(--s3);max-width:61.8ch;hyphens:auto;text-wrap:pretty}
+/* переносов нет намеренно: текст выключен по левому краю, и «от-мены»
+   с «уточ-няю» только сорят — выгоды от них никакой */
+p{margin:0 0 var(--s3);max-width:61.8ch;hyphens:manual;text-wrap:pretty}
 h1,h2,h3,h4{font-family:var(--display);font-weight:600;letter-spacing:-.02em;margin:0;text-wrap:balance;
   hyphens:none;letter-spacing:-.005em}
 h1{font-size:var(--f6);line-height:1.02}
@@ -531,7 +533,6 @@ tr:last-child td{border-bottom:0}
 .dbody h3{margin-bottom:var(--s3)}
 .dbody>p{color:var(--tx2);margin-bottom:var(--s4)}
 .chips{display:flex;flex-wrap:wrap;gap:var(--s2);margin-bottom:var(--s4)}
-.car p,.adlead{hyphens:manual}
 /* кадр зала — вспомогательный: он нужен, чтобы выбрать, а не рассматривать.
    Поэтому полоса, а не кадр 1.618: двенадцать заведений иначе растягивают
    раздел на километр. */
@@ -544,6 +545,48 @@ tr:last-child td{border-bottom:0}
   border-bottom:1px solid var(--line);padding:10px 6px;min-width:44px;
   text-align:center}
 .vlinks a:hover{border-bottom-color:currentColor}
+/* доплаты: цена на пару стоит рядом с тем, что за неё получаешь,
+   иначе читатель считает сам и ошибается */
+.upsell{margin-top:var(--s6);border-top:1px solid var(--line);padding-top:var(--s5)}
+.upnote{color:var(--tx2);font-size:var(--f1);max-width:61.8ch;margin:0 0 var(--s5)}
+.ups{list-style:none;margin:0;padding:0;display:grid;gap:var(--s5)}
+.ups>li{display:grid;gap:var(--s2);padding-bottom:var(--s4);
+  border-bottom:1px solid var(--line)}
+.ups>li:last-child{border-bottom:0;padding-bottom:0}
+.uphead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--s3) var(--s4);
+  align-items:baseline}
+.uphead h4{margin:0}
+.upprice{margin:0;text-align:right}
+.upprice b{display:block;font-family:var(--display);font-weight:600;
+  font-size:var(--f4);line-height:1;color:var(--sea-ink);white-space:nowrap}
+.upprice span{display:block;font-family:var(--mono);font-size:var(--f0);
+  color:var(--tx2);margin-top:var(--s1)}
+.upcost{font-size:var(--f0);color:var(--tx2);margin:0;max-width:61.8ch}
+@media (max-width:720px){
+  .uphead{grid-template-columns:1fr}
+  .upprice{text-align:left}
+  .upprice span{display:inline}
+}
+
+/* дублёры: две строки одной высоты, чтобы пара читалась целиком */
+.alts{list-style:none;margin:0;padding:0;counter-reset:alt;
+  display:grid;gap:var(--s4)}
+.alts>li{counter-increment:alt;display:grid;gap:var(--s1);
+  padding:var(--s4) 0;border-bottom:1px solid var(--line)}
+.alts>li:last-child{border-bottom:0}
+.altwhat{margin:0;font-family:var(--display);font-weight:600;font-size:var(--f2)}
+.altmain,.altspare{margin:0;font-size:var(--f1);display:grid;
+  grid-template-columns:9.5em minmax(0,1fr);gap:var(--s3);align-items:baseline}
+.altmain span,.altspare span{font-family:var(--mono);font-size:var(--f0);
+  letter-spacing:.08em;text-transform:uppercase}
+.altmain span{color:var(--sea-ink)}
+.altspare span{color:var(--tx2)}
+.altspare{color:var(--tx2)}
+.altwhen{margin:var(--s1) 0 0;font-size:var(--f0);color:var(--tx2);
+  max-width:61.8ch}
+@media (max-width:560px){
+  .altmain,.altspare{grid-template-columns:1fr;gap:0}
+}
 .chip{hyphens:none;font-family:var(--mono);font-size:var(--f0);letter-spacing:.05em;
   border:1px solid var(--line);padding:var(--s1) var(--s3);color:var(--tx2)}
 .chip b{color:var(--sea-ink);font-weight:400}
@@ -781,50 +824,42 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   .day{grid-template-columns:1fr;margin-left:0;gap:var(--s3)}
   .strip{gap:var(--s1)}
 }
-/* Меню. На широких экранах details ведёт себя как обычная строка ссылок:
-   кнопку скрываем, а скрытие содержимого браузером снимаем явно. */
-.navmenu{display:contents}
-.navmenu summary{display:none}
-.navmenu .navlinks,
-.navmenu:not([open]) .navlinks{display:flex;flex-wrap:wrap;
-  align-items:center;gap:var(--s3) var(--s4);
-  /* без min-width:0 флекс не даёт строке сжаться, и ссылки уезжают за край */
-  min-width:0}
+/* Меню одно на всех ширинах: кнопка «Разделы» и панель под ней.
+   Раньше на широких экранах ссылки пытались жить строкой внутри <details> —
+   но закрытый details гасит содержимое через ::details-content, и никакой
+   display этого не отменяет: ссылки существовали в DOM и не рисовались. */
+.navmenu{position:relative;flex:0 0 auto;margin-left:auto}
+.navmenu summary{display:inline-flex;align-items:center;gap:var(--s2);
+  min-height:44px;padding:0 var(--s2);cursor:pointer;list-style:none;
+  font-family:var(--mono);font-size:var(--f0);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--tx2)}
 .navmenu summary::-webkit-details-marker{display:none}
 .navmenu summary::marker{content:""}
+.navmenu summary:hover{color:var(--tx)}
+.navmenu[open] summary{color:var(--tx)}
+.navmenu summary:focus-visible{outline:2px solid var(--sea-ink);outline-offset:3px}
+/* три полоски рисуем градиентом: лишних узлов в разметке не нужно */
+.burger{width:18px;height:11px;flex:0 0 auto;
+  background:linear-gradient(currentColor 0 0) top/100% 1.5px no-repeat,
+             linear-gradient(currentColor 0 0) center/100% 1.5px no-repeat,
+             linear-gradient(currentColor 0 0) bottom/100% 1.5px no-repeat;
+  transition:opacity .2s ease}
+.navmenu[open] .burger{opacity:.55}
+.navlinks{display:grid;gap:0;position:absolute;right:0;top:calc(100% + var(--s2));
+  min-width:min(70vw,248px);background:var(--bg);border:1px solid var(--line);
+  box-shadow:0 18px 40px -18px oklch(0 0 0/.35);
+  padding:var(--s2) 0;z-index:var(--z-sticky)}
+.navlinks a{display:flex;align-items:center;min-height:44px;
+  padding:0 var(--s4);white-space:nowrap}
+.navlinks a.active{box-shadow:none;color:var(--tx);background:var(--sea-soft)}
 
 /* меню и зоны нажатия перестраиваются раньше остальной вёрстки:
    в один ряд девять ссылок не укладываются уже около 980px */
 @media (max-width:1100px){
-  /* меню: девять ссылок сворачиваются в кнопку «Разделы» */
-  .navin{flex-wrap:nowrap;gap:0 var(--s3);justify-content:space-between}
+  /* на узких экранах прячем дату и даём панели больше ширины */
   .navtitle{display:none}
+  .navin{flex-wrap:nowrap;gap:0 var(--s3);justify-content:space-between}
   .brand{flex:0 0 auto}
-  .navmenu{display:block;position:relative;flex:0 0 auto}
-  .navmenu summary{display:inline-flex;align-items:center;gap:var(--s2);
-    min-height:44px;padding:0 var(--s2);cursor:pointer;list-style:none;
-    font-family:var(--mono);font-size:var(--f0);letter-spacing:.08em;
-    text-transform:uppercase;color:var(--tx2)}
-  .navmenu[open] summary{color:var(--tx)}
-  .navmenu summary:focus-visible{outline:2px solid var(--sea-ink);outline-offset:3px}
-  /* три полоски рисуем градиентом: лишних узлов в разметке не нужно */
-  .burger{width:18px;height:11px;flex:0 0 auto;
-    background:linear-gradient(currentColor 0 0) top/100% 1.5px no-repeat,
-               linear-gradient(currentColor 0 0) center/100% 1.5px no-repeat,
-               linear-gradient(currentColor 0 0) bottom/100% 1.5px no-repeat;
-    transition:opacity .2s ease}
-  .navmenu[open] .burger{opacity:.55}
-  /* список выпадает панелью поверх страницы, а не раздвигает шапку */
-  .navmenu:not([open]) .navlinks{display:none}
-  .navmenu[open] .navlinks{display:grid;gap:0;
-    position:absolute;right:0;top:calc(100% + var(--s2));min-width:min(62vw,240px);
-    background:var(--bg);border:1px solid var(--line);
-    box-shadow:0 18px 40px -18px oklch(0 0 0/.35);
-    padding:var(--s2) 0;z-index:var(--z-sticky)}
-  .navmenu[open] .navlinks a{display:flex;align-items:center;min-height:44px;
-    padding:0 var(--s4);white-space:nowrap}
-  .navmenu[open] .navlinks a.active{box-shadow:none;color:var(--tx);
-    background:var(--sea-soft)}
 
   /* зоны нажатия: было 13–37px */
   .more{display:inline-block;padding:15px 2px}
@@ -860,7 +895,6 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   /* ось героя: заголовок отступал на 68px, а текст ниже — на 21px */
   .hero .inner{padding-left:var(--s4);padding-right:var(--s4)}
   /* в узких колонках переносы рвали «до-рог» и «ба-гаж» */
-  p{hyphens:manual}
 
   /* блок ретрита оставался двухколоночным: знак висел в пустой колонке */
   .promo{grid-template-columns:1fr;align-items:start;
@@ -881,7 +915,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <details class="navmenu">
       <summary><span class="burger" aria-hidden="true"></span>Разделы</summary>
       <div class="navlinks">
-        <a href="#occasions">Поводы</a><a href="#flight">Перелёт</a><a href="#stay">Жильё</a><a href="#route">Программа</a><a href="#map">Карта</a><a href="#food">Еда</a><a href="#car">Машина</a><a href="#budget">Цена</a><a href="#book">Бронь</a><a href="#honest">Честно</a><a href="#faq">Вопросы</a>
+        <a href="#occasions">Поводы</a><a href="#flight">Перелёт</a><a href="#stay">Жильё</a><a href="#route">Программа</a><a href="#map">Карта</a><a href="#food">Еда</a><a href="#car">Машина</a><a href="#budget">Цена</a><a href="#book">Бронь</a><a href="#backup">Дублёры</a><a href="#honest">Честно</a><a href="#faq">Вопросы</a>
       </div>
     </details>
   </div>
@@ -1417,6 +1451,13 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <p>Отель, море и культурная программа в обоих одинаковые. Разница — в багаже, катере, машине и в том, сколько стоит ужин.</p>
   </div>
   <div class="tw"><table><thead><tr><th>Статья</th><th class="pick">До €1 300 на пару</th><th>До €2 000 на пару</th></tr></thead><tbody><tr><td>Перелёт на шестерых</td><td>€1 221</td><td>€1 470</td></tr><tr class="dim"><td>— багаж</td><td>ручная кладь</td><td>плюс чемоданы</td></tr><tr><td>Жильё: три сьюта, четыре ночи</td><td>€1 308</td><td>€1 308</td></tr><tr><td>Эко-налог, платится в отеле</td><td>€12</td><td>€12</td></tr><tr><td>Дорога из аэропорта и обратно</td><td>€57</td><td>€120</td></tr><tr class="dim"><td>— как едем</td><td>минивэн туда, автобус обратно</td><td>минивэн оба раза</td></tr><tr><td>Комино и Блю-Лагуна</td><td>€270</td><td>€450</td></tr><tr class="dim"><td>— на чём</td><td>круиз от Слимы</td><td>свой катер</td></tr><tr><td>Лодка в грот и билет в храмы</td><td>€120</td><td>€120</td></tr><tr><td>Автобусы, паром, карта Tallinja</td><td>€120</td><td>€120</td></tr><tr><td>Минивэн на два дня</td><td>доплата +€185</td><td>€235</td></tr><tr><td>Экскурсия по Мдине с катакомбами</td><td>—</td><td>€153</td></tr><tr><td>Ужины, четыре вечера</td><td>€528</td><td>€912</td></tr><tr><td>Предоплата за жильё</td><td>уточняется</td><td>уточняется</td></tr><tr><td>Обеды, кофе, вода</td><td>€300</td><td>€456</td></tr><tr><td>Поводы: просекко, торт, цветы</td><td>по желанию</td><td>по желанию</td></tr><tr class="dim"><td>— кто платит</td><td>каждая пара за свой</td><td>каждая пара за свой</td></tr><tr class="sub"><td>Итого без резерва</td><td>€3 936</td><td>€5 321</td></tr><tr class=""><td>Резерв 10 %</td><td>—</td><td>€532</td></tr><tr class="tot"><td>Итого на шестерых</td><td>€3 936</td><td>€5 853</td></tr><tr class="big"><td>На пару</td><td>€1 312</td><td>€1 951</td></tr><tr class=""><td>На человека</td><td>€656</td><td>€976</td></tr></tbody></table></div>
+
+  <div class="upsell">
+    <h3>За доплату можно иначе</h3>
+    <p class="upnote">Базовая цена держится сама. Всё ниже — выбор каждой пары
+    отдельно: кто хочет, доплачивает и получает своё, остальные ничего не теряют.</p>
+    <ul class="ups"><li><div class="uphead"><h4>Минивэн на два дня</h4><p class="upprice"><b>+€62</b><span>на пару · +€185 на группу</span></p></div><p class="body-s">Дни 4 и 5 идут своим темпом: Марсашлокк за двадцать пять минут вместо сорока, юг без оглядки на последний автобус, открывается западный берег и винодельня под Мдиной.</p><p class="upcost">Один человек весь день трезвый, движение левостороннее, залог на карте €500–1 500. Подробный расчёт — в разделе про машину.</p></li><li><div class="uphead"><h4>Чемоданы вместо ручной клади</h4><p class="upprice"><b>+€83</b><span>на пару · +€249 на группу</span></p></div><p class="body-s">Каждый везёт что хочет и сколько хочет, обратно есть куда положить покупки.</p><p class="upcost">Это почти треть всех наших денег на еду. На четыре тёплых дня, честно говоря, не нужно.</p></li><li><div class="uphead"><h4>Свой катер вместо группового круиза</h4><p class="upprice"><b>+€110–210</b><span>на пару · цену запрашиваю</span></p></div><p class="body-s">Ранний выход, пока Блю-Лагуна ещё пустая, свой маршрут и остановки, лёд и бокалы на борту. Единственный способ получить лагуну без катамаранов.</p><p class="upcost">Точную цену беру у двух-трёх владельцев письменно, с условиями отмены. Групповой круиз держу забронированным как подстраховку.</p></li><li><div class="uphead"><h4>Мальтийский сет в Legligin</h4><p class="upprice"><b>+€23</b><span>на пару · +€138 на группу</span></p></div><p class="body-s">Погреб без меню: хозяин приносит семь-восемь закусок одну за другой и наливает только местное.</p><p class="upcost">Доплата возникает, только если сет окажется €45, а не €30 — цену уточняю при брони. При €30 вечер уже в базовой цене.</p></li><li><div class="uphead"><h4>Гипогей Хал-Сафлиени</h4><p class="upprice"><b>+€80</b><span>на пару · €40 с человека</span></p></div><p class="body-s">Подземный некрополь на пять тысяч лет старше рыцарей. Восемьдесят человек в сутки, заменить его нечем.</p><p class="upcost">Только если найдутся билеты по €40: до поездки семь недель, а их берут за два-три месяца. Внутрь не пускают в сандалиях и шлёпанцах, фотографировать нельзя.</p></li><li><div class="uphead"><h4>Экскурсия по Мдине с катакомбами</h4><p class="upprice"><b>+€51</b><span>на пару · +€153 на группу</span></p></div><p class="body-s">Молчаливый город с гидом и катакомбы, которые сами не найдёшь.</p><p class="upcost">Отмена свободная — можно решать на месте, хоть в день выезда.</p></li></ul>
+  </div>
 </div></section>
 
 <section id="logistics"><div class="wrap">
@@ -1453,6 +1494,15 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
 
 
 
+
+<section id="backup"><div class="wrap">
+  <div class="shead">
+    <h2>У каждого пункта есть дублёр</h2>
+    <p>Ветер, выходной день таверны или занятый стол не должны ломать вечер.
+    Поэтому запасной вариант выбран заранее, а не на месте.</p>
+  </div>
+  <ol class="alts"><li><p class="altwhat">Вечер 28.09 — два повода</p><p class="altmain"><span>основной</span>Nenu, Валлетта</p><p class="altspare"><span>запасной</span>Ta’ Kris, Слима</p><p class="altwhen">если Nenu закрыт в понедельник — в Валлетте это обычное дело</p></li><li><p class="altwhat">Вечер 30.09 — годовщина</p><p class="altmain"><span>основной</span>Legligin, Валлетта</p><p class="altspare"><span>запасной</span>Rampila, в бастионе</p><p class="altwhen">если не будет стола на шестерых или сет окажется дороже договорённого</p></li><li><p class="altwhat">Вечер 29.09</p><p class="altmain"><span>основной</span>Погреб Trabuxu</p><p class="altspare"><span>запасной</span>The Pub, Валлетта</p><p class="altwhen">если в погребе нет места: он маленький и его разбирают заранее</p></li><li><p class="altwhat">День на воде</p><p class="altmain"><span>основной</span>Круиз от Слимы на Комино</p><p class="altspare"><span>запасной</span>Гозо своим паромом из Чирквеввы</p><p class="altwhen">северный ветер закрывает Комино и лагуну; паром ходит почти в любую погоду</p></li><li><p class="altwhat">Купание дня 4</p><p class="altmain"><span>основной</span>St Peter’s Pool</p><p class="altspare"><span>запасной</span>Каланка или Делимара, рядом</p><p class="altwhen">юго-восточный ветер кладёт волну прямо в чашу</p></li><li><p class="altwhat">День 5</p><p class="altmain"><span>основной</span>Грот, храмы и обрыв Дингли</p><p class="altspare"><span>запасной</span>Мдина, катакомбы и «Serkin»</p><p class="altwhen">лодки в грот не выходят при волне, а вода светится только до одиннадцати</p></li><li><p class="altwhat">Жильё</p><p class="altmain"><span>основной</span>Two Pillows, Слима</p><p class="altspare"><span>запасной</span>Land’s End или Tritoni со свободной отменой</p><p class="altwhen">держим одну бронь с отменой до письменного подтверждения от Two Pillows</p></li><li><p class="altwhat">Дорога из аэропорта</p><p class="altmain"><span>основной</span>Минивэн через отель</p><p class="altspare"><span>запасной</span>Автобус X2 до Слимы</p><p class="altwhen">если трансфер не подтвердят: X2 идёт от терминала и стоит €2 с человека</p></li></ol>
+</div></section>
 
 <section id="honest"><div class="wrap">
   <div class="shead">

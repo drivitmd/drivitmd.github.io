@@ -32,7 +32,8 @@
   --sea:#D24F4F; --sea-soft:#d24f4f14;
   --sun:#BC5858; --wine:#8A2E22;
   --eye:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 18'><path d='M1.6 9C6.5 2.4 25.5 2.4 30.4 9 25.5 15.6 6.5 15.6 1.6 9Z' fill='none' stroke='black' stroke-width='1.7'/><circle cx='16' cy='9' r='3.1' fill='black'/></svg>");
-  --z-grain:1; --z-overlay:60;
+  /* слои по смыслу: зерно → липкие панели → полоса прочитанного → скип-ссылка → зум */
+  --z-grain:1; --z-sticky:20; --z-progress:30; --z-skip:40; --z-overlay:60;
   --display:"Montserrat","Segoe UI",system-ui,sans-serif;
   --body:"Roboto","Segoe UI",system-ui,sans-serif;
   --mono:"IBM Plex Mono","Cascadia Mono",Consolas,ui-monospace,monospace;
@@ -239,13 +240,13 @@ section+section{border-top:1px solid var(--line)}
   padding:var(--s2) var(--s4)}
 @media print{ .topnav{display:none !important} }
 
-.skip{position:absolute;left:-9999px;top:0;z-index:12;background:var(--sea);
+.skip{position:absolute;left:-9999px;top:0;z-index:var(--z-skip);background:var(--sea);
   color:var(--bg);padding:var(--s3) var(--s4);font-family:var(--mono);font-size:var(--f0);
   text-decoration:none}
 .skip:focus{left:var(--s3);top:var(--s3)}
 
 /* полоса прочитанного */
-.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:11;pointer-events:none}
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:var(--z-progress);pointer-events:none}
 .progress span{display:block;height:100%;width:0;background:var(--sun)}
 
 /* активный раздел в навигации */

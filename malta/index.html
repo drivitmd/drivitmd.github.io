@@ -671,7 +671,37 @@ tr:last-child td{border-bottom:0}
   text-transform:uppercase;color:var(--sea-ink)}
 .evgap{margin:0;font-family:var(--mono);font-size:var(--f0);color:var(--tx2)}
 .evhave{margin:var(--s5) 0 0;font-size:var(--f1);max-width:78ch}
-.chip{hyphens:none;font-family:var(--mono);font-size:var(--f0);letter-spacing:.05em;
+/* сложенный раздел: заголовок работает кнопкой, лид виден и в сложенном виде */
+.fold{border-top:1px solid var(--line)}
+.fold>summary{list-style:none;cursor:pointer;display:grid;
+  grid-template-columns:minmax(0,1fr) auto;align-items:start;
+  gap:var(--s3) var(--s4);padding:var(--s5) 0}
+.fold>summary::-webkit-details-marker{display:none}
+.fold>summary::marker{content:""}
+.fold>summary h2{margin:0;grid-column:1}
+.foldl{grid-column:1;color:var(--tx2);font-size:var(--f1);max-width:61.8ch}
+.foldl p{margin:0}
+/* знак раскрытия: плюс превращается в минус, без иконок и без картинок */
+.foldx{grid-column:2;grid-row:1/3;align-self:center;position:relative;
+  width:26px;height:26px;border:1px solid var(--line);border-radius:50%;
+  flex:0 0 auto}
+.foldx::before,.foldx::after{content:"";position:absolute;inset:50% 6px auto;
+  height:1px;background:var(--sea-ink);transform:translateY(-50%);
+  transition:transform .2s ease,opacity .2s ease}
+.foldx::after{transform:translateY(-50%) rotate(90deg)}
+.fold[open] .foldx::after{opacity:0;transform:translateY(-50%) rotate(0)}
+.fold>summary:hover .foldx{border-color:var(--sea-ink)}
+.fold>summary:focus-visible{outline:2px solid var(--sea-ink);outline-offset:4px}
+.foldbody{padding-bottom:var(--s5)}
+/* в сложенном разделе отступы секции больше не нужны — заголовок сам их даёт */
+#includes,#tricks,#flight,#plan-b,#taste,#wine,#michelin,
+#logistics,#practical,#backup,#events{padding:0}
+@media print{
+  .fold>summary{padding:0}
+  .foldx{display:none}
+}
+.chip{hyphens:none;
+font-family:var(--mono);font-size:var(--f0);letter-spacing:.05em;
   border:1px solid var(--line);padding:var(--s1) var(--s3);color:var(--tx2)}
 .chip b{color:var(--sea-ink);font-weight:400}
 
@@ -955,7 +985,17 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   .wrap>*{grid-column:1}
   .day{grid-template-columns:1fr;margin-left:0;gap:var(--s3);padding:var(--s5) 0}
   .dnum{font-size:var(--f4)} .ddate{margin-top:0}
-  .strip{grid-template-columns:1fr}
+  /* На телефоне три кадра друг под другом давали по 660px на локацию, а локаций
+     тридцать — половина всей длины страницы. Кадры остаются все три и того же
+     размера, но листаются в сторону: один экран вместо трёх. */
+  .strip{grid-auto-flow:column;grid-template-columns:none;
+    grid-auto-columns:88%;overflow-x:auto;overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;scrollbar-width:none;
+    padding-bottom:var(--s2)}
+  .strip::-webkit-scrollbar{display:none}
+  .strip figure{scroll-snap-align:center}
+  /* подсказка, что кадры листаются: у последнего виден край следующего */
+  .strip.s3::after,.strip.s2::after{content:"";grid-row:1;width:var(--s2)}
   .book>div,.ord>div{grid-template-columns:1fr;gap:var(--s2)}
   .book .sum,.book .when{text-align:left}
   section{padding:var(--s6) 0}
@@ -1054,11 +1094,8 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   </div>
 </div></section>
 
-<section id="includes"><div class="wrap">
-  <div class="shead">
-    <h2>Что входит и что нет</h2>
-    <p>Всё, что ниже слева, уже посчитано в цене. Справа — то, за что каждый платит сам.</p>
-  </div>
+<section id="includes"><div class="wrap"><details class="fold"><summary><h2>Что входит и что нет</h2><span class="foldl"><p>Всё, что ниже слева, уже посчитано в цене. Справа — то, за что каждый платит сам.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+  
   <div class="incl">
     <div>
       <h3>Входит в €1 312 на пару</h3>
@@ -1069,29 +1106,23 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
       <ul class="no"><li>Сдаваемый багаж — летим с ручной кладью, иначе плюс €249 на группу</li><li>Сувениры и личные покупки</li><li>Страховка</li><li>Ужины в звёздных ресторанах — их в этом бюджете нет и не нужно</li></ul>
     </div>
   </div>
-</div></section>
+</div></details></div></section>
 
-<section id="tricks"><div class="wrap">
-  <div class="shead">
-    <h2>Три приёма, на которых держится цена</h2>
-    <p>Мальта — маленький рынок с крошечными отелями, и она наказывает тех, кто смотрит только один канал.</p>
-  </div>
+<section id="tricks"><div class="wrap"><details class="fold"><summary><h2>Три приёма, на которых держится цена</h2><span class="foldl"><p>Мальта — маленький рынок с крошечными отелями, и она наказывает тех, кто смотрит только один канал.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+  
   <div class="trlist">
     <article class="tr reveal"><h3>«Мест нет» у OTA не значит, что мест нет</h3><p>Booking на наши даты не показал в центре Валлетты ни одного варианта на три номера. Прямой канал в ту же минуту отдал отель с рейтингом 4.8 — и сам пометил, что дешевле OTA. Маленькие отели держат часть номеров вне систем бронирования, и это работает в нашу пользу.</p><p class="flag">так найдено жильё</p></article><article class="tr reveal"><h3>Багаж решает, влезаем ли мы в бюджет</h3><p>Один и тот же рейс стоит на пятую часть дороже с чемоданами вместо ручной клади. Эти €249 — почти треть всех наших денег на еду. На четыре тёплых дня чемодан не нужен.</p><p class="flag">решение на €249</p></article><article class="tr reveal"><h3>Причал важнее цены экскурсии</h3><p>Дешёвый круиз на Комино уходит из Буджиббы — час на автобусе в каждую сторону. Тур от Слимы дороже на пять евро с человека, зато до причала пять минут на пароме.</p><p class="flag">два часа дороги за пятёрку</p></article>
   </div>
-</div></section>
+</div></details></div></section>
 
-<section id="flight"><div class="wrap">
-  <div class="shead">
-    <h2>Кишинёв — Мальта, одна пересадка</h2>
-    <p>Живой поиск на шестерых: <b>$1&nbsp;327 ≈ €1&nbsp;221 за всех</b> с ручной кладью, около €204 с человека туда и обратно. С чемоданами тот же рейс стоит $1&nbsp;597 ≈ €1&nbsp;470.</p>
-  </div>
+<section id="flight"><div class="wrap"><details class="fold"><summary><h2>Кишинёв — Мальта, одна пересадка</h2><span class="foldl"><p>Живой поиск на шестерых: <b>$1&nbsp;327 ≈ €1&nbsp;221 за всех</b> с ручной кладью, около €204 с человека туда и обратно. С чемоданами тот же рейс стоит $1&nbsp;597 ≈ €1&nbsp;470.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+  
   <div class="tw"><table><thead><tr><th>Направление</th><th>Дата</th><th>Вылет</th><th>Прилёт</th><th>В пути</th><th>Пересадки</th></tr></thead><tbody><tr><td>Туда</td><td>вс 27.09</td><td>15:00 KIV</td><td>20:20 MLA</td><td>6 ч 20 м</td><td>1 · Бухарест</td></tr><tr><td>Обратно</td><td>чт 01.10</td><td>21:30 MLA</td><td>07:15 KIV (+1)</td><td>8 ч 45 м</td><td>1 · Бухарест</td></tr></tbody></table></div>
   <div class="two" style="margin-top:var(--s4)">
     <div class="card"><h3>Ваши даты — лучшая клетка в сетке</h3><p>27.09 — $1&nbsp;597 · 29.09 — $1&nbsp;600 · 26.09 — $1&nbsp;925 · <b>28.09 — $4&nbsp;765</b>. Сдвиг на один день дороже втрое, поэтому даты забираем первыми.</p></div>
     <div class="card"><h4>Обратный рейс ночной</h4><p>Вылет 21:30, прилёт в Кишинёв 07:15. Плюс: последний день на острове остаётся полным — успеваем и море, и храмы. Минус: спать в самолёте.</p></div>
   </div>
-</div></section>
+</div></details></div></section>
 
 <section id="stay"><div class="wrap">
   <div class="shead">
@@ -1115,11 +1146,8 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
 </article></div>
 </div></section>
 
-<section id="plan-b"><div class="wrap">
-  <div class="shead">
-    <h2>Если хочется ночевать внутри стен Валлетты</h2>
-    <p>Тот же бюджет и тридцать шесть евро экономии, но с оговорками, которые лучше прочитать до брони.</p>
-  </div>
+<section id="plan-b"><div class="wrap"><details class="fold"><summary><h2>Если хочется ночевать внутри стен Валлетты</h2><span class="foldl"><p>Тот же бюджет и тридцать шесть евро экономии, но с оговорками, которые лучше прочитать до брони.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+  
   <div class="hotels"><article class="hcard reveal" data-poi="Mandera’s Boutique Suites">
   <div class="hshots"><div class="strip s3"><figure><img src="img/hotel-mandera-1.avif" alt="Mandera’s Boutique Suites" width="1100" height="786" loading="lazy" decoding="async"></figure><figure><img src="img/hotel-mandera-2.avif" alt="Mandera’s Boutique Suites" width="1100" height="786" loading="lazy" decoding="async"></figure><figure><img src="img/hotel-mandera-3.avif" alt="Mandera’s Boutique Suites" width="1100" height="786" loading="lazy" decoding="async"></figure></div><span class="tag">если только внутри стен</span></div>
   <div class="hbody">
@@ -1135,7 +1163,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <a class="btn" href="https://www.directbooker.ai/book/CLqVQhgBIPOhASgEeWLlD47hyMvb?TctPKg" target="_blank" rel="noopener">Прямая бронь →</a>
   </div>
 </article></div>
-</div></section>
+</div></details></div></section>
 
 <section id="route"><div class="wrap">
   <div class="shead">
@@ -1443,20 +1471,14 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
 </article></div></div>
 </div></section>
 
-<section id="michelin"><div class="wrap">
-  <div class="shead">
-    <h2>Мишлен, но по-местному</h2>
-    <p>Мишленовская кухня на Мальте — это не белые скатерти за €150. В гиде 2026 всего тридцать пять заведений на весь остров, и половина из них — местная кухня в ленте €€. Собрал те, что лежат ровно на нашем маршруте и держатся в €45–50 с человека.</p>
-  </div>
+<section id="michelin"><div class="wrap"><details class="fold"><summary><h2>Мишлен, но по-местному</h2><span class="foldl"><p>Мишленовская кухня на Мальте — это не белые скатерти за €150. В гиде 2026 всего тридцать пять заведений на весь остров, и половина из них — местная кухня в ленте €€. Собрал те, что лежат ровно на нашем маршруте и держатся в €45–50 с человека.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+  
   <ul class="mich"><li><div class="michead"><h3>Rubino</h3><p class="michmeta">Валлетта · мальтийско-сицилианская <b>€€</b></p></div><p class="body-s">Открыт в начале 1900-х как сицилианская кондитерская. Кролик, лампуки в сезон, мальтийское меззе, козий сыр с чили-джемом и та самая кассата сицилиана.</p><p class="michprice">паста €17.50–23.50, ужин из двух блюд около €40</p><p class="vlinks"><a href="https://www.rubinomalta.com/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Rubino%20Malta" target="_blank" rel="noopener">на карте</a></p></li><li><div class="michead"><h3>Legligin</h3><p class="michmeta">Валлетта · мальтийская, слепой сет <b>€€</b></p></div><p class="body-s">Меню не приносят вовсе: блюда выносят по сезону. В гиде описан как домашняя кухня, полная мальтийских и средиземноморских вкусов.</p><p class="michprice">сет €48 с человека, винное сопровождение +€40 — не берём</p><p class="vlinks"><a href="https://legliginmalta.com/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Legligin%20Malta" target="_blank" rel="noopener">на карте</a></p></li><li><div class="michead"><h3>Guzé</h3><p class="michmeta">Валлетта · традиционная <b>€€</b></p></div><p class="body-s">Погребной зал под сводами в двух шагах от собора. Традиционная кухня без туристической подачи — тот случай, когда «в гиде» и «недорого» совпадают.</p><p class="michprice">лента €€</p><p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=Guz%C3%A9%20Malta" target="_blank" rel="noopener">на карте</a></p></li><li><div class="michead"><h3>Tartarun</h3><p class="michmeta">Марсашлокк · рыба и морепродукты <b>€€</b></p></div><p class="body-s">Ровно там, где мы обедаем в день 4: улов дня с лодок, стоящих в двадцати метрах. Лампуки в конце сентября — их профиль.</p><p class="michprice">лента €€</p><p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=Tartarun%20Malta" target="_blank" rel="noopener">на карте</a></p></li><li><div class="michead"><h3>Terrone</h3><p class="michmeta">Биргу · рыба, мальтийско-итальянская <b>€€</b></p></div><p class="body-s">Ровно там, где мы гуляем после форта Сант-Анджело. Мальтиец-австралиец на кухне, местная рыба по-средиземноморски.</p><p class="michprice">лента €€</p><p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=Terrone%20Malta" target="_blank" rel="noopener">на карте</a></p></li><li><div class="michead"><h3>Grotto Tavern</h3><p class="michmeta">Рабат · местные продукты <b>€€</b></p></div><p class="body-s">Зал в настоящей пещере рядом с Мдиной. Улитки, козий сыр и то, что растёт вокруг — запасной план дня 5 превращается в самый интересный обед поездки.</p><p class="michprice">лента €€</p><p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=Grotto%20Tavern%20Malta" target="_blank" rel="noopener">на карте</a></p></li></ul>
   <p class="michnote">Ленты цен — из самого гида: €€ у Michelin по Мальте это примерно €35–60 с человека. Граница €45–50 держится двумя блюдами без винного сопровождения; точные суммы подтверждаем при брони. Проверено по guide.michelin.com 10 августа 2026.</p>
-</div></section>
+</div></details></div></section>
 
-<section id="wine"><div class="wrap">
-  <div class="shead">
-    <h2>Погреба и винодельни</h2>
-    <p>Мальтийское вино почти не уезжает с острова, поэтому пить его надо здесь. Два погреба в городе и три хозяйства по дороге — плюс редкое совпадение: конец сентября это сбор урожая.</p>
-  </div>
+<section id="wine"><div class="wrap"><details class="fold"><summary><h2>Погреба и винодельни</h2><span class="foldl"><p>Мальтийское вино почти не уезжает с острова, поэтому пить его надо здесь. Два погреба в городе и три хозяйства по дороге — плюс редкое совпадение: конец сентября это сбор урожая.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+  
   <div class="rl"><article class="vcard reveal">
   <figure class="vshot"><img src="img/venue-meridiana.avif" alt="Заведение: Meridiana, Та-Кали" width="1100" height="731" loading="lazy" decoding="async"><h3 class="vtitle"><span>Meridiana, Та-Кали</span></h3></figure>
   <p class="order">€€ · дегустация с экскурсией</p>
@@ -1476,17 +1498,14 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Дом Marsovin основан в 1919 году, сразу после Первой мировой, и до сих пор держит те же подвалы под Паолой.</p></div>
   <p class="vlinks"><a href="https://marsovinwinery.com/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Marsovin%2C%20%D0%9F%D0%B0%D0%BE%D0%BB%D0%B0%20Malta" target="_blank" rel="noopener">на карте</a><a href="https://www.facebook.com/marsovinwinery" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/marsovinwinery" target="_blank" rel="noopener">Instagram</a></p>
 </article></div>
-</div></section>
+</div></details></div></section>
 
-<section id="taste"><div class="wrap">
-  <div class="shead">
-    <h2>Что попробовать обязательно</h2>
-    <p>Конец сентября — пик сезона лампуки, ради которого на Мальту приезжают отдельно.</p>
-  </div>
+<section id="taste"><div class="wrap"><details class="fold"><summary><h2>Что попробовать обязательно</h2><span class="foldl"><p>Конец сентября — пик сезона лампуки, ради которого на Мальту приезжают отдельно.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+  
   <div class="taste">
     <div class="t reveal"><figure><img src="img/food-lampuki-1.avif" alt="Лампуки" width="1100" height="733" loading="lazy" decoding="async"></figure><div><h3>Лампуки</h3><p>Золотая корифена, пик которой приходится ровно на наши даты: берите на гриле или в пироге с каперсами и оливками.</p></div></div><div class="t reveal"><figure><img src="img/food-ftira-2.avif" alt="Фтира" width="1100" height="733" loading="lazy" decoding="async"></figure><div><h3>Фтира</h3><p>Плоская мальтийская лепёшка с тунцом, каперсами и помидором. Правильную пекут в дровяной печи, и она держит форму, а не разваливается.</p></div></div><div class="t reveal"><figure><img src="img/food-pastizzi-1.avif" alt="Пастиззи" width="1100" height="733" loading="lazy" decoding="async"></figure><div><h3>Пастиззи</h3><p>Слоёные пирожки с рикоттой или гороховым пюре, около сорока центов штука. Завтрак местных и спасение бюджета.</p></div></div><div class="t reveal"><figure><img src="img/food-gbejniet-2.avif" alt="Джбейна" width="1100" height="733" loading="lazy" decoding="async"></figure><div><h3>Джбейна</h3><p>Овечий сыр Гозо: свежий, сушёный или в чёрном перце. Ищите на рынке в Виктории и в лавках Марсашлокка.</p></div></div><div class="t reveal"><figure><img src="img/food-fenek-2.avif" alt="Стуффат тал-фенек" width="1100" height="825" loading="lazy" decoding="async"></figure><div><h3>Стуффат тал-фенек</h3><p>Кролик, тушёный в вине с чесноком, — национальное блюдо. Едят его как застолье, фенкату: сначала паста в соусе, потом мясо.</p></div></div><div class="t reveal"><figure><img src="img/food-kinnie-2.avif" alt="Kinnie и Cisk" width="1100" height="825" loading="lazy" decoding="async"></figure><div><h3>Kinnie и Cisk</h3><p>Горько-апельсиновая газировка на травах с 1952 года и местный лагер. Просить нужно именно их, а не привозные бренды.</p></div></div>
   </div>
-</div></section>
+</div></details></div></section>
 
 <section id="car"><div class="wrap">
   <div class="shead">
@@ -1552,10 +1571,10 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   </div>
 </div></section>
 
-<section id="logistics"><div class="wrap">
-  <div class="shead"><h2>Мелочи, которые ломают бюджет</h2></div>
+<section id="logistics"><div class="wrap"><details class="fold"><summary><h2>Мелочи, которые ломают бюджет</h2><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+  
   <div class="two"><div class="card reveal"><h3>Автобусы — весь транспорт</h3><p>Из Валлетты идёт почти всё: Марсашлокк — 81 и 85 (35–40 минут, проверено), Голубой грот — 74, Мдина и Рабат — 51, 52, 53, Golden Bay — 44. Номера и расписание сверяйте в приложении Tallinja: сетка меняется по сезонам.</p></div><div class="card reveal"><h3>Паром вместо автобуса</h3><p>Слима — Валлетта через Марсамшетт: пять минут и €2.80 туда-обратно, каждые полчаса. До 31 октября действует летнее расписание: из Слимы примерно до 23:45, из Валлетты до полуночи, — поэтому ужины в городе паром закрывает спокойно, такси не нужно. По воскресеньям начинает на два часа позже. В Три города через Гранд-Харбор — те же пять минут, около €2. <b>Расписание на 1 октября сверяем отдельно: с этой даты часть морских маршрутов уходит на зимний график.</b></p></div><div class="card reveal"><h3>Машина не нужна каждый день</h3><p>База в Слиме, и почти всё закрывают автобус с паромом. В Валлетту машину не завести: парковки внутри стен нет, улицы узкие, движение левостороннее. Минивэн берём отдельной доплатой на дни 4 и 5.</p></div><div class="card reveal"><h3>Дорога из аэропорта</h3><p>Фиксированное такси около €30, минивэн на шестерых с багажом €45. В смете заложен минивэн при прилёте и автобус X2 обратно: €57 на группу.</p></div><div class="card reveal"><h3>Эко-налог</h3><p>€0.50 с человека старше 18 за ночь, не больше €5 за поездку. На шестерых за четыре ночи — €12, платится в отеле и в цену брони не входит.</p></div><div class="card reveal"><h3>Погода и вода</h3><p>Конец сентября: воздух 26–28 °C, море около 25 °C — теплее, чем в июне. Вечером у воды свежо, возьмите по одной тёплой вещи.</p></div></div>
-</div></section>
+</div></details></div></section>
 
 <section id="book"><div class="wrap">
   <div class="shead">
@@ -1589,14 +1608,11 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
 
 
 
-<section id="backup"><div class="wrap">
-  <div class="shead">
-    <h2>У каждого пункта есть дублёр</h2>
-    <p>Ветер, выходной день таверны или занятый стол не должны ломать вечер.
-    Поэтому запасной вариант выбран заранее, а не на месте.</p>
-  </div>
+<section id="backup"><div class="wrap"><details class="fold"><summary><h2>У каждого пункта есть дублёр</h2><span class="foldl"><p>Ветер, выходной день таверны или занятый стол не должны ломать вечер.
+    Поэтому запасной вариант выбран заранее, а не на месте.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+  
   <ol class="alts"><li><p class="altwhat">Вечер 28.09 — два повода</p><p class="altmain"><span>основной</span>Nenu, Валлетта</p><p class="altspare"><span>запасной</span>Ta’ Kris, Слима</p><p class="altwhen">Nenu работает каждый день — дублёр нужен только если не дадут большой стол на шестерых</p></li><li><p class="altwhat">Вечер 30.09 — годовщина</p><p class="altmain"><span>основной</span>Rampila, в бастионе</p><p class="altspare"><span>запасной</span>Legligin за доплату</p><p class="altwhen">Rampila держит смету; Legligin — тот же вечер сильнее, но +€52 на пару, и это выбор пары</p></li><li><p class="altwhat">Вечер 29.09</p><p class="altmain"><span>основной</span>Погреб Trabuxu</p><p class="altspare"><span>запасной</span>The Pub, Валлетта</p><p class="altwhen">если в погребе нет места: он маленький и его разбирают заранее</p></li><li><p class="altwhat">День на воде</p><p class="altmain"><span>основной</span>Круиз от Слимы на Комино</p><p class="altspare"><span>запасной</span>Гозо своим паромом из Чирквеввы</p><p class="altwhen">северный ветер закрывает Комино и лагуну; паром ходит почти в любую погоду</p></li><li><p class="altwhat">Купание дня 4</p><p class="altmain"><span>основной</span>St Peter’s Pool</p><p class="altspare"><span>запасной</span>Каланка или Делимара, рядом</p><p class="altwhen">юго-восточный ветер кладёт волну прямо в чашу</p></li><li><p class="altwhat">День 5</p><p class="altmain"><span>основной</span>Грот, храмы и обрыв Дингли</p><p class="altspare"><span>запасной</span>Мдина, катакомбы и «Serkin»</p><p class="altwhen">лодки в грот не выходят при волне, а вода светится только до одиннадцати</p></li><li><p class="altwhat">Жильё</p><p class="altmain"><span>основной</span>Two Pillows, Слима</p><p class="altspare"><span>запасной</span>Land’s End или Tritoni со свободной отменой</p><p class="altwhen">держим одну бронь с отменой до письменного подтверждения от Two Pillows</p></li><li><p class="altwhat">Дорога из аэропорта</p><p class="altmain"><span>основной</span>Минивэн через отель</p><p class="altspare"><span>запасной</span>Автобус X2 до Слимы</p><p class="altwhen">если трансфер не подтвердят: X2 идёт от терминала и стоит €2 с человека</p></li></ol>
-</div></section>
+</div></details></div></section>
 
 <section id="honest"><div class="wrap">
   <div class="shead">
@@ -1606,23 +1622,17 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   <ul class="honest"><li>Вышло €1 312 на пару — на €12 выше вашего потолка. Это цена решения взять Two Pillows с настоящими приватными сьютами вместо более дешёвого варианта с дормами: жильё дороже на €36 за всю поездку. Закрывается одним обедом на группу. Всё остальное держится на трёх допущениях: летим без чемоданов, средний ужин €22 на человека, обратно в аэропорт автобусом. Минивэн в базу не входит: это отдельное предложение, +€62 на пару.</li><li>Оба варианта жилья формально бутик-хостелы: кроме наших сьютов в доме есть общие номера. Поэтому берём именно private suite с санузлом внутри, получаем это письменно и отдельно спрашиваем, где расположены дормы и есть ли правило тишины после 23:00.</li><li>Воскресный рыбный рынок Марсашлокка приходится на день прилёта — в среду увидим будничную торговлю, она тоже настоящая, но меньше.</li><li>Решение по воде принимаем утром того же дня: северный ветер бьёт по Комино и лагуне, юго-восточный — по гроту и St Peter’s Pool. Запасной план на день 5 — Мдина, катакомбы и «Serkin», купание — плиты Тинье, они закрыты с севера бухтой. У круиза берём тариф со свободной отменой.</li><li>Цену Legligin сверил на их сайте: ужин-сет €48 с человека, а не €30, как я считал сначала. На вечер в базе заложено €22, поэтому в базовую цену он больше не входит: годовщина Рапопорт проходит в Rampila, а Legligin стоит отдельной доплатой +€52 на пару — и это выбор пары, а не решение организатора.</li><li>День закрытия Nenu проверен по их собственному расписанию: заведение работает каждый день, и до 30 сентября действует летний график — последний заказ на ужин в 22:30. Наши 20:00 в понедельник 28-го проходят спокойно, так что два повода в один вечер ничем не грозят.</li><li>Условия отмены и предоплаты берём письмом до оплаты и платим картой, а не переводом: прямая бронь вне OTA живёт по правилам самого отеля, и возврат там сложнее.</li><li>Гипогей Хал-Сафлиени — единственное на острове, что нельзя заменить ничем: подземный некрополь четвёртого тысячелетия до нашей эры, куда пускают восемьдесят человек в сутки по сеансам, €40. Билеты уходят за два-три месяца, а до поездки семь недель, поэтому проверяем наличие сразу: если сеансов нет, остаются двадцать мест «на завтра» по €50 — или сознательно не идём. В программу он не заложен именно поэтому.</li><li>Обратный рейс ночной: вылет 21:30, прилёт в Кишинёв 07:15. Зато последний день на острове остаётся полным.</li><li>Цены сняты 10 августа 2026 года. Перелёт показан в долларах, как в источнике, и пересчитан по курсу около 0.92 — проверьте курс и цены перед оплатой.</li><li>Фотографии локаций — из Wikimedia Commons, авторы и лицензии перечислены внизу; снимки отелей взяты из их собственных карточек в Google.</li></ul>
 </div></section>
 
-<section id="events"><div class="wrap">
-  <div class="shead">
-    <h2>Афиша: чего мы не увидим</h2>
-    <p>Проверил афиши: в наши пять дней большого события на острове нет. Зато три из них проходят рядом — и об этом лучше знать заранее, чем узнать на месте.</p>
-  </div>
+<section id="events"><div class="wrap"><details class="fold"><summary><h2>Афиша: чего мы не увидим</h2><span class="foldl"><p>Проверил афиши: в наши пять дней большого события на острове нет. Зато три из них проходят рядом — и об этом лучше знать заранее, чем узнать на месте.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+  
   <ul class="evs"><li><p class="evwhen">25–26 сентября</p><h3>Science in the City</h3><p class="evgap">за день до прилёта</p><p class="body-s">Ночь науки в Валлетте: город превращается в открытую лабораторию. Заканчивается ровно перед нашим приездом.</p></li><li><p class="evwhen">3 октября</p><h3>Notte Bianca</h3><p class="evgap">через два дня после вылета</p><p class="body-s">Главная белая ночь Валлетты: дворцы и музеи открыты до утра, всё бесплатно. Первая суббота октября — мы улетаем 1-го.</p></li><li><p class="evwhen">9–10 октября</p><h3>Birgufest</h3><p class="evgap">через неделю после вылета</p><p class="body-s">Биргу гасит электричество и освещается свечами. Тот самый Биргу, куда мы идём в день 4 — только без свечей.</p></li><li><p class="evwhen">не в этом году</p><h3>Malta International Airshow</h3><p class="evgap">стал раз в два года</p><p class="body-s">Последний прошёл 27–28 сентября 2025 — ровно в наши даты, но следующий ожидается в 2027-м.</p></li></ul>
   <p class="evhave">Что в наши даты всё-таки есть: деревенские фесты сентября доигрывают последние выходные, по воскресеньям работает рыбный рынок Марсашлокка, а вечерами Валлетта живёт сама по себе — Strait Street, погреба и кухни до полуночи. Программу мы строим на еде и городе, а не на событии, и это осознанно: событие или совпадёт, или нет, а ужин в погребе будет в любом случае.</p>
   <p class="michnote">Проверено 10 августа 2026 по календарям Festivals Malta, Visit Malta, malta.com и maltainfoguide. За две недели до вылета сверю ещё раз: мелкие концерты и приходские фесты объявляют поздно.</p>
-</div></section>
+</div></details></div></section>
 
-<section id="practical"><div class="wrap">
-  <div class="shead">
-    <h2>Мелочи, которые решают дело на месте</h2>
-    <p>То, о чём вспоминают в аэропорту или у первой розетки. Прочитать один раз и забыть.</p>
-  </div>
+<section id="practical"><div class="wrap"><details class="fold"><summary><h2>Мелочи, которые решают дело на месте</h2><span class="foldl"><p>То, о чём вспоминают в аэропорту или у первой розетки. Прочитать один раз и забыть.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+  
   <div class="two"><div class="card reveal"><h3>Розетки британские</h3><p>На Мальте вилки трёхштырьковые, тип G, как в Британии. Переходник нужен обязательно: в отеле их обычно две штуки на всех, а у нас шесть телефонов и камеры.</p></div><div class="card reveal"><h3>Связь дороже, чем кажется</h3><p>Молдова не в ЕС, поэтому европейские правила роуминга на нас не действуют. Дешевле взять eSIM заранее или симку Melita или GO в аэропорту. Wi-Fi есть в отеле и кафе, но карты и но лодка в грот и автобусы по расписанию требуют интернета.</p></div><div class="card reveal"><h3>Вода из крана — техническая на вкус</h3><p>Она опреснённая и безопасная, но солоноватая. Мальтийцы пьют бутилированную, и мы тоже: ящик воды в первый день дешевле, чем покупать по бутылке у моря.</p></div><div class="card reveal"><h3>Чаевые и счёт</h3><p>Пять-десять процентов — норма, но во многих местах service charge уже включён в счёт. Смотрите строку внизу, чтобы не заплатить дважды.</p></div><div class="card reveal"><h3>Воскресенье закрыто, кроме рынка</h3><p>В день прилёта многие магазины не работают. Зато утром работает рыбный рынок в Марсашлокке — но он у нас в среду, потому что прилетаем вечером.</p></div><div class="card reveal"><h3>Сентябрь — сезон деревенских фест</h3><p>В приходах идут праздники с оркестрами и фейерверками до полуночи. Попасть на такой — удача, но если он под окнами отеля, спать будет шумно. Спросим у хозяев заранее.</p></div><div class="card reveal"><h3>Документы: проверить перед вылетом</h3><p>Мальта в Шенгене, для биометрических паспортов Молдовы виза не нужна, 90 дней из 180. Но ЕС постепенно вводит ETIAS и биометрическую регистрацию на границе — правила меняются, поэтому за месяц до вылета проверяем официальный сайт, нужна ли предварительная авторизация.</p></div><div class="card reveal"><h3>Наличные держим</h3><p>Карты принимают везде, но у лодочников в гроте, на рынке и в деревенских тавернах бывает только наличка. €50–100 на группу закрывают вопрос.</p></div><div class="card reveal"><h3>Закрытая обувь для Гипогея</h3><p>Если берём Гипогей, у одного дня появляется дресс-код: нужна закрытая обувь. В сандалиях и шлёпанцах внутрь не пускают, и это не обсуждается. Фотографировать внутри тоже нельзя.</p></div><div class="card reveal"><h3>Солнце и камень</h3><p>В конце сентября солнце ещё жёсткое, а на скальных купальнях нет тени вообще. Крем, шляпа и тапки: известняк острый и скользкий, босиком вылезать из воды больно.</p></div><div class="card reveal"><h3>Экстренный номер</h3><p>112 — единый для скорой, полиции и пожарных, работает и с мальтийской, и с любой другой симки.</p></div></div>
-</div></section>
+</div></details></div></section>
 
 <section id="faq"><div class="wrap">
   <div class="shead">
@@ -1688,6 +1698,23 @@ document.head.insertAdjacentHTML('beforeend',
 
   var links = [].slice.call(document.querySelectorAll('.topnav a[href^="#"]'));
   // выбрал раздел — панель закрывается, иначе накрывает то, куда пришёл
+  // ссылка ведёт в сложенный раздел — раскрываем его, иначе переход в пустоту
+  function openFold(id) {
+    var t = document.getElementById(id);
+    if (!t) return;
+    var d = t.querySelector('details.fold') || t.closest('details');
+    if (d) d.open = true;
+  }
+  links.forEach(function (a) {
+    a.addEventListener('click', function () {
+      openFold((a.getAttribute('href') || '').slice(1));
+    });
+  });
+  if (location.hash) openFold(location.hash.slice(1));
+  window.addEventListener('hashchange', function () {
+    openFold(location.hash.slice(1));
+  });
+
   var menu = document.querySelector('.navmenu');
   if (menu) links.forEach(function (a) {
     a.addEventListener('click', function () { menu.removeAttribute('open'); });

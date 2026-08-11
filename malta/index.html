@@ -750,6 +750,8 @@ tr:last-child td{border-bottom:0}
   font-size:var(--f5);line-height:1;color:var(--sea-ink);
   font-variant-numeric:tabular-nums}
 .calcbase{grid-column:1;font-size:var(--f0);color:var(--tx2)}
+.calccap{grid-column:1;font-size:var(--f0);color:var(--sea-ink);font-weight:500}
+.calccap:empty{display:none}
 @media print{ .calclist input{display:none} }
 /* чек-лист брони: номер шага сам работает галочкой, сделанный шаг гаснет */
 .stepdone{display:inline-flex;align-items:center;gap:var(--s2);cursor:pointer;
@@ -1362,7 +1364,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
       <div class="strip s3"><figure><img src="img/eve-street-1.avif" alt="Долетели — и сразу к воде" width="1100" height="825" loading="lazy" decoding="async"></figure><figure><img src="img/eve-valletta-1.avif" alt="Долетели — и сразу к воде" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/eve-dining-4.avif" alt="Долетели — и сразу к воде" width="1100" height="733" loading="lazy" decoding="async"></figure></div></div></div><div class="day reveal"><div><div class="dnum">2</div><div class="ddate">пн 28.09</div></div>
       <div class="dbody"><h3>С утра купаемся, днём идём в собор</h3><p>В девять переправляемся паромом через Марсамшетт в Слиму — пять минут и €2.80 туда-обратно — и купаемся с плит Тинье: лестницы прямо в воду, кофе на променаде. К одиннадцати возвращаемся в отель переодеться: в собор не пускают с открытыми плечами и коленями. Собор Святого Иоанна, где пол — четыреста надгробных плит рыцарей, а в оратории висит Караваджо. В 16:00 идём в Верхние сады Барракка на залп пушек. Вечером фтира из дровяной печи в Nenu.</p>
       <div class="chips"><span class="chip"><b>море</b> · плиты Тинье</span><span class="chip"><b>культура</b> · собор и залп в 16:00</span></div>
-      <ol class="tl"><li><time>09:00</time><span>Купание с плит Тинье, кофе на променаде</span></li><li><time>11:00</time><span>В отель: душ и «соборная» одежда — плечи и колени закрыты</span></li><li><time>11:45</time><span>Паром через бухту в Валлетту, пять минут</span></li><li><time>12:15</time><span>Прогулка по городу, обед</span></li><li><time>13:45</time><span>Собор Святого Иоанна и Караваджо, билеты на слот</span></li><li><time>15:25</time><span>Верхние сады Барракка, занимаем место у парапета</span></li><li><time>16:00</time><span>Залп пушек</span></li><li><time>17:00</time><span>Лифт к харбору, вид на Три города</span></li><li><time>20:00</time><span>Ужин: фтира из дровяной печи в Nenu</span></li></ol>
+      <ol class="tl"><li><time>09:00</time><span>Паром в Слиму, купание с плит Тинье и кофе на променаде</span></li><li><time>11:00</time><span>Паром обратно, в отеле душ и «соборная» одежда — плечи и колени закрыты</span></li><li><time>12:15</time><span>Прогулка по городу, обед</span></li><li><time>13:45</time><span>Собор Святого Иоанна и Караваджо, билеты на слот</span></li><li><time>15:25</time><span>Верхние сады Барракка, занимаем место у парапета</span></li><li><time>16:00</time><span>Залп пушек</span></li><li><time>17:00</time><span>Лифт к харбору, вид на Три города</span></li><li><time>20:00</time><span>Ужин: фтира из дровяной печи в Nenu</span></li></ol>
       <div class="strip s3"><figure><img src="img/swim-sliema-2.avif" alt="С утра купаемся, днём идём в собор" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/st-johns-1.avif" alt="С утра купаемся, днём идём в собор" width="1100" height="825" loading="lazy" decoding="async"></figure><figure><img src="img/barrakka-0.avif" alt="С утра купаемся, днём идём в собор" width="1100" height="825" loading="lazy" decoding="async"></figure></div></div></div><div class="day reveal"><div><div class="dnum">3</div><div class="ddate">вт 29.09</div></div>
       <div class="dbody"><h3>Весь день на воде</h3><p>Весь день проводим на воде: круиз от Sliema Ferries идёт на Гозо, в пещеры Комино и в Блю-Лагуну. Порядок выбирает оператор, и обычно он не тот, которого ждёшь: Гозо утром, а лагуна после обеда, когда там собираются катамараны со всего острова. Пустую лагуну увидишь только со своего катера, если выйти рано, — об этом я и спрашиваю оператора первым делом, это вопрос №2 в наших письмах. На Гозо стоянка короткая, поэтому Цитадель обещаю только если оператор письменно подтвердит два с половиной часа на берегу. Вечер — в погребе Trabuxu в Валлетте.</p>
       <div class="chips"><span class="chip"><b>море</b> · Блю-Лагуна и пещеры</span><span class="chip"><b>культура</b> · Гозо с моря</span></div>
@@ -1374,7 +1376,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
       <div class="strip s3"><figure><img src="img/mxlokk-wide-2.avif" alt="Рыбацкая деревня и город старше Валлетты" width="1100" height="734" loading="lazy" decoding="async"></figure><figure><img src="img/mxlokk-life-2.avif" alt="Рыбацкая деревня и город старше Валлетты" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/mxlokk-wide-1.avif" alt="Рыбацкая деревня и город старше Валлетты" width="1100" height="462" loading="lazy" decoding="async"></figure></div></div></div><div class="day reveal"><div><div class="dnum">5</div><div class="ddate">чт 01.10</div></div>
       <div class="dbody"><h3>Успеть в грот, пока светится вода</h3><p>В восемь выезжаем на юг. Первые лодки в грот уходят около девяти и катают, пока держится утренний свет: к одиннадцати вода уже не светится. Сам грот, кстати, красивее всего смотрится не с лодки, а со смотровой площадки на дороге. Купаться идём не в тесную бухту у причала, а в Гхар-Лапси — десять минут по той же дороге, скальные ванны с лестницами и почти одни местные. Рядом храмы Хаджар-Ким и Мнайдра, им пять с половиной тысяч лет. Оттуда пятнадцать минут до обрыва Дингли, самой высокой точки острова: внизу пустой островок Филфла, а по сторонам — каменные колеи, о назначении которых до сих пор спорят. Обедаем там же, кроликом, в загородной таверне у обрыва — до аэропорта от неё двадцать пять минут. Потом возвращаемся в отель, душ, забираем вещи, и в 21:30 самолёт. Если вместо юга захочется Молчаливый город — едем в Мдину, спускаемся в катакомбы, берём пастиззи в «Serkin», а купаться идём на плиты Слимы уже перед аэропортом. С минивэном юг проезжаем в своём темпе, не поглядывая на последний автобус.</p>
       <div class="chips"><span class="chip"><b>море</b> · грот и купание</span><span class="chip"><b>культура</b> · Хаджар-Ким и Мнайдра</span></div>
-      <ol class="tl"><li><time>08:00</time><span>Выезд на юг, вещи уже в машине</span></li><li><time>08:45</time><span>Кофе у причала, берём билеты</span></li><li><time>09:00</time><span>Первая лодка в Голубой грот — свет работает до 11:00</span></li><li><time>10:15</time><span>Купание в скальных ваннах Гхар-Лапси</span></li><li><time>11:30</time><span>Храмы Хаджар-Ким и Мнайдра</span></li><li><time>13:00</time><span>Обрыв Дингли и каменные колеи</span></li><li><time>13:45</time><span>Кроличий обед в таверне у обрыва</span></li><li><time>14:00</time><span>Возвращение, обед, душ и багаж в отеле</span></li><li><time>16:00</time><span>Кофе и последнее купание с плит Тинье</span></li><li><time>18:30</time><span>В аэропорт</span></li><li><time>21:30</time><span>Вылет</span></li></ol>
+      <ol class="tl"><li><time>08:00</time><span>Выезд на юг, вещи уже в машине</span></li><li><time>08:45</time><span>Кофе у причала, берём билеты</span></li><li><time>09:00</time><span>Первая лодка в Голубой грот — свет работает до 11:00</span></li><li><time>10:15</time><span>Купание в скальных ваннах Гхар-Лапси</span></li><li><time>11:30</time><span>Храмы Хаджар-Ким и Мнайдра</span></li><li><time>13:00</time><span>Обрыв Дингли и каменные колеи</span></li><li><time>13:45</time><span>Кроличий обед в таверне у обрыва</span></li><li><time>15:00</time><span>Возвращение в отель: душ и багаж</span></li><li><time>16:15</time><span>Паром в Слиму: кофе и последнее купание с плит</span></li><li><time>18:30</time><span>В аэропорт</span></li><li><time>21:30</time><span>Вылет</span></li></ol>
       <div class="strip s3"><figure><img src="img/grotto-wide-4.avif" alt="Успеть в грот, пока светится вода" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/blue-grotto-1.avif" alt="Успеть в грот, пока светится вода" width="1100" height="733" loading="lazy" decoding="async"></figure><figure><img src="img/temple-wide-3.avif" alt="Успеть в грот, пока светится вода" width="1100" height="825" loading="lazy" decoding="async"></figure></div></div></div>
   </div>
 </div></section>
@@ -1775,12 +1777,13 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Соберите свой вариант</h3>
     <p class="upnote">Отметьте, что берёте, — сумма на пару пересчитается сразу.
     Без галочек это базовая цена, в которой уже всё необходимое.</p>
-    <ul class="calclist"><li><label><input type="checkbox" data-d="62"><span class="calcname">Минивэн на два дня</span><span class="calcd">+€62</span></label><p class="calcnote">дни 4 и 5 в своём темпе, открывается западный берег</p></li><li><label><input type="checkbox" data-d="83"><span class="calcname">Чемоданы вместо ручной клади</span><span class="calcd">+€83</span></label><p class="calcnote">каждый везёт что хочет, но это треть денег на еду</p></li><li><label><input type="checkbox" data-d="52"><span class="calcname">Ужин-сет в Legligin</span><span class="calcd">+€52</span></label><p class="calcnote">€48 с человека вместо €22, зато вечер запоминается</p></li><li><label><input type="checkbox" data-d="51"><span class="calcname">Экскурсия по Мдине с катакомбами</span><span class="calcd">+€51</span></label><p class="calcnote">с гидом и с отменой в любой момент</p></li><li><label><input type="checkbox" data-d="110"><span class="calcname">Свой катер вместо круиза</span><span class="calcd">+€110</span></label><p class="calcnote">от €110: ранний выход и пустая лагуна, точную цену запрашиваю</p></li><li><label><input type="checkbox" data-d="70"><span class="calcname">Только такси вместо автобусов</span><span class="calcd">+€70</span></label><p class="calcnote">ни руля, ни расписаний — но две машины на каждый переезд</p></li><li><label><input type="checkbox" data-d="-38"><span class="calcname">Невозвратный тариф жилья</span><span class="calcd">−€38</span></label><p class="calcnote">дешевле на 10 %, но при отмене теряем всё</p></li></ul>
+    <ul class="calclist"><li><label><input type="checkbox" data-d="62" data-excl="g0"><span class="calcname">Минивэн на два дня</span><span class="calcd">+€62</span></label><p class="calcnote">дни 4 и 5 в своём темпе, открывается западный берег</p></li><li><label><input type="checkbox" data-d="83" data-excl=""><span class="calcname">Чемоданы вместо ручной клади</span><span class="calcd">+€83</span></label><p class="calcnote">каждый везёт что хочет, но это треть денег на еду</p></li><li><label><input type="checkbox" data-d="52" data-excl=""><span class="calcname">Ужин-сет в Legligin</span><span class="calcd">+€52</span></label><p class="calcnote">€48 с человека вместо €22, зато вечер запоминается</p></li><li><label><input type="checkbox" data-d="51" data-excl=""><span class="calcname">Экскурсия по Мдине с катакомбами</span><span class="calcd">+€51</span></label><p class="calcnote">с гидом и с отменой в любой момент</p></li><li><label><input type="checkbox" data-d="110" data-excl=""><span class="calcname">Свой катер вместо круиза</span><span class="calcd">+€110</span></label><p class="calcnote">от €110: ранний выход и пустая лагуна, точную цену запрашиваю</p></li><li><label><input type="checkbox" data-d="70" data-excl="g0"><span class="calcname">Только такси вместо автобусов</span><span class="calcd">+€70</span></label><p class="calcnote">ни руля, ни расписаний — но две машины на каждый переезд</p></li><li><label><input type="checkbox" data-d="-38" data-excl=""><span class="calcname">Невозвратный тариф жилья</span><span class="calcd">−€38</span></label><p class="calcnote">дешевле на 10 %, но при отмене теряем всё</p></li></ul>
     <p class="calcpick"><button type="button" id="calccopy">Скопировать мой выбор</button>
       <span id="calcmsg">отправьте одним сообщением — так ничего не забудется</span></p>
     <p class="calcout"><span class="calclabel">Итого на пару</span>
       <b id="calcsum" data-base="1257">€1257</b>
-      <span class="calcbase">без доплат — €1257</span></p>
+      <span class="calcbase">без доплат — €1257</span>
+      <span class="calccap" id="calccap" data-cap="1300" role="status" aria-live="polite"></span></p>
   </div>
 </div></section>
 
@@ -1982,9 +1985,25 @@ document.head.insertAdjacentHTML('beforeend',
   if (sum) {
     var boxes = [].slice.call(document.querySelectorAll('.calclist input'));
     var base = parseInt(sum.getAttribute('data-base'), 10);
+    var capel = document.getElementById('calccap');
+    var cap = capel ? parseInt(capel.getAttribute('data-cap'), 10) : 0;
+    // взаимоисключающее: с минивэном такси не нужно. Отметив оба, пара дважды
+    // вычитала из сметы одни и те же автобусы — теперь второй снимается сам.
+    var only = function (box) {
+      var grp = box.getAttribute('data-excl');
+      if (!grp || !box.checked) return;
+      boxes.forEach(function (o) {
+        if (o !== box && o.getAttribute('data-excl') === grp) o.checked = false;
+      });
+    };
     var recount = function () {
       var t = base;
       boxes.forEach(function (b) { if (b.checked) t += parseInt(b.getAttribute('data-d'), 10); });
+      if (capel) {
+        capel.textContent = (cap && t > cap)
+          ? 'выше потолка €' + cap + ' на €' + (t - cap)
+          : (cap && t === cap ? 'ровно в потолок €' + cap : '');
+      }
       var was = sum.textContent;
       sum.textContent = '€' + t;
       sum.classList.toggle('calcup', t !== base);
@@ -1997,7 +2016,9 @@ document.head.insertAdjacentHTML('beforeend',
         setTimeout(function () { sum.classList.remove('bump'); }, 260);
       }
     };
-    boxes.forEach(function (b) { b.addEventListener('change', recount); });
+    boxes.forEach(function (b) {
+      b.addEventListener('change', function () { only(b); recount(); });
+    });
     recount();
   }
 

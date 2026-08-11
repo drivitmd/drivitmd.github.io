@@ -72,8 +72,8 @@ UID:malta2026-2-0@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T090000
 DTEND;TZID=Europe/Malta:20260928T110000
-SUMMARY:Купание с плит Тинье\, кофе на проме
- наде
+SUMMARY:Паром в Слиму\, купание с плит Тинье 
+ и кофе на променаде
 DESCRIPTION:День 2 · С утра купаемся\, днём идё
  м в собор\n\nПрограмма целиком: https://drivitmd.
  github.io/malta/
@@ -81,8 +81,8 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Купание с плит Тинье\, кофе на про
- менаде
+DESCRIPTION:Паром в Слиму\, купание с плит Тин
+ ье и кофе на променаде
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -90,8 +90,8 @@ UID:malta2026-2-1@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T110000
 DTEND;TZID=Europe/Malta:20260928T123000
-SUMMARY:В отель: душ и «соборная» одежда — п
- лечи и колени закрыты
+SUMMARY:Паром обратно\, в отеле душ и «собор
+ ная» одежда — плечи и колени закрыты
 DESCRIPTION:День 2 · С утра купаемся\, днём идё
  м в собор\n\nПрограмма целиком: https://drivitmd.
  github.io/malta/
@@ -99,30 +99,12 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:В отель: душ и «соборная» одежда 
- — плечи и колени закрыты
+DESCRIPTION:Паром обратно\, в отеле душ и «соб
+ орная» одежда — плечи и колени закрыты
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-2-2@drivitmd.github.io
-DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260928T114500
-DTEND;TZID=Europe/Malta:20260928T123000
-SUMMARY:Паром через бухту в Валлетту\, пять 
- минут
-DESCRIPTION:День 2 · С утра купаемся\, днём идё
- м в собор\n\nПрограмма целиком: https://drivitmd.
- github.io/malta/
-LOCATION:Malta
-BEGIN:VALARM
-TRIGGER:-PT20M
-ACTION:DISPLAY
-DESCRIPTION:Паром через бухту в Валлетту\, пят
- ь минут
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:malta2026-2-3@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T121500
 DTEND;TZID=Europe/Malta:20260928T135500
@@ -138,7 +120,7 @@ DESCRIPTION:Прогулка по городу\, обед
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-2-4@drivitmd.github.io
+UID:malta2026-2-3@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T134500
 DTEND;TZID=Europe/Malta:20260928T151500
@@ -156,7 +138,7 @@ DESCRIPTION:Собор Святого Иоанна и Караваджо\
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-2-5@drivitmd.github.io
+UID:malta2026-2-4@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T152500
 DTEND;TZID=Europe/Malta:20260928T161000
@@ -174,7 +156,7 @@ DESCRIPTION:Верхние сады Барракка\, занимаем
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-2-6@drivitmd.github.io
+UID:malta2026-2-5@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T160000
 DTEND;TZID=Europe/Malta:20260928T164500
@@ -190,7 +172,7 @@ DESCRIPTION:Залп пушек
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-2-7@drivitmd.github.io
+UID:malta2026-2-6@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T170000
 DTEND;TZID=Europe/Malta:20260928T174500
@@ -206,7 +188,7 @@ DESCRIPTION:Лифт к харбору\, вид на Три города
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-2-8@drivitmd.github.io
+UID:malta2026-2-7@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T200000
 DTEND;TZID=Europe/Malta:20260928T214000
@@ -604,10 +586,9 @@ END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-5-7@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20261001T140000
-DTEND;TZID=Europe/Malta:20261001T154000
-SUMMARY:Возвращение\, обед\, душ и багаж в от
- еле
+DTSTART;TZID=Europe/Malta:20261001T150000
+DTEND;TZID=Europe/Malta:20261001T154500
+SUMMARY:Возвращение в отель: душ и багаж
 DESCRIPTION:День 5 · Успеть в грот\, пока свети
  тся вода\n\nПрограмма целиком: https://drivitmd.g
  ithub.io/malta/
@@ -615,17 +596,16 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Возвращение\, обед\, душ и багаж в 
- отеле
+DESCRIPTION:Возвращение в отель: душ и багаж
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-5-8@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20261001T160000
-DTEND;TZID=Europe/Malta:20261001T180000
-SUMMARY:Кофе и последнее купание с плит Тин
- ье
+DTSTART;TZID=Europe/Malta:20261001T161500
+DTEND;TZID=Europe/Malta:20261001T181500
+SUMMARY:Паром в Слиму: кофе и последнее купа
+ ние с плит
 DESCRIPTION:День 5 · Успеть в грот\, пока свети
  тся вода\n\nПрограмма целиком: https://drivitmd.g
  ithub.io/malta/
@@ -633,8 +613,8 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Кофе и последнее купание с плит Т
- инье
+DESCRIPTION:Паром в Слиму: кофе и последнее ку
+ пание с плит
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

@@ -281,18 +281,6 @@ section+section{border-top:1px solid var(--line)}
 .faq details[open] summary::after{content:"–"}
 .faq p{font-size:var(--f1);color:var(--tx2);margin:0 0 var(--s4);max-width:61.8ch}
 
-/* липкая полоса действия */
-/* .stickybar в разметке не используется — оставлено намеренно пустым,
-   чтобы не тянуть мёртвые правила. */
-.stickybar-unused{position:sticky;bottom:0;z-index:var(--z-sticky);display:flex;flex-wrap:wrap;
-  align-items:center;justify-content:space-between;gap:var(--s3);
-  padding:var(--s3) var(--s5);background:oklch(.195 .028 240);color:oklch(.965 .012 230);
-  border-top:1px solid oklch(.34 .03 240);font-family:var(--mono);font-size:var(--f0);
-  letter-spacing:.06em;text-transform:uppercase}
-.stickybar b{font-family:var(--display);font-size:var(--f3);letter-spacing:0;
-  text-transform:none;font-weight:400}
-.stickybar a{color:oklch(.16 .02 60);background:oklch(.79 .126 76);text-decoration:none;
-  padding:var(--s2) var(--s4)}
 @media print{ .topnav{display:none !important} }
 
 .skip{position:absolute;left:-9999px;top:0;z-index:var(--z-skip);background:var(--sea-ink);

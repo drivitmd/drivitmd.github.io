@@ -851,6 +851,12 @@ tr:last-child td{border-bottom:0}
 .foot-src>summary::marker{content:""}
 .foot-src>summary:hover{color:var(--tx)}
 .foot-src>summary:focus-visible{outline:2px solid var(--sea-ink);outline-offset:3px}
+/* макет майки: широкий кадр с подписью под ним, как у кадра в разделе о Мальте */
+.teeshot{margin:var(--s6) 0 0}
+.teeshot img{width:100%;height:auto;display:block;cursor:zoom-in;
+  background:var(--surface2);border:1px solid var(--line)}
+.teeshot figcaption{margin-top:var(--s3);font-size:var(--f0);color:var(--tx2);
+  max-width:78ch}
 .chip{hyphens:none;
 font-family:var(--mono);font-size:var(--f0);letter-spacing:.05em;
   border:1px solid var(--line);padding:var(--s1) var(--s3);color:var(--tx2)}
@@ -1263,6 +1269,12 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
       <div class="ocwhen"><time>30 сентября, среда</time><span>день 4</span></div>
       <p class="ocplan">Самый сильный вечер программы: после Марсашлокка и скальной купальни переправляемся лодкой в Биргу. Ужин в базовой цене — Rampila, ресторан внутри бастиона под стенами Валлетты. А если хочется вечера, который потом вспоминают годами, — сет без меню в погребе Legligin за доплату €52 на пару. Стол в дальнем углу и повод — просим при брони в любом случае.</p></article>
   </div>
+
+  <figure class="teeshot">
+    <img src="img/tee-pair.avif" alt="Макет именной майки: перед с логотипом и гербом Мальты, спина с именем" width="1400" height="897" loading="lazy" decoding="async">
+    <figcaption>Перед у всех одинаковый: наш знак, щит Мальты и год. Спина — своя,
+    с именем. Шесть штук: Андрей, Наталья, Алексей, Ольга, Борис, Кристина.</figcaption>
+  </figure>
 </div></section>
 
 <section id="includes"><div class="wrap"><details class="fold"><summary><h2>Что входит и что нет</h2><span class="foldl"><p>Всё, что ниже слева, уже посчитано в цене. Справа — то, за что каждый платит сам.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
@@ -1809,7 +1821,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
       <div class="sum">+€153</div></div><div class="reveal" data-step="7"><div class="n">
       <label class="stepdone"><input type="checkbox" data-step="7"
         aria-label="Шаг 7 сделан"><span>7</span></label></div><div class="when">до 15 сентября</div>
-      <div><h3>Именные майки, шесть штук</h3><p>Имена все известны: Андрей, Наталья, Алексей, Ольга, Борис, Кристина. Печать и доставка занимают около недели, поэтому заказываем заранее, а не в последний вечер. Размеры спрашиваем у всех одним сообщением.</p></div>
+      <div><h3>Именные майки, шесть штук</h3><p>Имена все известны: Андрей, Наталья, Алексей, Ольга, Борис, Кристина. Печать и доставка занимают около недели, поэтому заказываем заранее, а не в последний вечер. Размеры спрашиваем у всех одним сообщением. Макет готов: перед один на всех, спина у каждого своя.</p><a class="mini" href="tee-print.png" target="_blank" rel="noopener">Макет для печати →</a></div>
       <div class="sum">мой подарок</div></div><div class="reveal" data-step="8"><div class="n">
       <label class="stepdone"><input type="checkbox" data-step="8"
         aria-label="Шаг 8 сделан"><span>8</span></label></div><div class="when">до 20 сентября</div>
@@ -2208,7 +2220,7 @@ document.head.insertAdjacentHTML('beforeend',
   }
   document.addEventListener('click', function (e) {
     var t = e.target;
-    if (t.tagName === 'IMG' && t.closest('.strip, .hphoto, .t, .vshot, .whyshot')) {
+    if (t.tagName === 'IMG' && t.closest('.strip, .hphoto, .t, .vshot, .whyshot, .teeshot')) {
       open(t.currentSrc || t.src, t.alt); return;
     }
     if (z.classList.contains('on')) close();

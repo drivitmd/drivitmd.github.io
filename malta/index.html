@@ -752,6 +752,40 @@ tr:last-child td{border-bottom:0}
   color:var(--tx2);margin:var(--s4) 0 0}
 .bookdone b{color:var(--sea-ink);font-weight:400}
 @media print{ .stepdone input{display:none} }
+/* таблицы восхода и адресов: узкие, с моноцифрами, на телефоне прокручиваются */
+.suntab,.cardtab{width:100%;border-collapse:collapse;margin:var(--s5) 0 0;
+  font-size:var(--f1)}
+.suntab caption,.cardtab caption{text-align:left;font-family:var(--mono);
+  font-size:var(--f0);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--tx2);padding-bottom:var(--s3)}
+.suntab th,.cardtab th{text-align:left;font-family:var(--mono);font-size:var(--f0);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--tx2);font-weight:400;
+  border-bottom:1px solid var(--line);padding:var(--s2) var(--s3) var(--s2) 0}
+.suntab td,.cardtab td{border-bottom:1px solid var(--line);
+  padding:var(--s3) var(--s3) var(--s3) 0;vertical-align:top}
+.suntab td{font-variant-numeric:tabular-nums}
+.suntab td:first-child{width:40%}
+.cardtab td b{display:block}
+.cardtab td span{display:block;font-size:var(--f0);color:var(--tx);opacity:.78;
+  margin-top:2px}
+.cardtab .tel{font-family:var(--mono);white-space:nowrap;color:var(--sea-ink)}
+.icsline{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  margin:var(--s5) 0 0}
+.icsline span{font-size:var(--f0);color:var(--tx2)}
+/* список вещей: заголовок и одна строка зачем */
+.pack{margin-top:var(--s6);border-top:1px solid var(--line);padding-top:var(--s5)}
+.packlist{list-style:none;margin:var(--s4) 0 0;padding:0;display:grid;gap:var(--s4);
+  grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr))}
+.packlist h4{margin:0 0 var(--s1);font-size:var(--f2)}
+.packlist p{margin:0;font-size:var(--f0);color:var(--tx2)}
+/* кнопка «скопировать выбор» */
+.calcpick{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3);
+  margin:var(--s4) 0 0}
+#calccopy{min-height:44px;padding:0 var(--s4);font-family:var(--mono);
+  font-size:var(--f0);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--bg);background:var(--sea-ink);border:0;cursor:pointer}
+#calccopy:focus-visible{outline:2px solid var(--sea-ink);outline-offset:3px}
+#calcmsg{font-size:var(--f0);color:var(--tx2)}
 .chip{hyphens:none;
 font-family:var(--mono);font-size:var(--f0);letter-spacing:.05em;
   border:1px solid var(--line);padding:var(--s1) var(--s3);color:var(--tx2)}
@@ -1090,7 +1124,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <details class="navmenu">
       <summary><span class="burger" aria-hidden="true"></span>Разделы</summary>
       <div class="navlinks">
-        <a href="#occasions">Поводы</a><a href="#flight">Перелёт</a><a href="#stay">Жильё</a><a href="#route">Программа</a><a href="#map">Карта</a><a href="#food">Еда</a><a href="#michelin">Мишлен</a><a href="#car">Машина</a><a href="#budget">Цена</a><a href="#book">Бронь</a><a href="#backup">Дублёры</a><a href="#honest">Честно</a><a href="#faq">Вопросы</a>
+        <a href="#occasions">Поводы</a><a href="#flight">Перелёт</a><a href="#stay">Жильё</a><a href="#route">Программа</a><a href="#map">Карта</a><a href="#food">Еда</a><a href="#michelin">Мишлен</a><a href="#car">Машина</a><a href="#budget">Цена</a><a href="#book">Бронь</a><a href="#pocket">В дорогу</a><a href="#backup">Дублёры</a><a href="#honest">Честно</a><a href="#faq">Вопросы</a>
       </div>
     </details>
   </div>
@@ -1291,7 +1325,13 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h3>Погода и вода в наши даты</h3>
     <p class="wxlead">Конец сентября на Мальте — это ещё лето, но без июльской духоты: вода теплее воздуха ночью, а солнце уже не жжёт в полдень.</p>
     <ul class="wxgrid"><li><span class="wxk">Воздух днём</span><span class="wxv">26 °C</span><p class="wxn">в разные годы от 24 до 29</p></li><li><span class="wxk">Воздух ночью</span><span class="wxv">22 °C</span><p class="wxn">от 18 до 25 — вечером у воды нужна одна тёплая вещь</p></li><li><span class="wxk">Море</span><span class="wxv">25.7 °C</span><p class="wxn">теплее, чем в июне: вода за лето прогрелась и ещё не остыла</p></li><li><span class="wxk">Дождь</span><span class="wxv">каждый четвёртый день</span><p class="wxn">но это короткий ливень, а не английская морось</p></li><li><span class="wxk">Ветер</span><span class="wxv">до 23 км/ч</span><p class="wxn">в отдельные дни до 39 — от него зависит, выйдут ли лодки</p></li></ul>
-    <p class="wxsource">Числа — среднее за 2020–2025 годы на 27 сентября — 1 октября: архив Open-Meteo по Валлетте и температура поверхности моря по трём точкам вокруг острова. Прогноз на конкретные дни смотрим за неделю до вылета.</p>
+    <div class="tw"><table class="suntab">
+      <caption>Когда светло: восход и закат по нашим датам</caption>
+      <thead><tr><th>дата</th><th>восход</th><th>закат</th></tr></thead>
+      <tbody><tr><td>27 сентября</td><td>06:53</td><td>18:51</td></tr><tr><td>28 сентября</td><td>06:54</td><td>18:50</td></tr><tr><td>29 сентября</td><td>06:55</td><td>18:48</td></tr><tr><td>30 сентября</td><td>06:56</td><td>18:47</td></tr><tr><td>1 октября</td><td>06:57</td><td>18:45</td></tr></tbody>
+    </table></div>
+    <p class="wxsource">Числа — среднее за 2020–2025 годы на 27 сентября — 1 октября: архив Open-Meteo по Валлетте и температура поверхности моря по трём точкам вокруг острова. Прогноз на конкретные дни смотрим за неделю до вылета. Восход и закат — из того же
+    архива по Валлетте: между годами разница меньше минуты.</p>
   </div>
 </div></section>
 
@@ -1644,6 +1684,8 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <p class="upnote">Отметьте, что берёте, — сумма на пару пересчитается сразу.
     Без галочек это базовая цена, в которой уже всё необходимое.</p>
     <ul class="calclist"><li><label><input type="checkbox" data-d="62"><span class="calcname">Минивэн на два дня</span><span class="calcd">+€62</span></label><p class="calcnote">дни 4 и 5 в своём темпе, открывается западный берег</p></li><li><label><input type="checkbox" data-d="83"><span class="calcname">Чемоданы вместо ручной клади</span><span class="calcd">+€83</span></label><p class="calcnote">каждый везёт что хочет, но это треть денег на еду</p></li><li><label><input type="checkbox" data-d="52"><span class="calcname">Ужин-сет в Legligin</span><span class="calcd">+€52</span></label><p class="calcnote">€48 с человека вместо €22, зато вечер запоминается</p></li><li><label><input type="checkbox" data-d="70"><span class="calcname">Гипогей Хал-Сафлиени</span><span class="calcd">+€70</span></label><p class="calcnote">€35 с человека, если сеанс вообще найдётся</p></li><li><label><input type="checkbox" data-d="51"><span class="calcname">Экскурсия по Мдине с катакомбами</span><span class="calcd">+€51</span></label><p class="calcnote">с гидом и с отменой в любой момент</p></li><li><label><input type="checkbox" data-d="110"><span class="calcname">Свой катер вместо круиза</span><span class="calcd">+€110</span></label><p class="calcnote">от €110: ранний выход и пустая лагуна, точную цену запрашиваю</p></li><li><label><input type="checkbox" data-d="70"><span class="calcname">Только такси вместо автобусов</span><span class="calcd">+€70</span></label><p class="calcnote">ни руля, ни расписаний — но две машины на каждый переезд</p></li><li><label><input type="checkbox" data-d="-38"><span class="calcname">Невозвратный тариф жилья</span><span class="calcd">−€38</span></label><p class="calcnote">дешевле на 10 %, но при отмене теряем всё</p></li></ul>
+    <p class="calcpick"><button type="button" id="calccopy">Скопировать мой выбор</button>
+      <span id="calcmsg">отправьте одним сообщением — так ничего не забудется</span></p>
     <p class="calcout"><span class="calclabel">Итого на пару</span>
       <b id="calcsum" data-base="1257">€1257</b>
       <span class="calcbase">без доплат — €1257</span></p>
@@ -1727,6 +1769,30 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   <p class="evhave">Что в наши даты всё-таки есть: деревенские фесты сентября доигрывают последние выходные, по воскресеньям работает рыбный рынок Марсашлокка, а вечерами Валлетта живёт сама по себе — Strait Street, погреба и кухни до полуночи. Программу мы строим на еде и городе, а не на событии, и это осознанно: событие или совпадёт, или нет, а ужин в погребе будет в любом случае.</p>
   <p class="michnote">Проверено 10 августа 2026 по календарям Festivals Malta, Visit Malta, malta.com и maltainfoguide. За две недели до вылета сверю ещё раз: мелкие концерты и приходские фесты объявляют поздно.</p>
 </div></details></div></section>
+
+<section id="pocket"><div class="wrap">
+  <div class="shead">
+    <h2>Взять с собой в дорогу</h2>
+    <p>Сфотографируйте этот экран перед выездом. Роуминг может не включиться, телефон может сесть, а эти данные нужны именно в такие минуты.</p>
+  </div>
+
+  <p class="icsline"><a class="mini" href="malta.ics" download>Скачать программу
+  в календарь →</a> <span>39 событий с напоминаниями, работает без интернета</span></p>
+
+  <div class="tw"><table class="cardtab">
+    <caption>Адреса и телефоны</caption>
+    <thead><tr><th>что</th><th>где</th><th>телефон</th></tr></thead>
+    <tbody><tr><td><b>Жильё</b><span>Mandera’s Boutique Suites</span></td><td>52 Triq San Patrizju, Valletta VLT 1174<span>три сьюта Gallarija 2A, 3A, 4A · заезд 27.09 около 21:30</span></td><td class="tel">+356 2780 1578</td></tr><tr><td><b>Ужин 28.09</b><span>Nenu the Artisan Baker</span></td><td>143 St Dominic Street, Valletta<span>стол на шестерых, 20:00 · последний заказ 22:30</span></td><td class="tel">+356 2258 1535</td></tr><tr><td><b>Ужин 30.09</b><span>Rampila (или Legligin за доплату)</span></td><td>St John’s Cavalier, Valletta<span>годовщина Рапопорт · стол просим в дальнем углу</span></td><td class="tel">—</td></tr><tr><td><b>Экстренный номер</b><span>Единый по Мальте</span></td><td>полиция, скорая, пожарные<span>работает с любой симки, даже без денег на счету</span></td><td class="tel">112</td></tr><tr><td><b>Такси</b><span>eCabs и Bolt</span></td><td>приложение, оплата картой<span>шестеро не влезают в одну машину: заказываем две</span></td><td class="tel">—</td></tr><tr><td><b>Аэропорт</b><span>Malta International (MLA)</span></td><td>Luqa<span>вылет 01.10 в 21:30 · быть на месте к 19:15</span></td><td class="tel">+356 2124 9600</td></tr></tbody>
+  </table></div>
+  <p class="wxsource">Если опоздали на стыковку в Бухаресте: сразу к стойке перевозчика, а не к выходу. При одном билете вас пересадят бесплатно; если билета два, второй сегмент пропал — тогда сразу звоните мне.</p>
+
+  <div class="pack">
+    <h3>Что взять</h3>
+    <p class="upnote">Летим с одной ручной кладью, поэтому список короткий и только по делу. Четыре вещи здесь не для удобства, а чтобы вас пустили внутрь.</p>
+    <ul class="packlist"><li><h4>Аквашузы или тапки с подошвой</h4><p>Все наши купания — со скальных плит: камень острый, а вылезать приходится по железным скобам.</p></li><li><h4>Одежда, закрывающая плечи и колени</h4><p>Без неё в собор Святого Иоанна не пустят, а он в программе второго дня. Хватит рубашки и лёгких брюк или юбки ниже колена.</p></li><li><h4>Закрытая обувь</h4><p>Только если берём Гипогей: в сандалиях и шлёпанцах внутрь не пускают, и это не обсуждается.</p></li><li><h4>Одна тёплая вещь</h4><p>Вечером у воды свежо, а ночью воздух опускается до 18–22 °C.</p></li><li><h4>Переходник на британскую розетку</h4><p>На Мальте розетки как в Британии, трёхштырьковые. Один на пару достаточно.</p></li><li><h4>Шляпа и крем</h4><p>Тени нет на четырёх точках подряд: St Peter’s Pool, Верхние сады в четыре, плато храмов, причал грота.</p></li></ul>
+    <p class="wxsource">Что можно не брать: полотенца и фен есть в отеле, воду проще покупать на месте, зонт в конце сентября почти наверняка не понадобится, а кондиционер в номере выставлен на 24 °C и ниже не опускается — если спите в прохладе, берите тонкую простыню вместо одеяла.</p>
+  </div>
+</div></section>
 
 <section id="practical"><div class="wrap"><details class="fold"><summary><h2>Мелочи, которые решают дело на месте</h2><span class="foldl"><p>То, о чём обычно вспоминают уже в аэропорту или у первой розетки. Прочитайте один раз — и забудьте.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
   
@@ -1894,6 +1960,52 @@ document.head.insertAdjacentHTML('beforeend',
       var cy = vb[1] + (e.clientY - r.top) / r.height * vb[3];
       zoom(e.deltaY < 0 ? 0.85 : 1.18, cx, cy);
     }, { passive: false });
+  })();
+
+  // «скопировать мой выбор»: пара отправляет решение одним сообщением
+  (function () {
+    var btn = document.getElementById('calccopy');
+    if (!btn) return;
+    var msg = document.getElementById('calcmsg');
+    btn.addEventListener('click', function () {
+      var picked = [].slice.call(document.querySelectorAll('.calclist input'))
+        .filter(function (b) { return b.checked; })
+        .map(function (b) {
+          var row = b.closest('li');
+          return '· ' + row.querySelector('.calcname').textContent +
+                 ' (' + row.querySelector('.calcd').textContent + ')';
+        });
+      var total = (document.getElementById('calcsum') || {}).textContent || '';
+      var text = 'Мальта 27.09–01.10, наш выбор:\n'
+        + (picked.length ? picked.join('\n') : '· только базовый вариант')
+        + '\nИтого на пару: ' + total
+        + '\nПрограмма: https://drivitmd.github.io/malta/';
+      var done = function () {
+        if (msg) msg.textContent = 'скопировано — вставьте в сообщение';
+      };
+      // запасной способ: буфер обмена доступен только по https, а страницу
+      // могут открыть и файлом с диска — тогда копируем через скрытое поле
+      var fallback = function () {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly', '');
+        ta.style.cssText = 'position:fixed;left:-9999px;top:0';
+        document.body.appendChild(ta);
+        ta.select();
+        var okc = false;
+        try { okc = document.execCommand('copy'); } catch (e) { okc = false; }
+        document.body.removeChild(ta);
+        if (okc) done();
+        else if (msg) msg.textContent = 'скопировать не вышло — выделите итог вручную';
+      };
+      // современный буфер работает только в защищённом соединении; открыв файл
+      // с диска, обещание просто висит, не разрешаясь — поэтому проверяем заранее
+      if (window.isSecureContext && navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else {
+        fallback();
+      }
+    });
   })();
 
   var menu = document.querySelector('.navmenu');

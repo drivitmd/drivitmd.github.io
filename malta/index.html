@@ -786,6 +786,24 @@ tr:last-child td{border-bottom:0}
   color:var(--bg);background:var(--sea-ink);border:0;cursor:pointer}
 #calccopy:focus-visible{outline:2px solid var(--sea-ink);outline-offset:3px}
 #calcmsg{font-size:var(--f0);color:var(--tx2)}
+/* почему Мальта: шесть коротких доводов, каждый с проверяемым числом */
+.why{list-style:none;margin:0;padding:0;display:grid;gap:var(--s5) var(--s4);
+  grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
+.why>li{padding-top:var(--s4);border-top:2px solid var(--sea-ink)}
+.why h3{margin:0 0 var(--s2);font-size:var(--f3)}
+.why p{margin:0;color:var(--tx2)}
+.whysum{margin:var(--s6) 0 0;font-size:var(--f2);max-width:78ch}
+/* подвал: на виду одна строка, источники — по желанию */
+.foot-line{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--s2) var(--s4)}
+.foot-line b{font-family:var(--display);font-weight:600;font-size:var(--f2)}
+.foot-src{margin-top:var(--s4)}
+.foot-src>summary{list-style:none;cursor:pointer;font-family:var(--mono);
+  font-size:var(--f0);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--tx2);min-height:44px;display:inline-flex;align-items:center}
+.foot-src>summary::-webkit-details-marker{display:none}
+.foot-src>summary::marker{content:""}
+.foot-src>summary:hover{color:var(--tx)}
+.foot-src>summary:focus-visible{outline:2px solid var(--sea-ink);outline-offset:3px}
 .chip{hyphens:none;
 font-family:var(--mono);font-size:var(--f0);letter-spacing:.05em;
   border:1px solid var(--line);padding:var(--s1) var(--s3);color:var(--tx2)}
@@ -1124,7 +1142,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <details class="navmenu">
       <summary><span class="burger" aria-hidden="true"></span>Разделы</summary>
       <div class="navlinks">
-        <a href="#occasions">Поводы</a><a href="#flight">Перелёт</a><a href="#stay">Жильё</a><a href="#route">Программа</a><a href="#map">Карта</a><a href="#food">Еда</a><a href="#michelin">Мишлен</a><a href="#car">Машина</a><a href="#budget">Цена</a><a href="#book">Бронь</a><a href="#pocket">В дорогу</a><a href="#backup">Дублёры</a><a href="#honest">Честно</a><a href="#faq">Вопросы</a>
+        <a href="#why">Мальта</a><a href="#occasions">Поводы</a><a href="#flight">Перелёт</a><a href="#stay">Жильё</a><a href="#route">Программа</a><a href="#map">Карта</a><a href="#food">Еда</a><a href="#michelin">Мишлен</a><a href="#car">Машина</a><a href="#budget">Цена</a><a href="#book">Бронь</a><a href="#backup">Дублёры</a><a href="#honest">Честно</a><a href="#pocket">В дорогу</a><a href="#faq">Вопросы</a>
       </div>
     </details>
   </div>
@@ -1159,6 +1177,16 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   для своих, дальше не пересылаем — цены и брони привязаны к нашим датам.</p>
 
   <p style="margin-top:var(--s5)"><a class="mini" href="#cta">Что нужно от вас →</a></p>
+</div></section>
+
+<section id="why"><div class="wrap">
+  <div class="shead">
+    <h2>Что такое Мальта и почему её выбирают</h2>
+    <p>Мальта — самое маленькое государство Евросоюза: 316 квадратных километров, с севера на юг двадцать семь километров. Это значит, что за четыре дня остров проходится целиком, а не «частично, в следующий раз доедем».</p>
+  </div>
+  <ul class="why"><li><h3>Всё в пределах часа</h3><p>Двадцать семь километров в длину. Самая дальняя точка программы — в сорока минутах от отеля, а не в трёх часах. За один день успеваешь и купаться, и смотреть город, потому что переезды короткие.</p></li><li><h3>Здесь говорят по-английски</h3><p>Английский — государственный язык наравне с мальтийским: остров был британским до 1964 года. Отсюда же розетки как в Британии и левостороннее движение. Языкового барьера нет вообще, что для трёх пар без гида решает многое.</p></li><li><h3>Древнее пирамид</h3><p>Храмам Хаджар-Ким и Мнайдра пять с половиной тысяч лет — они старше пирамид Гизы и Стоунхенджа, и это самые древние стоящие каменные постройки на земле. Не реконструкция, а те же камни.</p></li><li><h3>Столица, построенная целиком по плану</h3><p>Валлетту начали строить в 1566 году, сразу после Великой осады, и спланировали по сетке ещё до первого камня — первый такой город в Европе. Весь центр под охраной ЮНЕСКО, и обходится он пешком за полчаса.</p></li><li><h3>Море теплее, чем в июне</h3><p>К концу сентября вода прогрета за всё лето и держит 25–26 °C — теплее, чем в начале сезона. Купальный сезон здесь тянется до ноября.</p></li><li><h3>Камень и море, без зелени</h3><p>На острове нет ни рек, ни лесов: это известняковая плита в море. Отсюда и цвет — медовые города и бирюзовая вода без промежуточных оттенков, и скальные купальни вместо песчаных пляжей.</p></li></ul>
+  <p class="whysum">Туристы выбирают Мальту за сочетание, которого больше нигде нет: Европа с евро и без визовых хлопот, английский язык, тёплое море до ноября, семь тысяч лет истории в шаге от отеля — и цены заметно ниже итальянских при том же Средиземном море. Плюс остров настолько мал, что машина не обязательна.</p>
+  <p class="wxsource">Здесь снимали «Гладиатора», «Троя», «Графа Монте-Кристо» и первый сезон «Игры престолов» — Валлетта играла Королевскую Гавань, а Мдина — Кингс-Лендинг времён Таргариенов. Мальтийский язык, кстати, единственный семитский язык, который пишут латиницей, и единственный такой среди государственных языков Евросоюза.</p>
 </div></section>
 
 <section id="occasions"><div class="wrap">
@@ -1513,7 +1541,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Всё вино — мальтийское, включая автохтонные сорта Ġellewża и Girgentina, которых больше нигде нет.</p></div>
   <p class="vlinks"><a href="https://legliginmalta.com/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Legligin%20Malta" target="_blank" rel="noopener">на карте</a><a href="https://www.facebook.com/Legligin" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/legliginrestaurant" target="_blank" rel="noopener">Instagram</a></p>
 </article><article class="vcard reveal">
-  <figure class="vshot vshot-none"><h4 class="vtitle"><span>Trabuxu Wine Bar</span></h4></figure>
+  <figure class="vshot"><img src="img/venue-trabuxu.avif" alt="Заведение: Trabuxu Wine Bar" width="1100" height="324" loading="lazy" decoding="async"><h4 class="vtitle"><span>Trabuxu Wine Bar</span></h4></figure>
   <p class="order">€ · бокал и доска</p>
   <p class="body-s">Каменный погреб под улицей, сырные доски и вино по бокалам. Сидят после ужина, а не вместо него.</p>
   <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Trabuxu по-мальтийски — «пробочник». Погребу больше трёхсот лет.</p></div>
@@ -1537,7 +1565,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Работает с 1837 года, старейшая кофейня острова.</p></div>
   <p class="vlinks"><a href="https://caffecordina.com/" target="_blank" rel="noopener">сайт</a><a href="https://www.google.com/maps/search/?api=1&query=Caff%C3%A8%20Cordina%20Malta" target="_blank" rel="noopener">на карте</a><a href="https://www.facebook.com/CaffeCordina" target="_blank" rel="noopener">Facebook</a><a href="https://www.instagram.com/caffecordina" target="_blank" rel="noopener">Instagram</a></p>
 </article></div></div><div class="zone"><h3>Рядом с маршрутом</h3><div class="rl"><article class="vcard reveal">
-  <figure class="vshot vshot-none"><h4 class="vtitle"><span>Таверны на набережной Марсашлокка</span></h4></figure>
+  <figure class="vshot"><img src="img/venue-mxlokk-tav.avif" alt="Заведение: Таверны на набережной Марсашлокка" width="1100" height="733" loading="lazy" decoding="async"><h4 class="vtitle"><span>Таверны на набережной Марсашлокка</span></h4></figure>
   <p class="order">€€ · улов дня</p>
   <p class="body-s">Обед дня 4: рыба дня, картошка, стакан вина, столы у самой воды. Меню одно, на мальтийском и английском — это хороший знак.</p>
   <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>В сентябре на всех прилавках лампуки — золотая корифена, которую ловят только с конца августа по ноябрь.</p></div>
@@ -1567,7 +1595,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Сыр джбейна делают из молока собственных овец, вино — со своего участка под стенами.</p></div>
   <p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=Ta%E2%80%99%20Rikardu%20Malta" target="_blank" rel="noopener">на карте</a></p>
 </article><article class="vcard reveal">
-  <figure class="vshot vshot-none"><h4 class="vtitle"><span>Клуб духового оркестра</span></h4></figure>
+  <figure class="vshot"><img src="img/venue-banda.avif" alt="Заведение: Клуб духового оркестра" width="1100" height="733" loading="lazy" decoding="async"><h4 class="vtitle"><span>Клуб духового оркестра</span></h4></figure>
   <p class="order">€ · Cisk и Kinnie</p>
   <p class="body-s">В каждой деревне есть każin — клуб с баром, где пиво стоит вдвое дешевле, а гости в основном соседи. Заходить можно всем, достаточно поздороваться.</p>
   <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Духовые оркестры на Мальте соревнуются между приходами больше ста лет, и клуб — центр этой конкуренции.</p></div>
@@ -1763,11 +1791,11 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   <ul class="honest"><li>Вышло €1 257 на пару — на €43 ниже вашего потолка. Сначала выходило €1 312: я считал жильё по Two Pillows в Слиме, а когда полез бронировать, там на наши даты оказались только места в общих номерах. Три сьюта Gallarija в самой Валлетте вышли дешевле на €166 — отсюда и запас. У тех же номеров есть невозвратный тариф — €1 027.80 вместо €1 142, экономия €38 на пару. Я выбрал возвратный: когда в поездке шесть человек, любая пара может выпасть, а €38 — дешёвая страховка, которая заодно избавляет от запасной брони. Дальше цифра держится на трёх допущениях: летим без чемоданов, средний ужин €22 на человека, обратно в аэропорт автобусом. Минивэн в базу не входит, это отдельная доплата +€62 на пару.</li><li>Оба варианта жилья формально бутик-хостелы: кроме наших сьютов в доме есть общие номера. Поэтому берём именно private suite с санузлом внутри, получаем это письменно и отдельно спрашиваем, где стоят общие номера и есть ли правило тишины после одиннадцати вечера.</li><li>Воскресный рыбный рынок Марсашлокка приходится на день прилёта — в среду увидим будничную торговлю, она тоже настоящая, но меньше.</li><li>Решение по воде принимаем утром того же дня: северный ветер бьёт по Комино и лагуне, юго-восточный — по гроту и St Peter’s Pool. Запасной план на день 5 — Мдина, катакомбы и «Serkin», купание — плиты Тинье, они закрыты с севера бухтой. У круиза берём тариф со свободной отменой.</li><li>Цену Legligin сверил на их сайте: ужин-сет €48 с человека, а не €30, как я считал сначала. На вечер в базе заложено €22, поэтому в базовую цену он больше не входит: годовщина Рапопорт проходит в Rampila, а Legligin стоит отдельной доплатой +€52 на пару — и это выбор пары, а не решение организатора.</li><li>День закрытия Nenu проверен по их собственному расписанию: заведение работает каждый день, и до 30 сентября действует летний график — последний заказ на ужин в 22:30. Наши 20:00 в понедельник 28-го проходят спокойно, так что два повода в один вечер ничем не грозят.</li><li>Условия отмены и предоплаты берём письмом до оплаты и платим картой, а не переводом: прямая бронь вне OTA живёт по правилам самого отеля, и возврат там сложнее.</li><li>Гипогей Хал-Сафлиени — единственное на острове, что нельзя заменить ничем: подземный некрополь четвёртого тысячелетия до нашей эры, куда пускают восемьдесят человек в сутки по сеансам, €40. Билеты уходят за два-три месяца, а до поездки семь недель, поэтому проверяем наличие сразу: если сеансов нет, остаются двадцать мест «на завтра» по €50 — или сознательно не идём. В программу он не заложен именно поэтому.</li><li>На этом маршруте Kiwi предлагает и склеенные из двух билетов варианты. Разница принципиальная: при опоздании на стыковку по раздельным билетам второй сегмент просто теряется, и это наша проблема, а не авиакомпании. Перед оплатой смотрим, один это билет или два.</li><li>Обратный рейс ночной: вылет 21:30, прилёт в Кишинёв 07:15. Зато последний день на острове остаётся полным.</li><li>Цены сняты 10 августа 2026 года. Перелёт показан в долларах, как в источнике, и пересчитан по курсу около 0.92 — проверьте курс и цены перед оплатой.</li><li>Фотографии локаций — из Wikimedia Commons, авторы и лицензии перечислены внизу; снимки отелей взяты из их собственных карточек в Google.</li></ul>
 </div></section>
 
-<section id="events"><div class="wrap"><details class="fold"><summary><h2>Афиша: чего мы не увидим</h2><span class="foldl"><p>Проверил афиши: в наши пять дней большого события на острове нет. Зато три из них проходят рядом — и об этом лучше знать заранее, чем узнать на месте.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+<section id="events"><div class="wrap"><details class="fold"><summary><h2>Что застаём именно в эти дни</h2><span class="foldl"><p>Конец сентября сам по себе событие: это единственные дни в году, когда на острове одновременно идёт сбор винограда и стоит пик лампуки. Плюс то, что происходит каждый день, но мимо чего проходят те, кто не знает.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
   
-  <ul class="evs"><li><p class="evwhen">25–26 сентября</p><h3>Science in the City</h3><p class="evgap">за день до прилёта</p><p class="body-s">Ночь науки в Валлетте: город превращается в открытую лабораторию. Заканчивается ровно перед нашим приездом.</p></li><li><p class="evwhen">3 октября</p><h3>Notte Bianca</h3><p class="evgap">через два дня после вылета</p><p class="body-s">Главная белая ночь Валлетты: дворцы и музеи открыты до утра, всё бесплатно. Первая суббота октября — мы улетаем 1-го.</p></li><li><p class="evwhen">9–10 октября</p><h3>Birgufest</h3><p class="evgap">через неделю после вылета</p><p class="body-s">Биргу гасит электричество и освещается свечами. Тот самый Биргу, куда мы идём в день 4 — только без свечей.</p></li><li><p class="evwhen">не в этом году</p><h3>Malta International Airshow</h3><p class="evgap">стал раз в два года</p><p class="body-s">Последний прошёл 27–28 сентября 2025 — ровно в наши даты, но следующий ожидается в 2027-м.</p></li></ul>
-  <p class="evhave">Что в наши даты всё-таки есть: деревенские фесты сентября доигрывают последние выходные, по воскресеньям работает рыбный рынок Марсашлокка, а вечерами Валлетта живёт сама по себе — Strait Street, погреба и кухни до полуночи. Программу мы строим на еде и городе, а не на событии, и это осознанно: событие или совпадёт, или нет, а ужин в погребе будет в любом случае.</p>
-  <p class="michnote">Проверено 10 августа 2026 по календарям Festivals Malta, Visit Malta, malta.com и maltainfoguide. За две недели до вылета сверю ещё раз: мелкие концерты и приходские фесты объявляют поздно.</p>
+  <ul class="evs"><li><p class="evwhen">весь конец сентября</p><h3>Сбор винограда</h3><p class="evgap">попадаем в самый пик</p><p class="body-s">Виноград везут под пресс в тот же день, что срезали. В хозяйствах это видно прямо во дворе — не показательно для автобусных групп, а как есть. Ни в июне, ни в ноябре этого не увидеть.</p></li><li><p class="evwhen">с конца августа по ноябрь</p><h3>Пик лампуки</h3><p class="evgap">лучшие недели — наши</p><p class="body-s">Золотая корифена приходит к Мальте один раз в год. В Марсашлокке её продают с лодок утром, а к обеду она уже на гриле или в пироге с каперсами.</p></li><li><p class="evwhen">каждый день в 12:00 и 16:00</p><h3>Залп пушек у Батареи салютов</h3><p class="evgap">идём 28 сентября</p><p class="body-s">Батарея работает с XVI века и считается одной из старейших действующих в мире. Приходите за десять минут: пушку заряжают на глазах, с пояснениями.</p></li><li><p class="evwhen">каждый день, кроме воскресенья</p><h3>Рынок Il-Monti</h3><p class="evgap">рядом с отелем</p><p class="body-s">Не сувенирный, а тот, куда валлеттцы ходят за носками и помидорами. Растягивается по Merchants Street и сворачивается к двум часам.</p></li><li><p class="evwhen">каждый вечер</p><h3>Валлетта после восьми вечера</h3><p class="evgap">все четыре вечера наши</p><p class="body-s">Туристы уезжают в Слиму, экскурсионные автобусы уходят, и город остаётся жителям и тем, кто в нём ночует. Мы как раз ночуем внутри стен.</p></li></ul>
+  <p class="evhave">Что до крупных фестивалей: Notte Bianca в этом году 3 октября, Birgufest 9–10 октября, а сезон деревенских праздников закрывается 20 сентября. Ни один в наши даты не попадает, и программа на них не рассчитана — она держится на том, что есть каждый день и на том, что бывает только в конце сентября.</p>
+  <p class="michnote">Проверено 11 августа 2026 по календарям Festivals Malta, festamalta.com и афише Teatru Manoel, чей сезон открывается только в октябре. За две недели до вылета сверю ещё раз: небольшие концерты и приходские службы объявляют поздно.</p>
 </div></details></div></section>
 
 <section id="pocket"><div class="wrap">
@@ -1840,7 +1868,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
 </div></section>
 
 <footer><div class="wrap">
-  <p><b>Drivit Travel</b> · собрано 10 августа 2026 года. Тарифы на жильё — прямые каналы отелей и Booking.com; перелёт — живой поиск на шесть пассажиров; круиз и экскурсии — Booking Attractions; расписание парома и автобусов сверено с публичными источниками. Фотографии локаций: Wikimedia Commons — Andrea Scanu (CC BY-SA 4.0) · Apatzi (CC BY-SA 3.0) · Björn S. (CC BY-SA 3.0) · Brian Harrington Spier from Shanghai, China (CC BY-SA 2.0) · Continentaleurope (CC BY 4.0) · Continentaleurope (CC BY-SA 4.0) · Cosal (CC BY-SA 4.0) · Diego Delso (CC BY-SA 4.0) · Dirk Heldmaier (CC BY-SA 3.0) · Erik1980 (CC BY-SA 3.0) · Frank Vincentz (CC BY-SA 3.0) · Freddyolsson (CC BY-SA 4.0) · G.Mannaerts (CC BY-SA 4.0) · Horatio Agius / Giorgio Sommer (Public domain) · JosephAmodio (CC BY-SA 4.0) · Julijana9991 (CC BY-SA 4.0) · Kritzolina (CC BY-SA 4.0) · Marika Caruana (CC BY-SA 4.0) · MemMinquxa (CC BY-SA 4.0) · Noel.Pardi (CC BY-SA 4.0) · Redeemer (CC BY-SA 4.0) · Renata Apan (CC BY-SA 4.0) · Sebastiaan ter Burg from Utrecht, The Netherlands (CC BY 2.0) · Simon Burchell (CC BY-SA 4.0) · Tony Hisgett from Birmingham, UK (CC BY 2.0) · Txllxt TxllxT (CC BY-SA 4.0) · Wikimedia Commons (CC BY-SA) · Wusel007 (CC BY-SA 3.0) · ianpudsey (CC BY 3.0) · portengaround (CC BY-SA 2.0). Снимки отелей — из их собственных карточек в Google. Кадры залов — с сайтов самих заведений и из их карточек на Google&nbsp;Maps; у трёх заведений подтвердить кадр не удалось, там осталась только ссылка на карту.</p>
+  <p class="foot-line"><b>Создано Bruno Studio</b> <span>Drivit Travel · Мальта, 2026</span></p>
 </div></footer>
 
 <script>
@@ -2144,6 +2172,28 @@ document.head.insertAdjacentHTML('beforeend',
     });
   }, { rootMargin: '0px 0px -7% 0px', threshold: 0.05 });
   els.forEach(function (e) { io.observe(e); });
+
+  // Содержимое сложенного раздела браузер не рисует, поэтому наблюдатель о нём
+  // не узнаёт — и блоки остаются прозрачными. Раскрыли раздел — показываем их.
+  document.querySelectorAll('details.fold').forEach(function (d) {
+    d.addEventListener('toggle', function () {
+      if (!d.open) return;
+      d.querySelectorAll('.reveal').forEach(function (e, i) {
+        e.style.transitionDelay = Math.min(i * 60, 360) + 'ms';
+        e.classList.add('in');
+        io.unobserve(e);
+      });
+    });
+  });
+
+  // Подстраховка: содержимое не имеет права остаться невидимым. Если через
+  // две с половиной секунды блок так и не показался — показываем принудительно.
+  setTimeout(function () {
+    document.querySelectorAll('.reveal:not(.in)').forEach(function (e) {
+      var r = e.getBoundingClientRect();
+      if (r.top < window.innerHeight * 1.6) { e.classList.add('in'); io.unobserve(e); }
+    });
+  }, 2500);
 })();
 </script>
 

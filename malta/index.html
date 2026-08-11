@@ -92,6 +92,11 @@ a{color:var(--sea)}
 /* переносов нет намеренно: текст выключен по левому краю, и «от-мены»
    с «уточ-няю» только сорят — выгоды от них никакой */
 p{margin:0 0 var(--s3);max-width:61.8ch;hyphens:manual;text-wrap:pretty}
+/* заголовки разбиваем по смыслу, а не по остатку строки */
+h1,h2,h3,h4{text-wrap:balance}
+/* латинские названия и цены не рвём переносом строки */
+.vtitle span,.michead h3,.calcd,.upprice b,.carsum,.pn{white-space:nowrap}
+.vtitle span{white-space:normal}
 h1,h2,h3,h4{font-family:var(--display);font-weight:600;letter-spacing:-.02em;margin:0;text-wrap:balance;
   hyphens:none;letter-spacing:-.005em}
 h1{font-size:var(--f6);line-height:1.02}
@@ -553,9 +558,9 @@ tr.big td:first-child{font-family:var(--display)}
 tr:last-child td{border-bottom:0}
 
 /* жильё */
-.hotels{display:grid;justify-content:start;
-  grid-template-columns:repeat(auto-fit,minmax(min(330px,100%),560px));
-  gap:var(--s4)}
+/* жильё — самый важный выбор на странице, поэтому карточка идёт во всю
+   ширину содержимого. Иначе её кадры сжимались до 183px против 322 у локаций. */
+.hotels{display:grid;gap:var(--s5)}
 .hcard{background:var(--surface);border:1px solid var(--line);display:flex;
   flex-direction:column;overflow:hidden}
 .hshots{position:relative}
@@ -593,7 +598,9 @@ tr:last-child td{border-bottom:0}
 .chips{display:flex;flex-wrap:wrap;gap:var(--s2);margin-bottom:var(--s4)}
 /* заведения живут в той же сетке и в той же пропорции, что локации:
    два в ряд, кадр 1.618, название прописными по низу кадра */
-.rl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(330px,100%),1fr));
+/* три в ряд — как у гастрономии и мишлена. Было два, и кадры выходили
+   481px против 311 у соседних разделов. */
+.rl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:var(--s5) var(--s4)}
 .vcard{display:grid;gap:var(--s2);align-content:start}
 .vshot{position:relative;margin:0 0 var(--s2);aspect-ratio:1.618;overflow:hidden;
@@ -671,7 +678,7 @@ tr:last-child td{border-bottom:0}
 /* мишленовская группа: та же сетка, что у заведений, но без кадров —
    здесь важнее кухня, город и цена, а фото у половины мест нет */
 .mich{list-style:none;margin:0;padding:0;display:grid;gap:var(--s5) var(--s4);
-  grid-template-columns:repeat(auto-fit,minmax(min(330px,100%),1fr))}
+  grid-template-columns:repeat(3,minmax(0,1fr))}
 .mich>li{display:grid;gap:var(--s2);align-content:start;
   padding-top:var(--s4);border-top:2px solid var(--sea-ink)}
 .michead h3{margin:0;font-size:var(--f3)}
@@ -789,6 +796,33 @@ tr:last-child td{border-bottom:0}
   color:var(--bg);background:var(--sea-ink);border:0;cursor:pointer}
 #calccopy:focus-visible{outline:2px solid var(--sea-ink);outline-offset:3px}
 #calcmsg{font-size:var(--f0);color:var(--tx2)}
+/* Отклик на курсор: кадр чуть приближается, карточка приподнимается.
+   Это единственная анимация, которую видно постоянно, поэтому она мягкая
+   и выключается при просьбе уменьшить движение. */
+/* подъём делаем свойством translate, а не transform: правило появления
+   :root.js .reveal.in{transform:none} специфичнее и глушило бы его */
+.vcard,.loc,.t,.hcard{transition:translate .35s cubic-bezier(.16,1,.3,1)}
+.vshot img,.strip img,.t img{transition:transform .55s cubic-bezier(.16,1,.3,1)}
+@media (hover:hover){
+  .vcard:hover,.t:hover{translate:0 -3px}
+  .vshot:hover img,.strip figure:hover img,.t:hover img{transform:scale(1.04)}
+}
+/* подчёркивание в меню растёт из центра, а не появляется целиком */
+.navlinks a{position:relative}
+.navlinks a::after{content:"";position:absolute;left:var(--s4);right:var(--s4);
+  bottom:6px;height:1px;background:var(--sea-ink);transform:scaleX(0);
+  transform-origin:center;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.navlinks a:hover::after,.navlinks a.active::after{transform:scaleX(1)}
+/* сумма в калькуляторе меняется заметно: короткий подскок */
+#calcsum{transition:transform .25s cubic-bezier(.16,1,.3,1),color .25s ease}
+#calcsum.bump{transform:translateY(-3px) scale(1.03)}
+@media (prefers-reduced-motion:reduce){
+  .vcard,.loc,.t,.hcard,.vshot img,.strip img,.t img,#calcsum,
+  .navlinks a::after{transition:none}
+  .vcard:hover,.t:hover{translate:none}
+  .vshot:hover img,.strip figure:hover img,.t:hover img{transform:none}
+}
+
 /* кадр, который проговаривает главный довод раздела: камень и вода */
 .whyshot{margin:var(--s5) 0 var(--s6);position:relative;aspect-ratio:2.35;
   overflow:hidden;background:var(--surface2)}
@@ -873,7 +907,7 @@ font-family:var(--mono);font-size:var(--f0);letter-spacing:.05em;
 .more:hover{color:var(--tx)}
 
 /* гастрономия */
-.taste{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));
+.taste{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:var(--s4)}
 .t{background:var(--surface);border:1px solid var(--line);overflow:hidden}
 .t figure{margin:0;aspect-ratio:1.618;background:var(--surface2)}
@@ -1105,12 +1139,19 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   /* На телефоне три кадра друг под другом давали по 660px на локацию, а локаций
      тридцать — половина всей длины страницы. Кадры остаются все три и того же
      размера, но листаются в сторону: один экран вместо трёх. */
+  .rl,.taste,.mich{grid-template-columns:1fr}
   .strip{grid-auto-flow:column;grid-template-columns:none;
-    grid-auto-columns:88%;overflow-x:auto;overscroll-behavior-x:contain;
+    /* кадр во всю ширину: так он совпадает с кадром в карточке. Подсказку,
+       что полосу можно листать, даёт затемнение у правого края. */
+    grid-auto-columns:100%;overflow-x:auto;overscroll-behavior-x:contain;
     scroll-snap-type:x mandatory;scrollbar-width:none;
     padding-bottom:var(--s2)}
   .strip::-webkit-scrollbar{display:none}
   .strip figure{scroll-snap-align:center}
+  .strip{position:relative}
+  .strip figure:not(:last-child)::before{content:"";position:absolute;
+    inset:0 0 0 auto;width:34px;z-index:2;pointer-events:none;
+    background:linear-gradient(to right,transparent,oklch(0 0 0/.22))}
   /* подсказка, что кадры листаются: у последнего виден край следующего */
   .strip.s3::after,.strip.s2::after{content:"";grid-row:1;width:var(--s2)}
   .book>div,.ord>div{grid-template-columns:1fr;gap:var(--s2)}
@@ -1355,15 +1396,12 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <button type="button" class="mz mzr" data-z="reset">весь остров</button>
   </div>
   <p class="maplegend">
-    <b class="l-ferry"><i></i>паром · дни 2 и 4</b>
-    <b class="l-boat"><i></i>круиз · день 3</b>
-    <b class="l-road"><i></i>дорога с минивэном · дни 4 и 5</b>
-    <b>цифры у морей — температура воды в наши даты</b>
-    <b>выберите день — останутся только его места и его дорога</b>
-    <b>★ у пляжа — насколько он подходит нам: дорога без машины, вход в воду,
-    тень, людность</b>
+    <b class="l-ferry"><i></i>паром</b>
+    <b class="l-boat"><i></i>круиз</b>
+    <b class="l-road"><i></i>дорога</b>
+    <b>★ — насколько пляж подходит нам, рядом температура воды</b>
   </p>
-  <p class="mapnote">Береговая линия и рельеф — из OpenStreetMap и SRTM, дорожная сеть не показана: линии маршрутов передают направление, а не точную дорогу. Расстояния честные — Мальта целиком укладывается в 27 километров.</p>
+  <p class="mapnote">Берег и рельеф — из OpenStreetMap и SRTM. Линии передают направление, а не точную дорогу: весь остров укладывается в 27 километров.</p>
 
   <div class="wx">
     <h3>Погода и вода в наши даты</h3>
@@ -1374,8 +1412,8 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
       <thead><tr><th>дата</th><th>восход</th><th>закат</th></tr></thead>
       <tbody><tr><td>27 сентября</td><td>06:53</td><td>18:51</td></tr><tr><td>28 сентября</td><td>06:54</td><td>18:50</td></tr><tr><td>29 сентября</td><td>06:55</td><td>18:48</td></tr><tr><td>30 сентября</td><td>06:56</td><td>18:47</td></tr><tr><td>1 октября</td><td>06:57</td><td>18:45</td></tr></tbody>
     </table></div>
-    <p class="wxsource">Числа — среднее за 2020–2025 годы на 27 сентября — 1 октября: архив Open-Meteo по Валлетте и температура поверхности моря по трём точкам вокруг острова. Прогноз на конкретные дни смотрим за неделю до вылета. Восход и закат — из того же
-    архива по Валлетте: между годами разница меньше минуты.</p>
+    <p class="wxsource">Числа — среднее за 2020–2025 годы ровно на наши даты, архив Open-Meteo
+    по Валлетте и температура моря по трём точкам вокруг острова.</p>
   </div>
 </div></section>
 
@@ -1887,8 +1925,12 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
 <script>
 document.documentElement.lang = 'ru';
 document.documentElement.classList.add('js');
-document.head.insertAdjacentHTML('beforeend',
-  '<meta name="robots" content="noindex,nofollow,noarchive">');
+// в версии для артефакта своего <head> нет, поэтому запрет индексации ставим
+// скриптом. На сайте он уже прописан в разметке — второй раз не добавляем.
+if (!document.querySelector('meta[name="robots"]')) {
+  document.head.insertAdjacentHTML('beforeend',
+    '<meta name="robots" content="noindex,nofollow,noarchive">');
+}
 document.head.insertAdjacentHTML('beforeend',
   '<meta name="theme-color" content="#0a1519" media="(prefers-color-scheme: dark)">'
   + '<meta name="theme-color" content="#f8f9f7" media="(prefers-color-scheme: light)">');
@@ -1929,8 +1971,17 @@ document.head.insertAdjacentHTML('beforeend',
     var recount = function () {
       var t = base;
       boxes.forEach(function (b) { if (b.checked) t += parseInt(b.getAttribute('data-d'), 10); });
+      var was = sum.textContent;
       sum.textContent = '€' + t;
       sum.classList.toggle('calcup', t !== base);
+      // короткий подскок, чтобы изменение суммы нельзя было пропустить
+      if (was && was !== sum.textContent
+          && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        sum.classList.remove('bump');
+        void sum.offsetWidth;
+        sum.classList.add('bump');
+        setTimeout(function () { sum.classList.remove('bump'); }, 260);
+      }
     };
     boxes.forEach(function (b) { b.addEventListener('change', recount); });
     recount();

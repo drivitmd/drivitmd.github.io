@@ -154,6 +154,27 @@ ol.flow p{font-size:var(--f1);color:var(--tx2)}
   padding:5px 9px;border-radius:999px;border:1px solid currentColor;width:max-content}
 .tag.ok{color:var(--ok)} .tag.no{color:var(--warn)}
 
+/* последние заявки: строка-запись, даты правятся на месте */
+.hist{list-style:none;margin:0;padding:0;display:grid;gap:var(--s3)}
+.hist li{display:grid;gap:var(--s3);align-items:center;background:var(--surface);
+  border:1px solid var(--line);border-radius:12px;padding:var(--s4)}
+@media (min-width:52rem){.hist li{grid-template-columns:minmax(0,1fr) auto auto}}
+.hplace{display:grid;gap:2px;min-width:0}
+.hplace b{font-family:var(--display);font-size:var(--f2);font-weight:600}
+.hplace span{font-family:var(--mono);font-size:var(--f0);color:var(--tx2);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hdates{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s2)}
+.hdates input{width:auto;min-width:9.5rem;padding:var(--s2) var(--s3);min-height:40px}
+.hn{font-family:var(--mono);font-size:var(--f0);color:var(--tx2);white-space:nowrap}
+.hact{display:flex;gap:var(--s2);align-items:center}
+.hact button,.hact a{min-height:40px;padding:0 var(--s4);border-radius:999px;cursor:pointer;
+  font:400 var(--f1)/38px var(--body);border:1px solid var(--line);background:none;
+  color:var(--tx);text-decoration:none;white-space:nowrap;transition:border-color .18s,color .18s}
+.hact button:hover,.hact a:hover{border-color:var(--act);color:var(--act-ink)}
+.hact .del{width:40px;padding:0;color:var(--tx2);font-size:var(--f2)}
+.hact .del:hover{border-color:var(--warn);color:var(--warn)}
+.hempty{color:var(--tx2);font-size:var(--f1)}
+
 .trips{display:grid;gap:var(--s4)}
 @media (min-width:48rem){.trips{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .trip{display:grid;gap:var(--s2);padding:var(--s5) var(--s4);background:var(--surface);
@@ -309,6 +330,15 @@ footer{padding:var(--s7) 0 var(--s6);color:var(--tx2);font-size:var(--f1)}
   </div>
 </section>
 
+<section id="last">
+  <h2>Последние заявки</h2>
+  <p class="lead">Десять последних поисков остаются в этом браузере. Даты можно поменять
+     прямо в строке — движок пересчитает всё заново, потому что от даты зависит и цена,
+     и афиша, и температура воды.</p>
+  <ul class="hist" id="histlist"></ul>
+  <p class="hempty" id="histempty">Пока ничего нет. Заполните заявку выше — она сохранится здесь.</p>
+</section>
+
 <section>
   <h2>Уже собрано</h2>
   <p class="lead">На этих поездках движок и учился: каждая ошибка стала правилом в спецификации.</p>
@@ -380,6 +410,13 @@ footer{padding:var(--s7) 0 var(--s6);color:var(--tx2);font-size:var(--f1)}
     L.push('адрес страницы: /' + (d.slug || '?') + '/');
     return L.join('\n');
   }
+  function issueURL(d) {
+    var body = '```\n' + brief(d) + '\n```\n';
+    return 'https://github.com/drivitmd/drivitmd.github.io/issues/new?labels=trip&title='
+      + encodeURIComponent('поездка: ' + d.place + ' ' + d.from_date + ' — ' + d.to_date)
+      + '&body=' + encodeURIComponent(body);
+  }
+
   function render() {
     var d = read(), e = bad(d);
     slip.innerHTML = '';
@@ -401,12 +438,7 @@ footer{padding:var(--s7) 0 var(--s6);color:var(--tx2);font-size:var(--f1)}
     $('#why').textContent = ok
       ? 'Двенадцать доменов, каждый со своей проверкой. Цена, часы и наличие мест — только с первоисточником.'
       : 'Заполните: ' + e.join(', ') + '.';
-    if (ok) {
-      var body = '```\n' + brief(d) + '\n```\n';
-      issue.href = 'https://github.com/drivitmd/drivitmd.github.io/issues/new?labels=trip&title='
-        + encodeURIComponent('поездка: ' + d.place + ' ' + d.from_date + ' — ' + d.to_date)
-        + '&body=' + encodeURIComponent(body);
-    }
+    if (ok) { issue.href = issueURL(d); }
     try { localStorage.setItem('find_travel', JSON.stringify(d)); } catch (err) {}
   }
 
@@ -421,7 +453,9 @@ footer{padding:var(--s7) 0 var(--s6);color:var(--tx2);font-size:var(--f1)}
   }
   copy.addEventListener('click', function (ev) {
     ev.preventDefault();
-    var text = brief(read());
+    var d = read();
+    hpush(d);
+    var text = brief(d);
     // на file:// обещание буфера подвисает молча, поэтому запасной путь обязателен
     if (window.isSecureContext && navigator.clipboard) {
       navigator.clipboard.writeText(text).then(function () { toast('Задание скопировано'); },
@@ -440,6 +474,119 @@ footer{padding:var(--s7) 0 var(--s6);color:var(--tx2);font-size:var(--f1)}
     document.body.removeChild(ta);
     toast(ok ? 'Задание скопировано' : 'Не вышло скопировать — выделите текст заявки вручную');
   }
+
+
+  // Десять последних заявок. Живут в этом браузере: бэкенда у страницы нет,
+  // а держать историю поисков на сервере ради шести человек — лишнее.
+  var HKEY = 'find_travel_history', HMAX = 10;
+  var hlist = $('#histlist'), hempty = $('#histempty');
+
+  function hload() {
+    try { return JSON.parse(localStorage.getItem(HKEY) || '[]') || []; }
+    catch (e) { return []; }
+  }
+  function hstore(a) {
+    try { localStorage.setItem(HKEY, JSON.stringify(a.slice(0, HMAX))); } catch (e) {}
+  }
+  function hkey(x) {
+    return (x.place || '').toLowerCase().trim() + '|' + x.from_date + '|' + x.to_date;
+  }
+  // Пишем не по каждой букве, а когда заявка отправлена или скопирована —
+  // иначе история забьётся черновиками из одной буквы.
+  function hpush(d) {
+    if (bad(d).length) return;
+    var a = hload().filter(function (x) { return hkey(x) !== hkey(d); });
+    var copy = JSON.parse(JSON.stringify(d));
+    copy.saved = new Date().toISOString().slice(0, 10);
+    a.unshift(copy);
+    hstore(a);
+    hrender();
+  }
+  function nightword(n) {
+    var t = n % 10, h = n % 100;
+    if (h > 10 && h < 15) return 'ночей';
+    if (t === 1) return 'ночь';
+    if (t > 1 && t < 5) return 'ночи';
+    return 'ночей';
+  }
+  function hrow(d, i) {
+    var li = document.createElement('li');
+    li.dataset.i = i;
+    li.innerHTML =
+      '<div class="hplace"><b></b><span></span></div>' +
+      '<div class="hdates">' +
+        '<input type="date" data-f="from_date" aria-label="Выезд">' +
+        '<input type="date" data-f="to_date" aria-label="Возвращение">' +
+        '<span class="hn"></span></div>' +
+      '<div class="hact">' +
+        '<button type="button" data-a="load">В форму</button>' +
+        '<a data-a="issue" rel="noopener">Заявка</a>' +
+        '<button type="button" class="del" data-a="del" aria-label="Убрать из истории">\u00d7</button>' +
+      '</div>';
+    var slug = d.place ? slugify(d.place) + '-' + (d.from_date || '').slice(0, 7) : '';
+    li.querySelector('.hplace b').textContent = d.place || '\u2014';
+    li.querySelector('.hplace span').textContent =
+      (d.adults || '?') + ' чел.' + (slug ? ' \u00b7 /' + slug + '/' : '');
+    li.querySelector('[data-f=from_date]').value = d.from_date || '';
+    li.querySelector('[data-f=to_date]').value = d.to_date || '';
+    var n = nights(d.from_date, d.to_date);
+    li.querySelector('.hn').textContent = n > 0 ? n + ' ' + nightword(n) : 'даты не сходятся';
+    var a = li.querySelector('[data-a=issue]');
+    if (bad(d).length) { a.removeAttribute('href'); a.setAttribute('aria-disabled', 'true'); }
+    else { a.href = issueURL(d); }
+    return li;
+  }
+  function hrender() {
+    var a = hload();
+    hlist.innerHTML = '';
+    a.forEach(function (d, i) { hlist.appendChild(hrow(d, i)); });
+    hempty.style.display = a.length ? 'none' : '';
+    hlist.style.display = a.length ? '' : 'none';
+  }
+
+  // Дату правят прямо в строке: от неё зависит и цена, и афиша, и вода,
+  // поэтому смена даты — это новый поиск, а не пометка в старом.
+  hlist.addEventListener('change', function (ev) {
+    var inp = ev.target.closest('input[data-f]');
+    if (!inp) return;
+    var li = inp.closest('li'), i = +li.dataset.i, a = hload();
+    if (!a[i]) return;
+    a[i][inp.dataset.f] = inp.value;
+    hstore(a);
+    li.replaceWith(hrow(a[i], i));
+  });
+  hlist.addEventListener('click', function (ev) {
+    var btn = ev.target.closest('[data-a]');
+    if (!btn) return;
+    var li = btn.closest('li'), i = +li.dataset.i, a = hload(), d = a[i];
+    if (!d) return;
+    if (btn.dataset.a === 'del') {
+      ev.preventDefault();
+      a.splice(i, 1); hstore(a); hrender();
+      toast('Убрано из истории');
+    } else if (btn.dataset.a === 'load') {
+      ev.preventDefault();
+      hfill(d);
+      form.scrollIntoView({ block: 'start' });
+      if (form.elements.place) form.elements.place.focus();
+      toast('Заявка в форме — правьте и отправляйте');
+    }
+  });
+
+  function hfill(d) {
+    Object.keys(d).forEach(function (k) {
+      var el = form.elements[k];
+      if (el && el.type !== 'checkbox' && typeof d[k] !== 'object') el.value = d[k];
+    });
+    form.querySelectorAll('input[name=accent]').forEach(function (b) { b.checked = false; });
+    (d.accent || []).forEach(function (val) {
+      var el = form.querySelector('input[value="' + val + '"]');
+      if (el) el.checked = true;
+    });
+    render();
+  }
+
+  issue.addEventListener('click', function () { hpush(read()); });
 
   var t = $('#theme');
   t.addEventListener('click', function () {
@@ -469,6 +616,7 @@ footer{padding:var(--s7) 0 var(--s6);color:var(--tx2);font-size:var(--f1)}
     }
   } catch (e) {}
   render();
+  hrender();
 })();
 
 </script>

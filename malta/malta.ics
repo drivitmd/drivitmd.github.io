@@ -42,14 +42,14 @@ UID:malta2026-1-1@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260927T210000
 DTEND;TZID=Europe/Malta:20260927T214500
-SUMMARY:Минивэн в Слиму\, заселение
+SUMMARY:Минивэн в Валлетту\, заселение
 DESCRIPTION:День 1 · Долетели — и сразу к воде\
  n\nПрограмма целиком: https://drivitmd.github.io/malta/
 LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Минивэн в Слиму\, заселение
+DESCRIPTION:Минивэн в Валлетту\, заселение
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -57,16 +57,14 @@ UID:malta2026-1-2@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260927T214500
 DTEND;TZID=Europe/Malta:20260927T223000
-SUMMARY:Променад Тинье\, поздний бокал у вод
- ы
+SUMMARY:Strait Street\, поздний бокал
 DESCRIPTION:День 1 · Долетели — и сразу к воде\
  n\nПрограмма целиком: https://drivitmd.github.io/malta/
 LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Променад Тинье\, поздний бокал у в
- оды
+DESCRIPTION:Strait Street\, поздний бокал
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -308,14 +306,14 @@ UID:malta2026-3-5@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260929T183000
 DTEND;TZID=Europe/Malta:20260929T191500
-SUMMARY:Возвращение в Слиму
+SUMMARY:Катер в Слиму\, паром в Валлетту
 DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
  мма целиком: https://drivitmd.github.io/malta/
 LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Возвращение в Слиму
+DESCRIPTION:Катер в Слиму\, паром в Валлетту
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

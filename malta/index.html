@@ -615,8 +615,11 @@ tr:last-child td{border-bottom:0}
     linear-gradient(135deg,color-mix(in oklab,var(--surface2) 82%,var(--sun) 18%),
                             var(--surface2));
   border-style:dashed}
+.vshot-none{align-content:end}
 .vshot-none .vtitle{position:static;color:var(--tx);text-shadow:none;
-  background:none;padding:var(--s4) var(--s4) var(--s4)}
+  background:none;padding:var(--s4) var(--s4) var(--s1)}
+.vshot-none figcaption{padding:0 var(--s4) var(--s4);font-family:var(--mono);
+  font-size:var(--f0);color:var(--tx2)}
 .vlinks{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s3);margin:var(--s2) 0 0;
   font-family:var(--mono);font-size:var(--f0);letter-spacing:.04em}
 .vlinks a{color:var(--sea-ink);text-decoration:none;
@@ -711,7 +714,7 @@ tr:last-child td{border-bottom:0}
 .fold>summary:focus-visible{outline:2px solid var(--sea-ink);outline-offset:4px}
 .foldbody{padding-bottom:var(--s5)}
 /* в сложенном разделе отступы секции больше не нужны — заголовок сам их даёт */
-#includes,#tricks,#flight,#plan-b,#taste,#wine,#michelin,
+#includes,#tricks,#flight,#plan-b,#taste,#wine,#michelin,#car,
 #logistics,#practical,#backup,#events{padding:0}
 @media print{
   .fold>summary{padding:0}
@@ -786,6 +789,16 @@ tr:last-child td{border-bottom:0}
   color:var(--bg);background:var(--sea-ink);border:0;cursor:pointer}
 #calccopy:focus-visible{outline:2px solid var(--sea-ink);outline-offset:3px}
 #calcmsg{font-size:var(--f0);color:var(--tx2)}
+/* кадр, который проговаривает главный довод раздела: камень и вода */
+.whyshot{margin:var(--s5) 0 var(--s6);position:relative;aspect-ratio:2.35;
+  overflow:hidden;background:var(--surface2)}
+.whyshot img{width:100%;height:100%;object-fit:cover;cursor:zoom-in;display:block}
+.whyshot figcaption{position:absolute;left:0;right:0;bottom:0;margin:0;
+  padding:var(--s5) var(--s4) var(--s3);font-family:var(--mono);font-size:var(--f0);
+  letter-spacing:.04em;color:#F6F2E8;text-shadow:0 1px 12px oklch(0 0 0/.6);
+  background:linear-gradient(to top,oklch(0 0 0/.6),transparent);pointer-events:none}
+@media (max-width:720px){ .whyshot{aspect-ratio:1.6} }
+
 /* почему Мальта: шесть коротких доводов, каждый с проверяемым числом */
 .why{list-style:none;margin:0;padding:0;display:grid;gap:var(--s5) var(--s4);
   grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
@@ -819,7 +832,7 @@ font-family:var(--mono);font-size:var(--f0);letter-spacing:.05em;
   transition:transform .5s ease}
 .strip figure:hover img{transform:scale(1.03)}
 /* лупа: знак того, что кадр открывается крупно */
-.strip figure::after,.t figure::after,.vshot::after{content:"";position:absolute;
+.strip figure::after,.t figure::after,.vshot::after,.whyshot::after{content:"";position:absolute;
   right:var(--s2);bottom:var(--s2);width:28px;height:28px;border-radius:50%;
   background:#0b191ec7 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F4F2E8' stroke-width='2' stroke-linecap='round'><circle cx='10.5' cy='10.5' r='6.5'/><path d='M15.4 15.4L21 21'/></svg>") center/15px no-repeat;
   pointer-events:none;opacity:.82;transition:opacity .2s ease}
@@ -1184,6 +1197,9 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <h2>Что такое Мальта и почему её выбирают</h2>
     <p>Мальта — самое маленькое государство Евросоюза: 316 квадратных километров, с севера на юг двадцать семь километров. Это значит, что за четыре дня остров проходится целиком, а не «частично, в следующий раз доедем».</p>
   </div>
+  <figure class="whyshot"><img src="img/gozo-country-2.avif" alt="Известняковый берег Мальты на закате" width="1100" height="733" loading="lazy" decoding="async">
+    <figcaption>Известняк и море без промежуточных оттенков — из этого остров и состоит</figcaption>
+  </figure>
   <ul class="why"><li><h3>Всё в пределах часа</h3><p>Двадцать семь километров в длину. Самая дальняя точка программы — в сорока минутах от отеля, а не в трёх часах. За один день успеваешь и купаться, и смотреть город, потому что переезды короткие.</p></li><li><h3>Здесь говорят по-английски</h3><p>Английский — государственный язык наравне с мальтийским: остров был британским до 1964 года. Отсюда же розетки как в Британии и левостороннее движение. Языкового барьера нет вообще, что для трёх пар без гида решает многое.</p></li><li><h3>Древнее пирамид</h3><p>Храмам Хаджар-Ким и Мнайдра пять с половиной тысяч лет — они старше пирамид Гизы и Стоунхенджа, и это самые древние стоящие каменные постройки на земле. Не реконструкция, а те же камни.</p></li><li><h3>Столица, построенная целиком по плану</h3><p>Валлетту начали строить в 1566 году, сразу после Великой осады, и спланировали по сетке ещё до первого камня — первый такой город в Европе. Весь центр под охраной ЮНЕСКО, и обходится он пешком за полчаса.</p></li><li><h3>Море теплее, чем в июне</h3><p>К концу сентября вода прогрета за всё лето и держит 25–26 °C — теплее, чем в начале сезона. Купальный сезон здесь тянется до ноября.</p></li><li><h3>Камень и море, без зелени</h3><p>На острове нет ни рек, ни лесов: это известняковая плита в море. Отсюда и цвет — медовые города и бирюзовая вода без промежуточных оттенков, и скальные купальни вместо песчаных пляжей.</p></li></ul>
   <p class="whysum">Туристы выбирают Мальту за сочетание, которого больше нигде нет: Европа с евро и без визовых хлопот, английский язык, тёплое море до ноября, семь тысяч лет истории в шаге от отеля — и цены заметно ниже итальянских при том же Средиземном море. Плюс остров настолько мал, что машина не обязательна.</p>
   <p class="wxsource">Здесь снимали «Гладиатора», «Троя», «Графа Монте-Кристо» и первый сезон «Игры престолов» — Валлетта играла Королевскую Гавань, а Мдина — Кингс-Лендинг времён Таргариенов. Мальтийский язык, кстати, единственный семитский язык, который пишут латиницей, и единственный такой среди государственных языков Евросоюза.</p>
@@ -1195,13 +1211,13 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
     <p>Две годовщины свадьбы и день рождения приходятся прямо на поездку. Вечера под них подобраны заранее, а не «как получится».</p>
   </div>
   <div class="occ">
-    <article class="oc reveal"><div class="ocwho"><h3>Домбровские</h3>
+    <article class="oc reveal"><div class="ocwho"><h3>Андрей и Наталья Домбровские</h3>
       <p class="ocwhat">Годовщина свадьбы</p></div>
       <div class="ocwhen"><time>28 сентября, понедельник</time><span>день 2</span></div>
-      <p class="ocplan">Вечер после собора и пушечного залпа. Ужин ставим в Nenu: фтира из дровяной печи, тихий зал, никакой туристической суеты. Отель просим поставить в номер просекко и что-нибудь сладкое к возвращению.</p></article><article class="oc reveal"><div class="ocwho"><h3>Фроловы</h3>
+      <p class="ocplan">Вечер после собора и пушечного залпа. Ужин ставим в Nenu: фтира из дровяной печи, тихий зал, никакой туристической суеты. Отель просим поставить в номер просекко и что-нибудь сладкое к возвращению.</p></article><article class="oc reveal"><div class="ocwho"><h3>Алексей и Ольга Фроловы</h3>
       <p class="ocwhat">День рождения Алексея</p></div>
       <div class="ocwhen"><time>28 сентября, понедельник</time><span>день 2</span></div>
-      <p class="ocplan">Тот же вечер, что и годовщина Домбровских, — и это скорее плюс: один общий стол в Nenu вместо двух отдельных поводов. Просим большой стол в тихом зале и предупреждаем сразу про два тоста. День сам подводит к этому вечеру: утром купаемся, днём собор, в четыре залп пушек.</p></article><article class="oc reveal"><div class="ocwho"><h3>Рапопорт</h3>
+      <p class="ocplan">Тот же вечер, что и годовщина Андрея с Натальей, — и это скорее плюс: один общий стол в Nenu вместо двух отдельных поводов. Просим большой стол в тихом зале и предупреждаем сразу про два тоста. День сам подводит к этому вечеру: утром купаемся, днём собор, в четыре залп пушек.</p></article><article class="oc reveal"><div class="ocwho"><h3>Борис и Кристина Рапопорт</h3>
       <p class="ocwhat">Годовщина свадьбы</p></div>
       <div class="ocwhen"><time>30 сентября, среда</time><span>день 4</span></div>
       <p class="ocplan">Самый сильный вечер программы: после Марсашлокка и скальной купальни переправляемся лодкой в Биргу. Ужин в базовой цене — Rampila, ресторан внутри бастиона под стенами Валлетты. А если хочется вечера, который потом вспоминают годами, — сет без меню в погребе Legligin за доплату €52 на пару. Стол в дальнем углу и повод — просим при брони в любом случае.</p></article>
@@ -1618,7 +1634,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Лозы посажены на месте военного аэродрома Та-Кали времён Второй мировой. Девятнадцать гектаров, мерло и сира на мальтийском камне.</p></div>
   <p class="vlinks"><a href="https://www.google.com/maps/search/?api=1&query=Meridiana%2C%20%D0%A2%D0%B0-%D0%9A%D0%B0%D0%BB%D0%B8%20Malta" target="_blank" rel="noopener">на карте</a></p>
 </article><article class="vcard reveal">
-  <figure class="vshot vshot-none"><h3 class="vtitle"><span>Ta’ Mena, Гозо</span></h3></figure>
+  <figure class="vshot vshot-none"><h3 class="vtitle"><span>Ta’ Mena, Гозо</span></h3><figcaption>своего кадра нет — есть только ссылки</figcaption></figure>
   <p class="order">€€ · дегустация с закусками</p>
   <p class="body-s">Семейное хозяйство под Шарой: вино, оливковое масло, каперсы и варенье делают тут же. Дегустация на террасе среди своих полей, без автобусных групп.</p>
   <div class="fact"><span aria-hidden="true"></span><p><span class="vh">Факт: </span>Конец сентября — самый сбор урожая: если повезёт, попадёте на vendemmia и увидите, как виноград идёт под пресс в тот же день.</p></div>
@@ -1639,11 +1655,8 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
   </div>
 </div></details></div></section>
 
-<section id="car"><div class="wrap">
-  <div class="shead">
-    <h2>Машина: нужна или нет</h2>
-    <p>Живём внутри стен Валлетты, и это сразу снимает половину вопросов о дороге: автобусы уходят от городских ворот, паром — от причала под бастионом. Машину в Валлетту не завести, парковок внутри стен нет. Считаю все варианты честно.</p>
-  </div>
+<section id="car"><div class="wrap"><details class="fold"><summary><h2>Машина: нужна или нет</h2><span class="foldl"><p>Живём внутри стен Валлетты, и это сразу снимает половину вопросов о дороге: автобусы уходят от городских ворот, паром — от причала под бастионом. Машину в Валлетту не завести, парковок внутри стен нет. Считаю все варианты честно.</p></span><span class="foldx" aria-hidden="true"></span></summary><div class="foldbody">
+  
   <div class="cars">
     <article class="car reveal"><div class="carhead">
       <h3>Без машины</h3><span class="cartag">в базовой цене</span>
@@ -1691,7 +1704,7 @@ th.pick{box-shadow:inset 0 3px 0 var(--sun)}
       </div>
     </div>
   </aside>
-</div></section>
+</div></details></div></section>
 
 <section id="budget"><div class="wrap">
   <div class="shead">
@@ -2144,7 +2157,7 @@ document.head.insertAdjacentHTML('beforeend',
   }
   document.addEventListener('click', function (e) {
     var t = e.target;
-    if (t.tagName === 'IMG' && t.closest('.strip, .hphoto, .t, .vshot')) {
+    if (t.tagName === 'IMG' && t.closest('.strip, .hphoto, .t, .vshot, .whyshot')) {
       open(t.currentSrc || t.src, t.alt); return;
     }
     if (z.classList.contains('on')) close();

@@ -169,6 +169,7 @@ fieldset{border:0;padding:0;display:grid;gap:var(--s2)}
 .hcard:hover{border-color:var(--tx2);background:var(--surface)}
 .hcard:active{transform:translateY(1px)}
 .hcard b{font:400 var(--f1)/1.3 var(--body)}
+.hnote{margin:.1rem 0 .5rem;color:var(--tx2);font:400 var(--f0)/1.45 var(--body)}
 .hcard span{font:400 var(--f0)/1.4 var(--mono);color:var(--tx2)}
 .hrow{display:flex;align-items:center;gap:var(--s2)}
 .hrow .hcard{flex:1}
@@ -257,7 +258,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
   <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><clipPath id="dl"><circle cx="50" cy="50" r="43"/></clipPath><g clip-path="url(#dl)"><rect width="100" height="100" fill="#FFFFFF"/><circle cx="50" cy="42" r="14" fill="#BC5858"/><path d="M-4 72 C16 52 30 57 50 63 C69 57 84 52 104 72 L104 104 L-4 104Z" fill="#D24F4F"/><path d="M2 82 C22 76 34 86 50 82 C67 78 80 86 98 82" fill="none" stroke="#F7DEDE" stroke-width="4" stroke-linecap="round"/></g><circle cx="50" cy="50" r="45" fill="none" stroke="#BC5858" stroke-width="3"/></svg>
   <span class="wordmark" translate="no">Drivit&nbsp;Travel</span>
   <span class="engname" translate="no">find_travel</span>
-  <span class="vchip">версия <b>1.4.0</b></span>
+  <span class="vchip">версия <b>1.5.0</b></span>
   <span class="spacer"></span>
   <button class="theme" id="theme" type="button">тёмная</button>
 </header>
@@ -349,14 +350,19 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
     </label>
 
     <div class="send">
-      <a class="btn p" id="issue" href="#" rel="noopener">Отправить заявку</a>
-      <a class="btn s" id="copy" href="#">Скопировать задание</a>
-      <p class="note" id="why"></p>
+      <!-- Кнопки, а не ссылки. Ссылка с href="#" отвечает с клавиатуры только на
+           Enter, а пробел на ней прокручивает страницу вместо отправки, и
+           скринридер объявляет её ссылкой, которая никуда не ведёт. -->
+      <button class="btn p" id="issue" type="button">Отправить заявку</button>
+      <button class="btn s" id="copy" type="button">Скопировать задание</button>
+      <p class="note" id="why" role="status" aria-live="polite"></p>
     </div>
   </form>
 
   <aside class="side">
     <h2>Прошлые заявки</h2>
+      <p class="hnote">Хранятся в этом браузере: с другого устройства их не
+      видно, и сервер их не получает.</p>
     <p class="note" id="histempty">Пока пусто: первая появится здесь сразу после отправки.</p>
     <div class="hist" id="histlist" style="display:none"></div>
   </aside>
@@ -365,14 +371,15 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
 <section>
   <h2>Уже собрано</h2>
   <div class="trips">
-<a class="trip" href="./madeyra-2026-09/"><b>Мадейра</b><span>27 сентября — 1 октября 2026</span><em>3 пары, 4 ночи · 34 из 79 фактов подтверждено</em></a>
-<a class="trip" href="./mayorka-2026-09/"><b>Майорка</b><span>27 сентября — 1 октября 2026</span><em>3 пары, 4 ночи · 28 из 83 фактов подтверждено</em></a>
-<a class="trip" href="./tbilisi-2026-10/"><b>Тбилиси</b><span>14–18 октября 2026</span><em>3 пары, 4 ночи · 16 из 62 фактов подтверждено</em></a>
 <a class="trip" href="../malta/"><b>Мальта</b><span>27 сентября — 1 октября 2026</span><em>три пары, четыре ночи · образец</em></a>
   </div>
 </section>
 
-<div class="wait" id="wait" role="dialog" aria-modal="true" aria-labelledby="waith">
+<!-- Окно ожидания скрыто и от глаз, и от скринридера, пока заявки нет: раньше
+     «Заявка принята — считаю оценку» лежало в разметке страницы до всякой
+     заявки, и читалось вспомогательными программами как уже случившееся. -->
+<div class="wait" id="wait" role="dialog" aria-modal="true" aria-labelledby="waith"
+     hidden aria-hidden="true">
   <div class="waitcard">
     <div class="waithead">
       <h2 id="waith">Заявка принята</h2>
@@ -393,20 +400,20 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
     <p class="waitline" id="waitline"></p>
     <p class="waitfoot" id="waitfoot"></p>
     <div class="waitact">
-      <a class="btn p" id="waitopen" href="#" style="display:none">Открыть страницу</a>
+      <button class="btn p" id="waitopen" type="button" style="display:none">Открыть страницу</button>
       <button class="btn s" type="button" id="waithide">Свернуть</button>
     </div>
   </div>
 </div>
 
 <footer>
-  1.4.0 — 12 августа 2026<br>
+  1.5.0 — 13 августа 2026<br>
   Создано <strong>bruno studio</strong>
 </footer>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
-var ETA = {"stages": [["Место, погода, карта", 170], ["Жильё", 105], ["Еда и вино", 183], ["Афиша и рынки", 134], ["Объекты: часы и билеты", 104], ["Транспорт", 86], ["Фотографии", 63], ["Тексты, дни, смета", 88]], "median": 933, "worst": 2649, "runs": 262};
+var ETA = {"stages": [["Место, погода, карта", 170], ["Жильё", 105], ["Еда и вино", 183], ["Афиша и рынки", 134], ["Объекты: часы и билеты", 99], ["Транспорт", 86], ["Фотографии", 63], ["Тексты, дни, смета", 42]], "median": 882, "worst": 2529, "runs": 262};
 
 
 (function () {
@@ -830,6 +837,11 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     W.line.textContent = mode === 'local' ? 'запускаю сбор…'
       : 'задание скопировано и открыт бот — вставьте его сообщением';
     W.open.style.display = 'none';
+    // Панель лежит в разметке с hidden: снимаем его вместе с открытием, иначе
+    // окно останется невидимым, а вспомогательные программы — не увидят его и
+    // после заявки.
+    W.box.hidden = false;
+    W.box.setAttribute('aria-hidden', 'false');
     W.box.setAttribute('data-open', '1');
     var t0 = Date.now();
     var total = ETA.median;
@@ -874,7 +886,9 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     }, 3000);
   }
 
-  W.hide.addEventListener('click', function () { W.box.removeAttribute('data-open'); });
+  W.hide.addEventListener('click', function () { W.box.removeAttribute('data-open');
+    W.box.hidden = true;
+    W.box.setAttribute('aria-hidden', 'true'); });
 })();
 
 </script>

@@ -192,7 +192,7 @@ UID:malta2026-2-7@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T200000
 DTEND;TZID=Europe/Malta:20260928T214000
-SUMMARY:Ужин: фтира из дровяной печи в Nenu
+SUMMARY:Ужин: фтира из дровяной печи в Ta’ Nenu
 DESCRIPTION:День 2 · С утра купаемся\, днём идё
  м в собор\n\nПрограмма целиком: https://drivitmd.
  github.io/malta/
@@ -200,7 +200,8 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Ужин: фтира из дровяной печи в Nenu
+DESCRIPTION:Ужин: фтира из дровяной печи в Ta’ 
+ Nenu
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

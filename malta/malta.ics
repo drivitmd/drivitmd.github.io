@@ -42,14 +42,14 @@ UID:malta2026-1-1@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260927T210000
 DTEND;TZID=Europe/Malta:20260927T214500
-SUMMARY:Минивэн в Валлетту\, заселение
+SUMMARY:Экспресс TD4 в Валлетту\, заселение
 DESCRIPTION:День 1 · Долетели — и сразу к воде\
  n\nПрограмма целиком: https://drivitmd.github.io/malta/
 LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Минивэн в Валлетту\, заселение
+DESCRIPTION:Экспресс TD4 в Валлетту\, заселение
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

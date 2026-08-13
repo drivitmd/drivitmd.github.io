@@ -235,8 +235,17 @@ section h2{margin-bottom:var(--s3)}
 .stages{list-style:none;padding:0;margin:0;display:grid;gap:.3rem}
 .stages li{display:flex;gap:var(--s3);align-items:baseline;font-size:var(--f0);color:var(--tx2)}
 .stages li b{font:400 var(--f0)/1.4 var(--mono);font-weight:400;min-width:5.2rem}
-.stages li[data-on="1"]{color:var(--tx)}
-.stages li[data-done="1"] b::after{content:" ✓";color:var(--ok)}
+/* Состояние этапа писалось в data-s, а стили ждали data-on/data-done — то есть
+   список этапов не рисовался вообще: «идёт», «сделано» и «ждёт» выглядели
+   одинаково, а точка была нулевого размера. Замер показал их попиксельно
+   идентичными. Правило теперь читает тот атрибут, который пишет скрипт. */
+.stages li .dot{width:.42rem;height:.42rem;border-radius:50%;flex:0 0 auto;
+  background:var(--line);margin-top:.42rem}
+.stages li[data-s="now"]{color:var(--tx)}
+.stages li[data-s="now"] .dot{background:var(--acc)}
+.stages li[data-s="done"] .dot{background:var(--ok)}
+.stages li[data-s="done"] .sec::after{content:" ✓";color:var(--ok)}
+.stages li .sec{margin-left:auto;font:400 var(--f0)/1.4 var(--mono)}
 .waitline,.waitfoot{font-size:var(--f0);color:var(--tx2)}
 .waitact{display:flex;gap:var(--s2)}
 .waitact .btn{flex:1}
@@ -258,7 +267,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
   <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><clipPath id="dl"><circle cx="50" cy="50" r="43"/></clipPath><g clip-path="url(#dl)"><rect width="100" height="100" fill="#FFFFFF"/><circle cx="50" cy="42" r="14" fill="#BC5858"/><path d="M-4 72 C16 52 30 57 50 63 C69 57 84 52 104 72 L104 104 L-4 104Z" fill="#D24F4F"/><path d="M2 82 C22 76 34 86 50 82 C67 78 80 86 98 82" fill="none" stroke="#F7DEDE" stroke-width="4" stroke-linecap="round"/></g><circle cx="50" cy="50" r="45" fill="none" stroke="#BC5858" stroke-width="3"/></svg>
   <span class="wordmark" translate="no">Drivit&nbsp;Travel</span>
   <span class="engname" translate="no">find_travel</span>
-  <span class="vchip">версия <b>1.5.0</b></span>
+  <span class="vchip">версия <b>1.6.0</b></span>
   <span class="spacer"></span>
   <button class="theme" id="theme" type="button">тёмная</button>
 </header>
@@ -385,7 +394,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
       <h2 id="waith">Заявка принята</h2>
       <span class="sub" id="waitsub"></span>
     </div>
-    <div class="ring">
+    <div class="ring" id="waitring">
       <svg viewBox="0 0 120 120" aria-hidden="true">
         <circle class="bg" cx="60" cy="60" r="52"></circle>
         <circle class="fg" id="waitarc" cx="60" cy="60" r="52"
@@ -407,7 +416,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
 </div>
 
 <footer>
-  1.5.0 — 13 августа 2026<br>
+  1.6.0 — 13 августа 2026<br>
   Создано <strong>bruno studio</strong>
 </footer>
 </div>
@@ -519,7 +528,7 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
       W.head.textContent = 'Собираю ' + (d.place || j.slug);
       return fetch(API + '/api/run/' + encodeURIComponent(j.slug), {
         method: 'POST', headers: {'Content-Type': 'application/json'}, body: '{}'
-      }).then(function () { waitWatch(j.slug); say('сбор запущен: ' + j.slug); });
+      }).then(function () { waitWatch(j.slug, API); say('сбор запущен: ' + j.slug); });
     }).catch(function (e) {
       W.line.textContent = 'движок не ответил: ' + e.message
         + '. Проверьте, что пульт запущен (ярлык «Drivit Travel — пульт»).';
@@ -559,12 +568,23 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
       .catch(function () {
         clearTimeout(timer);
         waitOpen(d, null, 'remote');
+        // Бот больше не открывается сам. Чужое приложение, открывшееся без
+        // спроса, читается как сбой — и в прошлый раз читатель именно так это
+        // и описал: «зачем-то открылся бот». Кнопку нажимает человек.
         var url = BOT + '?text=' + encodeURIComponent(brief(d));
         copyText(brief(d), function () {
-          say('движок на вашей машине не запущен — заявка ушла боту, '
-              + 'он положит её в очередь');
-          window.open(url, '_blank', 'noopener');
+          say('задание скопировано — отправьте его боту, иначе сбор не начнётся');
         });
+        W.open.textContent = 'Отправить боту';
+        W.open.style.display = '';
+        W.open.onclick = function () {
+          window.open(url, '_blank', 'noopener');
+          // Отправку подтверждает не страница: она не видит, нажал ли человек
+          // «отправить» в мессенджере. Поэтому пишем ровно это.
+          W.line.textContent = 'бот открыт — отправьте сообщение, чтобы заявка '
+            + 'встала в очередь';
+          markQueued(d);
+        };
       });
   }
 
@@ -681,6 +701,42 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     hstore(a);
     hrender();
   }
+  // Заявка, отданная боту, помечается в истории. Раньше после отправки человек
+  // обновлял страницу и не видел ничего: в списке «уже собрано» бывают только
+  // собранные поездки, а отправленной заявке места на странице не было вовсе.
+  // Пометка живёт рядом с самой заявкой, в этом же браузере.
+  // «2026-08-13 11:39» → «13.08 в 11:39»: в одной строке с датами поездки,
+  // набранными по-русски, машинный вид читается как чужой.
+  function queuedRu(s) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}):(\d{2})/.exec(String(s || ''));
+    return m ? (m[3] + '.' + m[2] + ' в ' + m[4] + ':' + m[5]) : String(s || '');
+  }
+
+  function localStamp() {
+    var t = new Date();
+    function two(n) { return (n < 10 ? '0' : '') + n; }
+    return t.getFullYear() + '-' + two(t.getMonth() + 1) + '-' + two(t.getDate())
+      + ' ' + two(t.getHours()) + ':' + two(t.getMinutes());
+  }
+
+  function markQueued(d) {
+    var a = hload();
+    var k = hkey(d);
+    for (var i = 0; i < a.length; i++) {
+      if (hkey(a[i]) === k) {
+        // Местное время, а не по Гринвичу: toISOString даёт UTC, и пометка
+        // «отдана боту в 08:38» при часах на стене 11:38 читается как сбой.
+        // Тот же капкан однажды сдвинул дату возврата на день назад.
+        a[i].queued = localStamp();
+        hstore(a);
+        hrender();
+        return;
+      }
+    }
+    hpush(d);
+    markQueued(d);
+  }
+
   function nightword(n) {
     var t = n % 10, h = n % 100;
     if (h > 10 && h < 15) return 'ночей';
@@ -705,7 +761,8 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     b.firstChild.textContent = d.place || '—';
     b.lastChild.textContent = dmy(d.from_date) + ' — ' + dmy(d.to_date)
       + (n > 0 ? ' · ' + n + ' ' + nightword(n) : '')
-      + ' · ' + (d.adults || '?') + ' чел. · ' + th;
+      + ' · ' + (d.adults || '?') + ' чел. · ' + th
+      + (d.queued ? ' · отдана боту ' + queuedRu(d.queued) + ', ждёт очереди' : '');
     var x = document.createElement('button');
     x.type = 'button';
     x.className = 'hdel';
@@ -804,7 +861,8 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
   var W = {
     box: $('#wait'), head: $('#waith'), sub: $('#waitsub'), arc: $('#waitarc'),
     time: $('#waittime'), what: $('#waitwhat'), list: $('#waitstages'),
-    line: $('#waitline'), foot: $('#waitfoot'), open: $('#waitopen'), hide: $('#waithide')
+    line: $('#waitline'), foot: $('#waitfoot'), open: $('#waitopen'), hide: $('#waithide'),
+    ring: $('#waitring')
   };
   var RING = 2 * Math.PI * 52;
   var waitTimer = null, waitPoll = null;
@@ -826,16 +884,26 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
   function waitOpen(d, slug, mode) {
     W.list.innerHTML = stagesHTML();
     W.head.textContent = mode === 'local' ? ('Собираю ' + (d.place || 'поездку'))
-                                          : 'Заявка ушла в очередь';
+                                          : 'Заявку надо отправить сообщением';
     W.sub.textContent = (dmy(d.from_date) || '') + ' — ' + (dmy(d.to_date) || '')
       + (d.adults ? (' · ' + d.adults + ' чел.') : '');
-    W.foot.textContent = 'Оценка по ' + ETA.runs + ' замерам из журналов движка: обычно '
-      + Math.round(ETA.median / 60) + ' мин, худший случай ' + Math.round(ETA.worst / 60)
-      + ' мин. Часть этапов идёт одновременно, поэтому это не сумма всех.'
-      + (mode === 'local' ? ' Окно можно свернуть — сборка не остановится.'
-                          : ' Сборка начнётся, когда движок возьмёт заявку.');
-    W.line.textContent = mode === 'local' ? 'запускаю сбор…'
-      : 'задание скопировано и открыт бот — вставьте его сообщением';
+    // Оценка по замерам — только там, где сборка идёт. На удалённом пути
+    // говорим ровно то, что произошло, и ничего о времени: время сборки,
+    // которая не началась, — не оценка, а обещание.
+    if (mode === 'local') {
+      W.foot.textContent = 'Оценка по ' + ETA.runs + ' замерам из журналов движка: обычно '
+        + Math.round(ETA.median / 60) + ' мин, худший случай ' + Math.round(ETA.worst / 60)
+        + ' мин. Показанные этапы складываются в эту оценку.'
+        + ' Окно можно свернуть — сборка не остановится.';
+      W.line.textContent = 'запускаю сбор…';
+    } else {
+      W.foot.textContent = 'Эта страница открыта в интернете, а движок стоит на '
+        + 'машине владельца и снаружи не виден — дойти до него страница не может. '
+        + 'Поэтому заявка передаётся сообщением: движок возьмёт её из очереди, '
+        + 'соберёт поездку и пришлёт ссылку. Пока сообщение не отправлено, '
+        + 'ничего не собирается.';
+      W.line.textContent = 'задание скопировано — осталось отправить его боту';
+    }
     W.open.style.display = 'none';
     // Панель лежит в разметке с hidden: снимаем его вместе с открытием, иначе
     // окно останется невидимым, а вспомогательные программы — не увидят его и
@@ -843,6 +911,21 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     W.box.hidden = false;
     W.box.setAttribute('aria-hidden', 'false');
     W.box.setAttribute('data-open', '1');
+    // Кольцо, отсчёт и этапы показывают ХОД СБОРКИ. На удалённом пути сборки
+    // нет — движок стоит на машине владельца и страницы из интернета не видит.
+    // Раньше таймер шёл всё равно: человек пятнадцать минут смотрел на
+    // выдуманные этапы, а в конце счётчик писал «почти готово» о работе,
+    // которая не начиналась. Ничего не происходит — ничего и не показываем.
+    if (mode !== 'local') {
+      W.ring.hidden = true;
+      W.list.innerHTML = '';
+      W.list.hidden = true;
+      W.what.textContent = '';
+      W.time.textContent = '';
+      return;
+    }
+    W.ring.hidden = false;
+    W.list.hidden = false;
     var t0 = Date.now();
     var total = ETA.median;
     clearInterval(waitTimer);
@@ -856,23 +939,44 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
         acc += ETA.stages[i][1];
         if (passed < acc) { cur = i; break; }
       }
-      if (cur < 0) cur = ETA.stages.length - 1;
+      // Оценка вышла — значит показанные этапы пройдены все. Раньше здесь
+      // стоял последний индекс, и последний этап навсегда оставался «идёт»:
+      // семь из восьми сделано, восьмой в работе — вечно.
+      if (cur < 0) cur = ETA.stages.length;
       W.list.querySelectorAll('li').forEach(function (li) {
         var i = +li.dataset.i;
         li.dataset.s = i < cur ? 'done' : (i === cur ? 'now' : 'wait');
       });
-      W.what.textContent = ETA.stages[cur][0];
+      W.what.textContent = (cur < ETA.stages.length) ? ETA.stages[cur][0]
+                                                      : 'оценка вышла';
+      if (frac >= 1) {
+        // Дальше показывать нечего: оценка исчерпана, а о настоящем ходе
+        // сборки эта ветка ничего не знает. Раньше окно навсегда застывало на
+        // «почти готово» — обещание о работе, про которую ничего не известно.
+        clearInterval(waitTimer);
+        W.time.textContent = 'дольше обычного';
+        W.line.textContent = 'оценка вышла; сколько осталось — движок не сообщает';
+      }
     }, 1000);
-    if (mode === 'local' && slug) { waitWatch(slug); }
+    if (mode === 'local' && slug) { waitWatch(slug, ENGINE); }
   }
 
   // Локально ход сборки известен точно: сервер отдаёт состояние и строку. Оценка
   // тогда служит только шкалой, а слова берутся у движка.
-  function waitWatch(slug) {
+  // База обязательна. Раньше адрес был относительным, и когда страница открыта
+  // не с самого сервера, опрос состояния уходил в никуда, молча падал в catch —
+  // и окно навсегда оставалось с оценочным таймером вместо настоящего хода
+  // сборки. То есть даже при доступном движке человек видел симуляцию.
+  var watchFails = 0;
+
+  function waitWatch(slug, base) {
+    var API = base === undefined ? ENGINE : base;
+    watchFails = 0;
     clearInterval(waitPoll);
     waitPoll = setInterval(function () {
-      fetch('/api/run/' + encodeURIComponent(slug)).then(function (r) { return r.json(); })
+      fetch(API + '/api/run/' + encodeURIComponent(slug)).then(function (r) { return r.json(); })
         .then(function (j) {
+          watchFails = 0;
           if (j.line) { W.line.textContent = j.line; }
           if (j.state && j.state !== 'работает') {
             clearInterval(waitPoll); clearInterval(waitTimer);
@@ -880,9 +984,29 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
             W.time.textContent = (j.state === 'готово') ? 'готово' : j.state;
             W.what.textContent = 'сборка закончена';
             W.list.querySelectorAll('li').forEach(function (li) { li.dataset.s = 'done'; });
-            if (j.page) { W.open.href = j.page; W.open.style.display = ''; }
+            if (j.page) {
+              // Это кнопка, а не ссылка: href на ней ничего не делает. Когда
+              // действия переставали быть ссылками, эта строка осталась прежней
+              // — и кнопка результата была бы видна и мертва.
+              W.open.textContent = 'Открыть страницу';
+              W.open.onclick = function () { window.open(j.page, '_blank', 'noopener'); };
+              W.open.style.display = '';
+            }
           }
-        }).catch(function () {});
+        }).catch(function () {
+          // Молчаливый catch — та же болезнь, что выдуманный прогресс: опрос
+          // падает, а окно продолжает показывать оценку как настоящий ход.
+          // Три неудачи подряд — и говорим прямо, что состояние недоступно.
+          watchFails += 1;
+          if (watchFails >= 3) {
+            clearInterval(waitPoll); clearInterval(waitTimer);
+            W.line.textContent = 'состояние сборки недоступно: движок не отвечает '
+              + 'на опрос. Сборка могла идти или остановиться — по этому окну не '
+              + 'узнать.';
+            W.time.textContent = 'неизвестно';
+            W.what.textContent = '';
+          }
+        });
     }, 3000);
   }
 

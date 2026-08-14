@@ -25,11 +25,48 @@ END:VTIMEZONE
 BEGIN:VEVENT
 UID:malta2026-1-0@drivitmd.github.io
 DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260927T120000
+DTEND;TZID=Europe/Malta:20260927T130000
+SUMMARY:Выезд в аэропорт Кишинёва\, регистр
+ ация за два часа
+DESCRIPTION:День 1 · Долетели ночью — до моря 
+ сто семьдесят метров\n\nПрограмма целик
+ ом: https://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Выезд в аэропорт Кишинёва\, регис
+ трация за два часа
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-1-1@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260927T140000
+DTEND;TZID=Europe/Malta:20260927T150000
+SUMMARY:Вылет из Кишинёва — 15:00 по местному:
+  Мальта на час позади
+DESCRIPTION:День 1 · Долетели ночью — до моря 
+ сто семьдесят метров\n\nПрограмма целик
+ ом: https://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Вылет из Кишинёва — 15:00 по местно
+ му: Мальта на час позади
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-1-2@drivitmd.github.io
+DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260927T202000
 DTEND;TZID=Europe/Malta:20260927T212000
 SUMMARY:Посадка в аэропорту MLA
-DESCRIPTION:День 1 · Долетели — и сразу к воде\
- n\nПрограмма целиком: https://drivitmd.github.io/malta/
+DESCRIPTION:День 1 · Долетели ночью — до моря 
+ сто семьдесят метров\n\nПрограмма целик
+ ом: https://drivitmd.github.io/malta/
 LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
@@ -38,42 +75,64 @@ DESCRIPTION:Посадка в аэропорту MLA
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-1-1@drivitmd.github.io
+UID:malta2026-1-3@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260927T210000
-DTEND;TZID=Europe/Malta:20260927T214500
-SUMMARY:Экспресс TD4 в Валлетту\, заселение
-DESCRIPTION:День 1 · Долетели — и сразу к воде\
- n\nПрограмма целиком: https://drivitmd.github.io/malta/
+DTSTART;TZID=Europe/Malta:20260927T214500
+DTEND;TZID=Europe/Malta:20260927T221900
+SUMMARY:Экспресс TD3 от терминала\, €3 с челов
+ ека
+DESCRIPTION:День 1 · Долетели ночью — до моря 
+ сто семьдесят метров\n\nПрограмма целик
+ ом: https://drivitmd.github.io/malta/
 LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Экспресс TD4 в Валлетту\, заселение
+DESCRIPTION:Экспресс TD3 от терминала\, €3 с чел
+ овека
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-1-2@drivitmd.github.io
+UID:malta2026-1-4@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260927T214500
-DTEND;TZID=Europe/Malta:20260927T223000
-SUMMARY:Strait Street\, поздний бокал
-DESCRIPTION:День 1 · Долетели — и сразу к воде\
- n\nПрограмма целиком: https://drivitmd.github.io/malta/
+DTSTART;TZID=Europe/Malta:20260927T221900
+DTEND;TZID=Europe/Malta:20260927T224500
+SUMMARY:Остановка «Torri» — 167 метров до отеля
+ \, заселение
+DESCRIPTION:День 1 · Долетели ночью — до моря 
+ сто семьдесят метров\n\nПрограмма целик
+ ом: https://drivitmd.github.io/malta/
 LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Strait Street\, поздний бокал
+DESCRIPTION:Остановка «Torri» — 167 метров до оте
+ ля\, заселение
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-1-5@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260927T224500
+DTEND;TZID=Europe/Malta:20260927T233000
+SUMMARY:Набережная Слимы\, поздний бокал
+DESCRIPTION:День 1 · Долетели ночью — до моря 
+ сто семьдесят метров\n\nПрограмма целик
+ ом: https://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Набережная Слимы\, поздний бокал
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-2-0@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260928T090000
-DTEND;TZID=Europe/Malta:20260928T110000
-SUMMARY:Паром в Слиму\, купание с плит Тинье 
- и кофе на променаде
+DTSTART;TZID=Europe/Malta:20260928T073000
+DTEND;TZID=Europe/Malta:20260928T081500
+SUMMARY:Завтрак в отеле — буфет\, входит в ц
+ ену
 DESCRIPTION:День 2 · С утра купаемся\, днём идё
  м в собор\n\nПрограмма целиком: https://drivitmd.
  github.io/malta/
@@ -81,17 +140,17 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Паром в Слиму\, купание с плит Тин
- ье и кофе на променаде
+DESCRIPTION:Завтрак в отеле — буфет\, входит в
+  цену
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-2-1@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260928T110000
-DTEND;TZID=Europe/Malta:20260928T123000
-SUMMARY:Паром обратно\, в отеле душ и «собор
- ная» одежда — плечи и колени закрыты
+DTSTART;TZID=Europe/Malta:20260928T090000
+DTEND;TZID=Europe/Malta:20260928T110000
+SUMMARY:Купание через дорогу: плиты и лестн
+ ицы в воду\, 170 метров
 DESCRIPTION:День 2 · С утра купаемся\, днём идё
  м в собор\n\nПрограмма целиком: https://drivitmd.
  github.io/malta/
@@ -99,16 +158,17 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Паром обратно\, в отеле душ и «соб
- орная» одежда — плечи и колени закрыты
+DESCRIPTION:Купание через дорогу: плиты и лес
+ тницы в воду\, 170 метров
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-2-2@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260928T121500
-DTEND;TZID=Europe/Malta:20260928T135500
-SUMMARY:Прогулка по городу\, обед
+DTSTART;TZID=Europe/Malta:20260928T110000
+DTEND;TZID=Europe/Malta:20260928T114000
+SUMMARY:Душ и «соборная» одежда — плечи и к
+ олени закрыты
 DESCRIPTION:День 2 · С утра купаемся\, днём идё
  м в собор\n\nПрограмма целиком: https://drivitmd.
  github.io/malta/
@@ -116,11 +176,48 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Прогулка по городу\, обед
+DESCRIPTION:Душ и «соборная» одежда — плечи и
+  колени закрыты
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-2-3@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260928T114000
+DTEND;TZID=Europe/Malta:20260928T121500
+SUMMARY:Пешком к парому: километр\, гребень 
+ метров тридцать пять
+DESCRIPTION:День 2 · С утра купаемся\, днём идё
+ м в собор\n\nПрограмма целиком: https://drivitmd.
+ github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Пешком к парому: километр\, гребен
+ ь метров тридцать пять
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-2-4@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260928T121500
+DTEND;TZID=Europe/Malta:20260928T134500
+SUMMARY:Паром в Валлетту\, пять минут. Прогу
+ лка по городу\, обед
+DESCRIPTION:День 2 · С утра купаемся\, днём идё
+ м в собор\n\nПрограмма целиком: https://drivitmd.
+ github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Паром в Валлетту\, пять минут. Про
+ гулка по городу\, обед
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-2-5@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T134500
 DTEND;TZID=Europe/Malta:20260928T151500
@@ -138,10 +235,10 @@ DESCRIPTION:Собор Святого Иоанна и Караваджо\
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-2-4@drivitmd.github.io
+UID:malta2026-2-6@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T152500
-DTEND;TZID=Europe/Malta:20260928T161000
+DTEND;TZID=Europe/Malta:20260928T160000
 SUMMARY:Верхние сады Барракка\, занимаем ме
  сто у парапета
 DESCRIPTION:День 2 · С утра купаемся\, днём идё
@@ -156,7 +253,7 @@ DESCRIPTION:Верхние сады Барракка\, занимаем
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-2-5@drivitmd.github.io
+UID:malta2026-2-7@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T160000
 DTEND;TZID=Europe/Malta:20260928T164500
@@ -172,7 +269,7 @@ DESCRIPTION:Залп пушек
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-2-6@drivitmd.github.io
+UID:malta2026-2-8@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T170000
 DTEND;TZID=Europe/Malta:20260928T174500
@@ -188,7 +285,7 @@ DESCRIPTION:Лифт к харбору\, вид на Три города
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-2-7@drivitmd.github.io
+UID:malta2026-2-9@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260928T200000
 DTEND;TZID=Europe/Malta:20260928T214000
@@ -205,42 +302,93 @@ DESCRIPTION:Ужин: фтира из дровяной печи в Ta’
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:malta2026-2-10@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260928T220000
+DTEND;TZID=Europe/Malta:20260928T224500
+SUMMARY:Паром обратно в Слиму — следующий т
+ олько в 23:30
+DESCRIPTION:День 2 · С утра купаемся\, днём идё
+ м в собор\n\nПрограмма целиком: https://drivitmd.
+ github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Паром обратно в Слиму — следующи
+ й только в 23:30
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:malta2026-3-0@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260929T084500
-DTEND;TZID=Europe/Malta:20260929T093000
-SUMMARY:Пешком на причал Sliema Ferries
+DTSTART;TZID=Europe/Malta:20260929T073000
+DTEND;TZID=Europe/Malta:20260929T081500
+SUMMARY:Завтрак в отеле
 DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
  мма целиком: https://drivitmd.github.io/malta/
 LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Пешком на причал Sliema Ferries
+DESCRIPTION:Завтрак в отеле
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-3-1@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260929T091500
-DTEND;TZID=Europe/Malta:20260929T181500
-SUMMARY:Выход круиза\, порядок дня — по марш
- руту оператора
+DTSTART;TZID=Europe/Malta:20260929T090500
+DTEND;TZID=Europe/Malta:20260929T093000
+SUMMARY:Выход из отеля\, шестнадцать минут п
+ о набережной
 DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
  мма целиком: https://drivitmd.github.io/malta/
 LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Выход круиза\, порядок дня — по ма
- ршруту оператора
+DESCRIPTION:Выход из отеля\, шестнадцать мину
+ т по набережной
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-3-2@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260929T103000
-DTEND;TZID=Europe/Malta:20260929T111500
+DTSTART;TZID=Europe/Malta:20260929T093000
+DTEND;TZID=Europe/Malta:20260929T100000
+SUMMARY:На причале Sliema Ferries — оператор прос
+ ит быть за полчаса
+DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
+ мма целиком: https://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:На причале Sliema Ferries — оператор пр
+ осит быть за полчаса
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-3-3@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260929T100000
+DTEND;TZID=Europe/Malta:20260929T113000
+SUMMARY:Отход. Порядок дня задаёт оператор
+DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
+ мма целиком: https://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Отход. Порядок дня задаёт операто
+ р
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-3-4@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260929T113000
+DTEND;TZID=Europe/Malta:20260929T121500
 SUMMARY:Гозо: стоянка в Мджарре\, набережная
 DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
  мма целиком: https://drivitmd.github.io/malta/
@@ -253,73 +401,127 @@ DESCRIPTION:Гозо: стоянка в Мджарре\, набережн
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-3-3@drivitmd.github.io
-DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260929T130000
-DTEND;TZID=Europe/Malta:20260929T144000
-SUMMARY:Обед на борту\, пещеры Комино
-DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
- мма целиком: https://drivitmd.github.io/malta/
-LOCATION:Malta
-BEGIN:VALARM
-TRIGGER:-PT20M
-ACTION:DISPLAY
-DESCRIPTION:Обед на борту\, пещеры Комино
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:malta2026-3-4@drivitmd.github.io
-DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260929T143000
-DTEND;TZID=Europe/Malta:20260929T163000
-SUMMARY:Блю-Лагуна: купание и маска\, полтор
- а часа
-DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
- мма целиком: https://drivitmd.github.io/malta/
-LOCATION:Malta
-BEGIN:VALARM
-TRIGGER:-PT20M
-ACTION:DISPLAY
-DESCRIPTION:Блю-Лагуна: купание и маска\, полт
- ора часа
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:malta2026-3-5@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260929T183000
-DTEND;TZID=Europe/Malta:20260929T191500
-SUMMARY:Катер в Слиму\, паром в Валлетту
+DTSTART;TZID=Europe/Malta:20260929T133000
+DTEND;TZID=Europe/Malta:20260929T153000
+SUMMARY:Блю-Лагуна: сходим на берег по QR-про
+ пуску\, слот 13:30–17:30
 DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
  мма целиком: https://drivitmd.github.io/malta/
 LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Катер в Слиму\, паром в Валлетту
+DESCRIPTION:Блю-Лагуна: сходим на берег по QR-п
+ ропуску\, слот 13:30–17:30
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-3-6@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260929T203000
-DTEND;TZID=Europe/Malta:20260929T221000
-SUMMARY:Ужин: погреб Trabuxu
+DTSTART;TZID=Europe/Malta:20260929T153000
+DTEND;TZID=Europe/Malta:20260929T161500
+SUMMARY:Пещеры Комино и Кристал-Лагуна с бо
+ рта
 DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
  мма целиком: https://drivitmd.github.io/malta/
 LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Ужин: погреб Trabuxu
+DESCRIPTION:Пещеры Комино и Кристал-Лагуна с 
+ борта
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-3-7@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260929T173000
+DTEND;TZID=Europe/Malta:20260929T181500
+SUMMARY:Возвращение в Слиму
+DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
+ мма целиком: https://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Возвращение в Слиму
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-3-8@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260929T181500
+DTEND;TZID=Europe/Malta:20260929T190000
+SUMMARY:Душ в отеле
+DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
+ мма целиком: https://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Душ в отеле
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-3-9@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260929T193000
+DTEND;TZID=Europe/Malta:20260929T200000
+SUMMARY:Паром в Валлетту\, с этого рейса ноч
+ ной тариф €5.20 туда-обратно
+DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
+ мма целиком: https://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Паром в Валлетту\, с этого рейса н
+ очной тариф €5.20 туда-обратно
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-3-10@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260929T200000
+DTEND;TZID=Europe/Malta:20260929T213000
+SUMMARY:Ужин в Валлетте — стол не бронирова
+ ли\, идём куда сядем
+DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
+ мма целиком: https://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Ужин в Валлетте — стол не брониро
+ вали\, идём куда сядем
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-3-11@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260929T213000
+DTEND;TZID=Europe/Malta:20260929T231000
+SUMMARY:Погреб Trabuxu: доска и вино по бокалам\
+ , уже после ужина
+DESCRIPTION:День 3 · Весь день на воде\n\nПрогра
+ мма целиком: https://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Погреб Trabuxu: доска и вино по бокал
+ ам\, уже после ужина
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-4-0@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260930T080000
-DTEND;TZID=Europe/Malta:20260930T084500
-SUMMARY:Выезд на юг
+DTEND;TZID=Europe/Malta:20260930T083500
+SUMMARY:Выезд на юг: автобус 13/14/16 от «Torri» в 
+ Валлетту
 DESCRIPTION:День 4 · Рыбацкая деревня и город 
  старше Валлетты\n\nПрограмма целиком: http
  s://drivitmd.github.io/malta/
@@ -327,16 +529,16 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Выезд на юг
+DESCRIPTION:Выезд на юг: автобус 13/14/16 от «Torri» 
+ в Валлетту
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-4-1@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260930T084500
-DTEND;TZID=Europe/Malta:20260930T104500
-SUMMARY:St Peter’s Pool: парковка свободна\, купае
- мся два часа
+DTSTART;TZID=Europe/Malta:20260930T083500
+DTEND;TZID=Europe/Malta:20260930T092000
+SUMMARY:Пересадка на 81 — идёт от площадки A6
 DESCRIPTION:День 4 · Рыбацкая деревня и город 
  старше Валлетты\n\nПрограмма целиком: http
  s://drivitmd.github.io/malta/
@@ -344,17 +546,17 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:St Peter’s Pool: парковка свободна\, куп
- аемся два часа
+DESCRIPTION:Пересадка на 81 — идёт от площадки
+  A6
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-4-2@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260930T111500
-DTEND;TZID=Europe/Malta:20260930T120000
-SUMMARY:Марсашлокк: стоянка у церкви\, набер
- ежная и луццу
+DTSTART;TZID=Europe/Malta:20260930T093000
+DTEND;TZID=Europe/Malta:20260930T100000
+SUMMARY:Марсашлокк: набережная\, луццу\, рыб
+ ные прилавки
 DESCRIPTION:День 4 · Рыбацкая деревня и город 
  старше Валлетты\n\nПрограмма целиком: http
  s://drivitmd.github.io/malta/
@@ -362,17 +564,17 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Марсашлокк: стоянка у церкви\, наб
- ережная и луццу
+DESCRIPTION:Марсашлокк: набережная\, луццу\, р
+ ыбные прилавки
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-4-3@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260930T123000
-DTEND;TZID=Europe/Malta:20260930T141000
-SUMMARY:Обед рыбой\, стол забронирован на ше
- стерых
+DTSTART;TZID=Europe/Malta:20260930T100000
+DTEND;TZID=Europe/Malta:20260930T101500
+SUMMARY:Такси до St Peter’s Pool: две машины\, деся
+ ть минут
 DESCRIPTION:День 4 · Рыбацкая деревня и город 
  старше Валлетты\n\nПрограмма целиком: http
  s://drivitmd.github.io/malta/
@@ -380,16 +582,17 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Обед рыбой\, стол забронирован на 
- шестерых
+DESCRIPTION:Такси до St Peter’s Pool: две машины\, де
+ сять минут
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-4-4@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260930T143000
-DTEND;TZID=Europe/Malta:20260930T151500
-SUMMARY:Ставим машину в MCP Флорианы
+DTSTART;TZID=Europe/Malta:20260930T101500
+DTEND;TZID=Europe/Malta:20260930T121500
+SUMMARY:Купаемся два часа: плоские скалы\, п
+ рыжки с трёх метров
 DESCRIPTION:День 4 · Рыбацкая деревня и город 
  старше Валлетты\n\nПрограмма целиком: http
  s://drivitmd.github.io/malta/
@@ -397,15 +600,18 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Ставим машину в MCP Флорианы
+DESCRIPTION:Купаемся два часа: плоские скалы\,
+  прыжки с трёх метров
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-4-5@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20260930T151500
-DTEND;TZID=Europe/Malta:20260930T160000
-SUMMARY:Лодка-дайса через Гранд-Харбор
+DTSTART;TZID=Europe/Malta:20260930T123000
+DTEND;TZID=Europe/Malta:20260930T124500
+SUMMARY:Обратно в Марсашлокк теми же машина
+ ми — договариваемся с водителем заране
+ е
 DESCRIPTION:День 4 · Рыбацкая деревня и город 
  старше Валлетты\n\nПрограмма целиком: http
  s://drivitmd.github.io/malta/
@@ -413,11 +619,47 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Лодка-дайса через Гранд-Харбор
+DESCRIPTION:Обратно в Марсашлокк теми же маши
+ нами — договариваемся с водителем зара
+ нее
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-4-6@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260930T124500
+DTEND;TZID=Europe/Malta:20260930T142500
+SUMMARY:Обед рыбой у самой воды
+DESCRIPTION:День 4 · Рыбацкая деревня и город 
+ старше Валлетты\n\nПрограмма целиком: http
+ s://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Обед рыбой у самой воды
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-4-7@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260930T143000
+DTEND;TZID=Europe/Malta:20260930T151500
+SUMMARY:Автобус 81 обратно в Валлетту\, там п
+ ересадка на 2\, 3 или 4 в Биргу
+DESCRIPTION:День 4 · Рыбацкая деревня и город 
+ старше Валлетты\n\nПрограмма целиком: http
+ s://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Автобус 81 обратно в Валлетту\, там
+  пересадка на 2\, 3 или 4 в Биргу
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-4-8@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260930T153000
 DTEND;TZID=Europe/Malta:20260930T170000
@@ -435,7 +677,7 @@ DESCRIPTION:Форт Сант-Анджело — билеты онлай
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-4-7@drivitmd.github.io
+UID:malta2026-4-9@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260930T170000
 DTEND;TZID=Europe/Malta:20260930T174500
@@ -451,7 +693,25 @@ DESCRIPTION:Набережная Биргу\, аперитив
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:malta2026-4-8@drivitmd.github.io
+UID:malta2026-4-10@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260930T183000
+DTEND;TZID=Europe/Malta:20260930T191500
+SUMMARY:Лодка-дайса через Гранд-Харбор в Ва
+ ллетту
+DESCRIPTION:День 4 · Рыбацкая деревня и город 
+ старше Валлетты\n\nПрограмма целиком: http
+ s://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Лодка-дайса через Гранд-Харбор в 
+ Валлетту
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-4-11@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20260930T200000
 DTEND;TZID=Europe/Malta:20260930T214000
@@ -469,11 +729,29 @@ DESCRIPTION:Ужин: Rampila в бастионе — или сет в Le
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:malta2026-4-12@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20260930T220000
+DTEND;TZID=Europe/Malta:20260930T224500
+SUMMARY:Паром в Слиму — или автобус 14 от A14 д
+ о 23:00
+DESCRIPTION:День 4 · Рыбацкая деревня и город 
+ старше Валлетты\n\nПрограмма целиком: http
+ s://drivitmd.github.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Паром в Слиму — или автобус 14 от A1
+ 4 до 23:00
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:malta2026-5-0@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20261001T080000
-DTEND;TZID=Europe/Malta:20261001T084500
-SUMMARY:Выезд на юг\, вещи уже в машине
+DTSTART;TZID=Europe/Malta:20261001T073000
+DTEND;TZID=Europe/Malta:20261001T081500
+SUMMARY:Завтрак\, сборы
 DESCRIPTION:День 5 · Успеть в грот\, пока свети
  тся вода\n\nПрограмма целиком: https://drivitmd.g
  ithub.io/malta/
@@ -481,15 +759,16 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Выезд на юг\, вещи уже в машине
+DESCRIPTION:Завтрак\, сборы
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-5-1@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20261001T084500
-DTEND;TZID=Europe/Malta:20261001T093000
-SUMMARY:Кофе у причала\, берём билеты
+DTSTART;TZID=Europe/Malta:20261001T082000
+DTEND;TZID=Europe/Malta:20261001T084000
+SUMMARY:Сдаём номера (выезд до 11:00)\, чемодан
+ ы — в камеру хранения отеля
 DESCRIPTION:День 5 · Успеть в грот\, пока свети
  тся вода\n\nПрограмма целиком: https://drivitmd.g
  ithub.io/malta/
@@ -497,16 +776,16 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Кофе у причала\, берём билеты
+DESCRIPTION:Сдаём номера (выезд до 11:00)\, чемод
+ аны — в камеру хранения отеля
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-5-2@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20261001T090000
-DTEND;TZID=Europe/Malta:20261001T103000
-SUMMARY:Первая лодка в Голубой грот — свет 
- работает до 11:00
+DTSTART;TZID=Europe/Malta:20261001T084000
+DTEND;TZID=Europe/Malta:20261001T092500
+SUMMARY:Паром в Валлетту
 DESCRIPTION:День 5 · Успеть в грот\, пока свети
  тся вода\n\nПрограмма целиком: https://drivitmd.g
  ithub.io/malta/
@@ -514,17 +793,16 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Первая лодка в Голубой грот — све
- т работает до 11:00
+DESCRIPTION:Паром в Валлетту
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-5-3@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20261001T101500
-DTEND;TZID=Europe/Malta:20261001T121500
-SUMMARY:Купание в скальных ваннах Гхар-Лапс
- и
+DTSTART;TZID=Europe/Malta:20261001T094500
+DTEND;TZID=Europe/Malta:20261001T102300
+SUMMARY:Автобус 74 от городских ворот — днём
+  он ходит раз в час
 DESCRIPTION:День 5 · Успеть в грот\, пока свети
  тся вода\n\nПрограмма целиком: https://drivitmd.g
  ithub.io/malta/
@@ -532,16 +810,17 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Купание в скальных ваннах Гхар-Ла
- пси
+DESCRIPTION:Автобус 74 от городских ворот — дн
+ ём он ходит раз в час
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-5-4@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20261001T113000
-DTEND;TZID=Europe/Malta:20261001T130000
-SUMMARY:Храмы Хаджар-Ким и Мнайдра
+DTSTART;TZID=Europe/Malta:20261001T102300
+DTEND;TZID=Europe/Malta:20261001T111500
+SUMMARY:Голубой грот: лодки с 09:00\, свет рабо
+ тает до полудня
 DESCRIPTION:День 5 · Успеть в грот\, пока свети
  тся вода\n\nПрограмма целиком: https://drivitmd.g
  ithub.io/malta/
@@ -549,15 +828,17 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Храмы Хаджар-Ким и Мнайдра
+DESCRIPTION:Голубой грот: лодки с 09:00\, свет ра
+ ботает до полудня
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-5-5@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20261001T130000
-DTEND;TZID=Europe/Malta:20261001T134500
-SUMMARY:Обрыв Дингли и каменные колеи
+DTSTART;TZID=Europe/Malta:20261001T111500
+DTEND;TZID=Europe/Malta:20261001T113800
+SUMMARY:Смотровая площадка на дороге — вид 
+ лучше\, чем с лодки
 DESCRIPTION:День 5 · Успеть в грот\, пока свети
  тся вода\n\nПрограмма целиком: https://drivitmd.g
  ithub.io/malta/
@@ -565,15 +846,17 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Обрыв Дингли и каменные колеи
+DESCRIPTION:Смотровая площадка на дороге — в
+ ид лучше\, чем с лодки
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-5-6@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20261001T134500
-DTEND;TZID=Europe/Malta:20261001T152500
-SUMMARY:Кроличий обед в таверне у обрыва
+DTSTART;TZID=Europe/Malta:20261001T113800
+DTEND;TZID=Europe/Malta:20261001T114500
+SUMMARY:Тот же 74 до храмов — четыре минуты\, 
+ следующий только через час
 DESCRIPTION:День 5 · Успеть в грот\, пока свети
  тся вода\n\nПрограмма целиком: https://drivitmd.g
  ithub.io/malta/
@@ -581,15 +864,17 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Кроличий обед в таверне у обрыва
+DESCRIPTION:Тот же 74 до храмов — четыре минут
+ ы\, следующий только через час
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-5-7@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20261001T150000
-DTEND;TZID=Europe/Malta:20261001T154500
-SUMMARY:Возвращение в отель: душ и багаж
+DTSTART;TZID=Europe/Malta:20261001T114500
+DTEND;TZID=Europe/Malta:20261001T131500
+SUMMARY:Храмы Хаджар-Ким и Мнайдра\, €10 с че
+ ловека
 DESCRIPTION:День 5 · Успеть в грот\, пока свети
  тся вода\n\nПрограмма целиком: https://drivitmd.g
  ithub.io/malta/
@@ -597,16 +882,16 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Возвращение в отель: душ и багаж
+DESCRIPTION:Храмы Хаджар-Ким и Мнайдра\, €10 с 
+ человека
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-5-8@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20261001T161500
-DTEND;TZID=Europe/Malta:20261001T181500
-SUMMARY:Паром в Слиму: кофе и последнее купа
- ние с плит
+DTSTART;TZID=Europe/Malta:20261001T134300
+DTEND;TZID=Europe/Malta:20261001T142800
+SUMMARY:Обратный 74 — следующий только в 14:43
 DESCRIPTION:День 5 · Успеть в грот\, пока свети
  тся вода\n\nПрограмма целиком: https://drivitmd.g
  ithub.io/malta/
@@ -614,16 +899,17 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:Паром в Слиму: кофе и последнее ку
- пание с плит
+DESCRIPTION:Обратный 74 — следующий только в 14
+ :43
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-5-9@drivitmd.github.io
 DTSTAMP:20260811T090000Z
-DTSTART;TZID=Europe/Malta:20261001T183000
-DTEND;TZID=Europe/Malta:20261001T193000
-SUMMARY:В аэропорт
+DTSTART;TZID=Europe/Malta:20261001T150000
+DTEND;TZID=Europe/Malta:20261001T154500
+SUMMARY:Слима: душ в courtesy room\, забираем чемод
+ аны
 DESCRIPTION:День 5 · Успеть в грот\, пока свети
  тся вода\n\nПрограмма целиком: https://drivitmd.g
  ithub.io/malta/
@@ -631,11 +917,45 @@ LOCATION:Malta
 BEGIN:VALARM
 TRIGGER:-PT20M
 ACTION:DISPLAY
-DESCRIPTION:В аэропорт
+DESCRIPTION:Слима: душ в courtesy room\, забираем чем
+ оданы
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:malta2026-5-10@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20261001T175100
+DTEND;TZID=Europe/Malta:20261001T182900
+SUMMARY:Экспресс TD3 от «Torri»
+DESCRIPTION:День 5 · Успеть в грот\, пока свети
+ тся вода\n\nПрограмма целиком: https://drivitmd.g
+ ithub.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:Экспресс TD3 от «Torri»
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-5-11@drivitmd.github.io
+DTSTAMP:20260811T090000Z
+DTSTART;TZID=Europe/Malta:20261001T182900
+DTEND;TZID=Europe/Malta:20261001T192900
+SUMMARY:В аэропорту\, за три часа до вылета
+DESCRIPTION:День 5 · Успеть в грот\, пока свети
+ тся вода\n\nПрограмма целиком: https://drivitmd.g
+ ithub.io/malta/
+LOCATION:Malta
+BEGIN:VALARM
+TRIGGER:-PT20M
+ACTION:DISPLAY
+DESCRIPTION:В аэропорту\, за три часа до вылет
+ а
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:malta2026-5-12@drivitmd.github.io
 DTSTAMP:20260811T090000Z
 DTSTART;TZID=Europe/Malta:20261001T213000
 DTEND;TZID=Europe/Malta:20261001T223000

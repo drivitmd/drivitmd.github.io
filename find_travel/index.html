@@ -267,7 +267,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
   <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><clipPath id="dl"><circle cx="50" cy="50" r="43"/></clipPath><g clip-path="url(#dl)"><rect width="100" height="100" fill="#FFFFFF"/><circle cx="50" cy="42" r="14" fill="#BC5858"/><path d="M-4 72 C16 52 30 57 50 63 C69 57 84 52 104 72 L104 104 L-4 104Z" fill="#D24F4F"/><path d="M2 82 C22 76 34 86 50 82 C67 78 80 86 98 82" fill="none" stroke="#F7DEDE" stroke-width="4" stroke-linecap="round"/></g><circle cx="50" cy="50" r="45" fill="none" stroke="#BC5858" stroke-width="3"/></svg>
   <span class="wordmark" translate="no">Drivit&nbsp;Travel</span>
   <span class="engname" translate="no">find_travel</span>
-  <span class="vchip">версия <b>1.8.0</b></span>
+  <span class="vchip">версия <b>1.9.0</b></span>
   <span class="spacer"></span>
   <button class="theme" id="theme" type="button">тёмная</button>
 </header>
@@ -411,7 +411,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
 </div>
 
 <footer>
-  1.8.0 — 17 августа 2026<br>
+  1.9.0 — 17 августа 2026<br>
   Создано <strong>bruno studio</strong>
 </footer>
 </div>
@@ -511,21 +511,93 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
   // в движок сама, без копирования и без единого чужого сайта.
   var ENGINE = LOCAL ? '' : 'http://127.0.0.1:8781';
 
+  // Движок, выставленный наружу туннелем. Адрес случайный и меняется при каждом
+  // перезапуске, поэтому вписать его в страницу нельзя — она читает его из
+  // engine.json. raw.githubusercontent обновляется сразу после пуша, не дожидаясь
+  // пересборки Pages; сама Pages идёт вторым запасным путём.
+  var TUNNEL = '';
+  var KEY = '';
+  try { KEY = localStorage.getItem('engine_key') || ''; } catch (e) {}
+
+  function findEngine() {
+    if (LOCAL) { return Promise.resolve(''); }
+    var urls = ['https://raw.githubusercontent.com/drivitmd/drivitmd.github.io'
+                + '/main/find_travel/engine.json?t=' + Date.now(),
+                'engine.json?t=' + Date.now()];
+    function tryOne(i) {
+      if (i >= urls.length) { return Promise.resolve(''); }
+      return fetch(urls[i]).then(function (r) {
+        if (!r.ok) { throw new Error('нет файла'); }
+        return r.json();
+      }).then(function (j) {
+        return (j && j.engine) || '';
+      }).catch(function () { return tryOne(i + 1); });
+    }
+    return tryOne(0).then(function (u) { TUNNEL = u; return u; });
+  }
+
+  findEngine();
+
+  function hdrs() {
+    var h = {'Content-Type': 'application/json'};
+    if (KEY) { h['X-Engine-Key'] = KEY; }
+    return h;
+  }
+
+  // Ключ спрашиваем ровно один раз на браузер и запоминаем. Спрашивать его
+  // при каждой заявке — способ добиться, чтобы человек перестал пользоваться.
+  function askKey(then) {
+    W.line.innerHTML = '';
+    var wrap = document.createElement('div');
+    wrap.style.display = 'flex'; wrap.style.gap = '8px'; wrap.style.flexWrap = 'wrap';
+    var inp = document.createElement('input');
+    inp.type = 'password'; inp.placeholder = 'ключ движка';
+    inp.autocomplete = 'off'; inp.style.flex = '1 1 12rem';
+    var go = document.createElement('button');
+    go.type = 'button'; go.textContent = 'Запомнить и отправить';
+    wrap.appendChild(inp); wrap.appendChild(go);
+    W.line.appendChild(wrap);
+    inp.focus();
+    function save() {
+      var v = inp.value.trim();
+      if (!v) { return; }
+      KEY = v;
+      try { localStorage.setItem('engine_key', v); } catch (e) {}
+      W.line.textContent = 'ключ сохранён — отправляю заявку';
+      then();
+    }
+    go.onclick = save;
+    inp.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter') { ev.preventDefault(); save(); }
+    });
+  }
+
   function sendLocal(d, say, base) {
     var API = base === undefined ? ENGINE : base;
     // Сервер пульта: сначала заводим поездку, потом запускаем сбор. Оба адреса
     // уже есть в API, и придумывать свои не нужно.
     waitOpen(d, null, 'local');
     fetch(API + '/api/trip', {
-      method: 'POST', headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(d)
-    }).then(function (r) { return r.json(); }).then(function (j) {
+      method: 'POST', headers: hdrs(), body: JSON.stringify(d)
+    }).then(function (r) {
+      if (r.status === 401) {
+        KEY = '';
+        try { localStorage.removeItem('engine_key'); } catch (e) {}
+        var err = new Error('ключ не подошёл');
+        err.needKey = true;
+        throw err;
+      }
+      return r.json();
+    }).then(function (j) {
       if (!j || !j.slug) { throw new Error((j && j.error) || 'движок не дал адрес поездки'); }
       W.head.textContent = 'Собираю ' + (d.place || j.slug);
       return fetch(API + '/api/run/' + encodeURIComponent(j.slug), {
-        method: 'POST', headers: {'Content-Type': 'application/json'}, body: '{}'
+        method: 'POST', headers: hdrs(), body: '{}'
       }).then(function () { waitWatch(j.slug, API); say('сбор запущен: ' + j.slug); });
     }).catch(function (e) {
+      if (e && e.needKey) {
+        return askKey(function () { sendLocal(d, say, API); });
+      }
       W.line.textContent = 'движок не ответил: ' + e.message
         + '. Проверьте, что пульт запущен (ярлык «Drivit Travel — пульт»).';
     });
@@ -565,6 +637,13 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
   // вписанной заявкой: открыть её на своей машине — и форма заполнена,
   // остаётся нажать «Собрать поездку». Ни бота, ни чужих сайтов.
   function sendRemote(d, say) {
+    // Движок выставлен наружу — работаем прямо здесь: заявка, ход сборки
+    // и результат на одной странице, с любого компьютера. Ключ спросим один раз.
+    if (TUNNEL) {
+      var run = function () { sendLocal(d, say, TUNNEL); };
+      if (!KEY) { waitOpen(d, null, 'local'); return askKey(run); }
+      return run();
+    }
     var probe = new AbortController();
     var timer = setTimeout(function () { probe.abort(); }, 1200);
     fetch(ENGINE + '/api/trips', {signal: probe.signal})

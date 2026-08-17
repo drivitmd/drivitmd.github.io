@@ -267,7 +267,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
   <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><clipPath id="dl"><circle cx="50" cy="50" r="43"/></clipPath><g clip-path="url(#dl)"><rect width="100" height="100" fill="#FFFFFF"/><circle cx="50" cy="42" r="14" fill="#BC5858"/><path d="M-4 72 C16 52 30 57 50 63 C69 57 84 52 104 72 L104 104 L-4 104Z" fill="#D24F4F"/><path d="M2 82 C22 76 34 86 50 82 C67 78 80 86 98 82" fill="none" stroke="#F7DEDE" stroke-width="4" stroke-linecap="round"/></g><circle cx="50" cy="50" r="45" fill="none" stroke="#BC5858" stroke-width="3"/></svg>
   <span class="wordmark" translate="no">Drivit&nbsp;Travel</span>
   <span class="engname" translate="no">find_travel</span>
-  <span class="vchip">версия <b>1.6.0</b></span>
+  <span class="vchip">версия <b>1.7.0</b></span>
   <span class="spacer"></span>
   <button class="theme" id="theme" type="button">тёмная</button>
 </header>
@@ -411,7 +411,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
 </div>
 
 <footer>
-  1.6.0 — 13 августа 2026<br>
+  1.7.0 — 17 августа 2026<br>
   Создано <strong>bruno studio</strong>
 </footer>
 </div>
@@ -498,10 +498,11 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
   // открывала форму создания issue на чужом сайте, и человек, нажав её, оказывался
   // не там, где ждал. Правило: заявка не уводит со страницы.
   //   · пульт открыт локально — движок рядом, сразу запускаем сбор;
-  //   · страница открыта в интернете — копируем задание и открываем бота,
-  //     который у владельца и так собирает задачи в очередь.
+  //   · страница открыта в интернете — движок недостижим, и мы даём ссылку
+  //     на локальный пульт с уже вписанной заявкой.
+  // Телеграм убран совсем по требованию владельца: бот открывал чужой чат,
+  // а заявка всё равно не доходила без ручной отправки сообщения.
   var LOCAL = ['localhost', '127.0.0.1', '[::1]'].indexOf(location.hostname) >= 0;
-  var BOT = 'https://t.me/SmartMailMD_bot';
 
   // Куда стучаться за движком. Пустая строка — «сюда же», когда пульт открыт с
   // самого сервера. Иначе прямой петлевой адрес: страница открыта с сайта, а
@@ -530,6 +531,16 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     });
   }
 
+  // Заявка уезжает в адресе локального пульта. base64url, потому что в JSON
+  // есть кириллица и кавычки, а адрес должен переживать копирование в мессенджер
+  // и обратно без потерь.
+  function handoffLink(d) {
+    var json = JSON.stringify(d);
+    var b64 = btoa(unescape(encodeURIComponent(json)))
+      .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    return 'http://127.0.0.1:8781/?req=' + b64;
+  }
+
   function copyText(text, done) {
     if (navigator.clipboard && location.protocol === 'https:') {
       navigator.clipboard.writeText(text).then(done, function () { legacyCopy(text, done); });
@@ -546,11 +557,13 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     done();
   }
 
-  // Страница открыта в интернете. Сначала пробуем достучаться до движка на
-  // машине владельца — если пульт запущен, заявка уйдёт туда сама и окно
-  // ожидания начнёт показывать настоящий ход сбора. Если движок не отвечает,
-  // остаётся бот: задание уходит ему уже вписанным в поле сообщения, нажать
-  // надо один раз. Чужих сайтов и GitHub здесь нет ни в одной ветке.
+  // Страница открыта в интернете. Сначала пробуем достучаться до движка —
+  // если браузер разрешил доступ к петлевому адресу и пульт запущен, заявка
+  // уйдёт сама. Обычно браузер это запрещает («Permission was denied for this
+  // request to access the loopback address space»), и тогда мы НЕ делаем вид,
+  // что заявка ушла. Вместо этого отдаём ссылку на локальный пульт с уже
+  // вписанной заявкой: открыть её на своей машине — и форма заполнена,
+  // остаётся нажать «Собрать поездку». Ни бота, ни чужих сайтов.
   function sendRemote(d, say) {
     var probe = new AbortController();
     var timer = setTimeout(function () { probe.abort(); }, 1200);
@@ -563,22 +576,16 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
       .catch(function () {
         clearTimeout(timer);
         waitOpen(d, null, 'remote');
-        // Бот больше не открывается сам. Чужое приложение, открывшееся без
-        // спроса, читается как сбой — и в прошлый раз читатель именно так это
-        // и описал: «зачем-то открылся бот». Кнопку нажимает человек.
-        var url = BOT + '?text=' + encodeURIComponent(brief(d));
-        copyText(brief(d), function () {
-          say('задание скопировано — отправьте его боту, иначе сбор не начнётся');
-        });
-        W.open.textContent = 'Отправить боту';
+        var link = handoffLink(d);
+        W.line.textContent = link;
+        W.line.style.wordBreak = 'break-all';
+        W.open.textContent = 'Скопировать ссылку';
         W.open.style.display = '';
         W.open.onclick = function () {
-          window.open(url, '_blank', 'noopener');
-          // Отправку подтверждает не страница: она не видит, нажал ли человек
-          // «отправить» в мессенджере. Поэтому пишем ровно это.
-          W.line.textContent = 'бот открыт — отправьте сообщение, чтобы заявка '
-            + 'встала в очередь';
-          markQueued(d);
+          copyText(link, function () {
+            W.line.textContent = 'ссылка скопирована — откройте её в браузере '
+              + 'на машине с движком, форма там будет уже заполнена';
+          });
         };
       });
   }
@@ -639,6 +646,41 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
   form.addEventListener('change', function () { modes(); ncount(); render(); });
   form.addEventListener('submit', function (ev) { ev.preventDefault(); });
 
+  // Заявка, принесённая из интернета. Публичная страница не может достучаться
+  // до движка и вместо обещаний отдаёт ссылку вида ?req=<заявка>. Здесь мы её
+  // разбираем и заполняем форму — чтобы человек не набирал всё заново.
+  // Сбор НЕ запускаем сам: заявка, начавшая собираться от одного открытия
+  // ссылки, — это то же самое чужое действие без спроса, от которого мы
+  // избавились, убрав бота. Человек нажимает кнопку.
+  (function prefillFromLink() {
+    var m = /[?&]req=([A-Za-z0-9_-]+)/.exec(location.search);
+    if (!m) { return; }
+    var d;
+    try {
+      var b64 = m[1].replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4) { b64 += '='; }
+      d = JSON.parse(decodeURIComponent(escape(atob(b64))));
+    } catch (e) { toast('ссылку с заявкой прочитать не удалось'); return; }
+    if (!d || typeof d !== 'object') { return; }
+    Object.keys(d).forEach(function (k) {
+      if (k === 'accent') {
+        [].forEach.call(form.querySelectorAll('[name=accent]'), function (el) {
+          el.checked = (d.accent || []).indexOf(el.value) >= 0;
+        });
+        return;
+      }
+      var el = form.querySelector('[name="' + k + '"]');
+      if (el && el.type !== 'checkbox') { el.value = d[k]; }
+    });
+    modes(); ncount(); render();
+    toast('заявка из ссылки подставлена — проверьте и нажмите «Собрать поездку»');
+    // Адрес чистим: перезагрузка страницы не должна подставлять заявку снова,
+    // а ссылка с чужой заявкой не должна оставаться в истории браузера.
+    if (history.replaceState) {
+      history.replaceState(null, '', location.pathname);
+    }
+  }());
+
   function toast(t) {
     var el = $('#toast');
     el.textContent = t;
@@ -696,7 +738,7 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     hstore(a);
     hrender();
   }
-  // Заявка, отданная боту, помечается в истории. Раньше после отправки человек
+  // Заявка, унесённая на локальный пульт, помечается в истории. Раньше человек
   // обновлял страницу и не видел ничего: в списке «уже собрано» бывают только
   // собранные поездки, а отправленной заявке места на странице не было вовсе.
   // Пометка живёт рядом с самой заявкой, в этом же браузере.
@@ -720,7 +762,7 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     for (var i = 0; i < a.length; i++) {
       if (hkey(a[i]) === k) {
         // Местное время, а не по Гринвичу: toISOString даёт UTC, и пометка
-        // «отдана боту в 08:38» при часах на стене 11:38 читается как сбой.
+        // «унесена в 08:38» при часах на стене 11:38 читается как сбой.
         // Тот же капкан однажды сдвинул дату возврата на день назад.
         a[i].queued = localStamp();
         hstore(a);
@@ -757,7 +799,7 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     b.lastChild.textContent = dmy(d.from_date) + ' — ' + dmy(d.to_date)
       + (n > 0 ? ' · ' + n + ' ' + nightword(n) : '')
       + ' · ' + (d.adults || '?') + ' чел. · ' + th
-      + (d.queued ? ' · отдана боту ' + queuedRu(d.queued) + ', ждёт очереди' : '');
+      + (d.queued ? ' · ссылка взята ' + queuedRu(d.queued) : '');
     var x = document.createElement('button');
     x.type = 'button';
     x.className = 'hdel';
@@ -879,7 +921,7 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
   function waitOpen(d, slug, mode) {
     W.list.innerHTML = stagesHTML();
     W.head.textContent = mode === 'local' ? ('Собираю ' + (d.place || 'поездку'))
-                                          : 'Заявку надо отправить сообщением';
+                                          : 'Движок отсюда недостижим';
     W.sub.textContent = (dmy(d.from_date) || '') + ' — ' + (dmy(d.to_date) || '')
       + (d.adults ? (' · ' + d.adults + ' чел.') : '');
     // Оценка по замерам — только там, где сборка идёт. На удалённом пути
@@ -893,11 +935,12 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
       W.line.textContent = 'запускаю сбор…';
     } else {
       W.foot.textContent = 'Эта страница открыта в интернете, а движок стоит на '
-        + 'машине владельца и снаружи не виден — дойти до него страница не может. '
-        + 'Поэтому заявка передаётся сообщением: движок возьмёт её из очереди, '
-        + 'соберёт поездку и пришлёт ссылку. Пока сообщение не отправлено, '
-        + 'ничего не собирается.';
-      W.line.textContent = 'задание скопировано — осталось отправить его боту';
+        + 'машине владельца: браузер не разрешает сайту стучаться на локальный '
+        + 'адрес, и дойти до движка страница не может. Ничего не собирается и '
+        + 'не отправляется — вместо обещаний вот ссылка на пульт с вашей '
+        + 'заявкой внутри. Откройте её на той машине, где запущен движок: '
+        + 'форма будет заполнена, останется нажать «Собрать поездку».';
+      W.line.textContent = '';
     }
     W.open.style.display = 'none';
     // Панель лежит в разметке с hidden: снимаем его вместе с открытием, иначе

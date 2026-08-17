@@ -526,6 +526,11 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
   // пересборки Pages; сама Pages идёт вторым запасным путём.
   var TUNNEL = '';
   var KEY = '';
+  // Запомненный адрес движка. Нужен потому, что раздача адреса через GitHub
+  // ненадёжна: raw кеширует ответ на краю сети и отдаёт вчерашний, а Pages
+  // отстаёт на пересборку. Запомненный адрес проверяется живым запросом, так что
+  // мёртвый сам себя вычеркнет.
+  try { TUNNEL = localStorage.getItem('engine_url') || ''; } catch (e) {}
   // Свой пульт получает ключ от самого сервера — он вписывает его в страницу,
   // которую отдаёт этой машине (и никогда в ту, что уходит через туннель).
   // Поэтому за своим компьютером пароль не спрашивается вообще.
@@ -537,8 +542,10 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     var urls = ['https://raw.githubusercontent.com/drivitmd/drivitmd.github.io'
                 + '/main/find_travel/engine.json?t=' + Date.now(),
                 'engine.json?t=' + Date.now()];
+    if (TUNNEL) { urls.unshift(null); }        // сначала пробуем запомненный
     function tryOne(i) {
       if (i >= urls.length) { return Promise.resolve(''); }
+      if (urls[i] === null) { return Promise.resolve(TUNNEL); }
       return fetch(urls[i]).then(function (r) {
         if (!r.ok) { throw new Error('нет файла'); }
         return r.json();
@@ -552,10 +559,19 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
       // закрыли крестиком, и снять адрес движок не успел. Поэтому адресу
       // не верим на слово — стучимся и проверяем, что там кто-то живой.
       return fetch(u + '/api/trips', {cache: 'no-store'})
-        .then(function (r) { return r.ok ? u : ''; })
+        // 401 — это ЖИВОЙ движок, который просит ключ, и признак даже более
+        // надёжный, чем 200: так отвечает именно наш сервер, а не заглушка
+        // туннеля. Проверять по r.ok нельзя: чтение теперь под ключом, ключ
+        // спрашивается только после того, как движок найден, — и получался
+        // замкнутый круг, в котором движок всегда выглядел мёртвым.
+        .then(function (r) { return (r.ok || r.status === 401) ? u : ''; })
         .catch(function () { return ''; });
     }).then(function (u) {
       TUNNEL = u;
+      try {
+        if (u) { localStorage.setItem('engine_url', u); }
+        else { localStorage.removeItem('engine_url'); }
+      } catch (e) {}
       engineSay(u);
       return u;
     });
@@ -574,12 +590,17 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
       el.textContent = 'движок доступен — заявка соберётся здесь, на этой странице';
       el.dataset.on = '1';
     } else {
-      el.textContent = 'движок сейчас недоступен: заявку можно будет только '
-        + 'унести на пульт кнопкой. Чтобы работало отсюда, на машине с движком '
-        + 'запустите «Движок наружу».';
+      TUNNEL_ASKED = true;
+      el.textContent = 'адрес движка не найден. Если «Движок наружу» запущен — '
+        + 'нажмите «Отправить заявку» и впишите адрес из его окна. Если нет — '
+        + 'заявку можно унести на пульт кнопкой.';
       el.dataset.on = '0';
     }
   }
+
+  // Один раз за сеанс предлагаем вписать адрес руками, если найти не удалось.
+  // Дальше — обычный путь с кнопкой «Открыть пульт и собрать».
+  var TUNNEL_ASKED = false;
 
   findEngine();
 
@@ -591,10 +612,17 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
 
   // Ключ спрашиваем ровно один раз на браузер и запоминаем. Спрашивать его
   // при каждой заявке — способ добиться, чтобы человек перестал пользоваться.
-  function askKey(then) {
+  function askKey(then, needUrl) {
     W.line.innerHTML = '';
     var wrap = document.createElement('div');
     wrap.style.display = 'flex'; wrap.style.gap = '8px'; wrap.style.flexWrap = 'wrap';
+    var url = null;
+    if (needUrl) {
+      url = document.createElement('input');
+      url.type = 'url'; url.placeholder = 'адрес движка из окна «Движок наружу»';
+      url.autocomplete = 'off'; url.style.flex = '1 1 100%';
+      wrap.appendChild(url);
+    }
     var inp = document.createElement('input');
     inp.type = 'password'; inp.placeholder = 'ключ движка';
     inp.autocomplete = 'off'; inp.style.flex = '1 1 12rem';
@@ -602,13 +630,20 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     go.type = 'button'; go.textContent = 'Запомнить и отправить';
     wrap.appendChild(inp); wrap.appendChild(go);
     W.line.appendChild(wrap);
-    inp.focus();
+    (url || inp).focus();
     function save() {
       var v = inp.value.trim();
       if (!v) { return; }
+      if (url) {
+        var u = url.value.trim().replace(/\/+$/, '');
+        if (!/^https:\/\//.test(u)) { W.line.firstChild.appendChild(
+          document.createTextNode(' адрес должен начинаться с https://')); return; }
+        TUNNEL = u;
+        try { localStorage.setItem('engine_url', u); } catch (e) {}
+      }
       KEY = v;
       try { localStorage.setItem('engine_key', v); } catch (e) {}
-      W.line.textContent = 'ключ сохранён — отправляю заявку';
+      W.line.textContent = 'сохранено — отправляю заявку';
       then();
     }
     go.onclick = save;
@@ -688,6 +723,13 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
       var run = function () { sendLocal(d, say, TUNNEL); };
       if (!KEY) { waitOpen(d, null, 'local'); return askKey(run); }
       return run();
+    }
+    // Адрес не нашёлся, но движок может быть поднят: раздача адреса через
+    // GitHub кешируется и отстаёт. Поэтому предлагаем вписать адрес руками —
+    // он виден в окне «Движок наружу» — вместо тупика.
+    if (KEY || TUNNEL_ASKED) {
+      waitOpen(d, null, 'local');
+      return askKey(function () { sendLocal(d, say, TUNNEL); }, !TUNNEL);
     }
     var probe = new AbortController();
     var timer = setTimeout(function () { probe.abort(); }, 1200);

@@ -802,9 +802,14 @@ var ETA = {"stages": [["Место, погода, карта", 171], ["Жиль�
     }
     var probe = new AbortController();
     var timer = setTimeout(function () { probe.abort(); }, 1200);
-    fetch(ENGINE + '/api/trips', {signal: probe.signal})
+    fetch(ENGINE + '/api/trips', {signal: probe.signal, headers: hdrs()})
       .then(function (r) {
         clearTimeout(timer);
+        // 401 — это «движок жив и просит ключ», а не «движка нет». Без этой
+        // развилки страница с неверным ключом уходила в передачу заявки на
+        // локальный пульт, хотя достаточно было спросить пароль.
+        if (r.status === 401) { waitOpen(d, null, 'local'); return askKey(function () {
+          sendLocal(d, say, ENGINE); }); }
         if (!r.ok) { throw new Error('движок не отвечает'); }
         sendLocal(d, say, ENGINE);
       })
@@ -1326,7 +1331,13 @@ var ETA = {"stages": [["Место, погода, карта", 171], ["Жиль�
     watchFails = 0;
     clearInterval(waitPoll);
     waitPoll = setInterval(function () {
-      fetch(API + '/api/run/' + encodeURIComponent(slug)).then(function (r) { return r.json(); })
+      // Ключ обязателен и здесь. Когда чтение закрыли ключом, этот опрос
+      // остался без заголовка: движок отвечал 401, окно ожидания не видело
+      // ни состояния, ни адреса страницы и крутилось до бесконечности —
+      // то самое «заявку отправил, а результата нет».
+      fetch(API + '/api/run/' + encodeURIComponent(slug),
+            {headers: hdrs(), cache: 'no-store'})
+        .then(function (r) { return r.json(); })
         .then(function (j) {
           watchFails = 0;
           if (j.line) { W.line.textContent = j.line; }

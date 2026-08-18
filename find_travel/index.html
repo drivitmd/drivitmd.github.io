@@ -443,7 +443,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
-var ETA = {"stages": [["Место, погода, карта", 148], ["Жильё", 105], ["Еда и вино", 190], ["Афиша и рынки", 134], ["Объекты: часы и билеты", 102], ["Транспорт", 85], ["Фотографии", 67], ["Тексты, дни, смета", 42]], "median": 873, "worst": 2703, "runs": 266};
+var ETA = {"stages": [["Место, погода, карта", 141], ["Жильё", 79], ["Еда и вино", 190], ["Афиша и рынки", 134], ["Объекты: часы и билеты", 102], ["Транспорт", 85], ["Фотографии", 67], ["Тексты, дни, смета", 42]], "median": 840, "worst": 2703, "runs": 266};
 
 
 (function () {
@@ -718,15 +718,45 @@ var ETA = {"stages": [["Место, погода, карта", 148], ["Жиль�
   // не с этого устройства. Теперь витрина общая — телефон, офис, ноутбук видят
   // одно и то же, а состояние берётся у движка, а не с чужих слов.
   function needKeyNote() {
-    if (!hempty) { return; }
+    if (!hempty || hempty.dataset.key === '1') { return; }
+    hempty.dataset.key = '1';
     hempty.style.display = '';
-    hempty.textContent = 'Заявки есть, но движок просит ключ. ';
-    var b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'btn tri';
-    b.textContent = 'Ввести ключ';
-    b.onclick = function () { askKey(function () { pullEngine(); }); };
-    hempty.appendChild(b);
+    hempty.innerHTML = '';
+    // Поле рисуем ЗДЕСЬ ЖЕ. Раньше кнопка звала общий ввод ключа, а тот
+    // рисуется внутри окна ожидания — оно скрыто, пока заявка не отправлена.
+    // Человек нажимал «Ввести ключ» и не видел ничего: поле появлялось
+    // в невидимом окне.
+    hempty.appendChild(document.createTextNode(
+      'Заявки хранит движок, и он просит ключ. Введите один раз — браузер запомнит. '));
+    var inp = document.createElement('input');
+    inp.type = 'password';
+    inp.placeholder = 'ключ движка';
+    inp.autocomplete = 'off';
+    inp.style.cssText = 'width:auto;min-width:11rem;margin:.4rem .5rem 0 0';
+    var go = document.createElement('button');
+    go.type = 'button';
+    go.className = 'btn tri';
+    go.textContent = 'Запомнить';
+    function save() {
+      var v = inp.value.trim();
+      if (!v) { inp.focus(); return; }
+      KEY = v;
+      try { localStorage.setItem('engine_key', v); } catch (e) {}
+      hempty.dataset.key = '';
+      hempty.textContent = 'Ключ сохранён — забираю заявки…';
+      pullEngine().then(function () {
+        if (!hload().length) {
+          hempty.textContent = 'Пока пусто: первая появится здесь сразу после отправки.';
+        }
+      });
+    }
+    go.onclick = save;
+    inp.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Enter') { ev.preventDefault(); save(); }
+    });
+    hempty.appendChild(inp);
+    hempty.appendChild(go);
+    inp.focus();
   }
 
   function pullEngine() {

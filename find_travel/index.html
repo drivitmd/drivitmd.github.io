@@ -167,6 +167,20 @@ fieldset{border:0;padding:0;display:grid;gap:var(--s2)}
   padding:.7rem .85rem;color:inherit;font:inherit;
   transition:border-color .16s ease,background .16s ease,transform .14s ease}
 .hcard:hover{border-color:var(--tx2);background:var(--surface)}
+/* Цвет — по состоянию заявки. Полоса слева, а не заливка: карточка остаётся
+   читаемой в обеих темах, а взгляд ловит состояние до чтения текста. */
+.hcard[data-s="собирается"]{border-left:3px solid var(--acc)}
+.hcard[data-s="готово"]{border-left:3px solid var(--ok,#3f8f5f)}
+.hcard[data-s="сломалось"]{border-left:3px solid var(--bad)}
+.hcard[data-s="ждёт отправки"]{border-left:3px solid var(--line)}
+.hdot{display:inline-block;width:.5rem;height:.5rem;border-radius:999px;
+  margin-right:.35rem;vertical-align:baseline;background:var(--line)}
+.hcard[data-s="собирается"] .hdot{background:var(--acc);
+  animation:hpulse 1.6s ease-in-out infinite}
+.hcard[data-s="готово"] .hdot{background:var(--ok,#3f8f5f)}
+.hcard[data-s="сломалось"] .hdot{background:var(--bad)}
+@keyframes hpulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.hcard[data-s] .hdot{animation:none}}
 .hcard:active{transform:translateY(1px)}
 .hcard b{font:400 var(--f1)/1.3 var(--body)}
 .hnote{margin:.1rem 0 .5rem;color:var(--tx2);font:400 var(--f0)/1.45 var(--body)}
@@ -389,14 +403,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
   </aside>
 </main>
 
-<section>
-  <h2>Уже собрано</h2>
-  <div class="trips">
-<a class="trip" href="./madeyra-2026-09/"><b>Мадейра</b><span>27 сентября — 1 октября 2026</span><em>3 пары, 4 ночи · 33 из 77 фактов подтверждено</em></a>
-<a class="trip" href="./mayorka-2026-09/"><b>Майорка</b><span>27 сентября — 1 октября 2026</span><em>3 пары, 4 ночи · 29 из 83 фактов подтверждено</em></a>
-<a class="trip" href="./tbilisi-2026-10/"><b>Тбилиси</b><span>14–18 октября 2026</span><em>3 пары, 4 ночи · 16 из 63 фактов подтверждено</em></a>
-  </div>
-</section>
+
 
 <!-- Окно ожидания скрыто и от глаз, и от скринридера, пока заявки нет: раньше
      «Заявка принята — считаю оценку» лежало в разметке страницы до всякой
@@ -436,7 +443,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
-var ETA = {"stages": [["Место, погода, карта", 170], ["Жильё", 105], ["Еда и вино", 183], ["Афиша и рынки", 134], ["Объекты: часы и билеты", 99], ["Транспорт", 86], ["Фотографии", 63], ["Тексты, дни, смета", 42]], "median": 882, "worst": 2530, "runs": 262};
+var ETA = {"stages": [["Место, погода, карта", 148], ["Жильё", 105], ["Еда и вино", 190], ["Афиша и рынки", 134], ["Объекты: часы и билеты", 102], ["Транспорт", 85], ["Фотографии", 67], ["Тексты, дни, смета", 42]], "median": 873, "worst": 2703, "runs": 266};
 
 
 (function () {
@@ -647,7 +654,13 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
   // Дальше — обычный путь с кнопкой «Открыть пульт и собрать».
   var TUNNEL_ASKED = false;
 
-  findEngine().then(function (base) { checkPending(); flushQueue(); });
+  findEngine().then(function (base) { checkPending(); flushQueue(); pullEngine(); });
+  // Пока хоть одна заявка собирается — спрашиваем движок чаще: человек смотрит
+  // на карточку и ждёт, когда она позеленеет.
+  setInterval(function () {
+    var busy = hload().some(function (d) { return d.state === 'собирается'; });
+    if (busy || !pullEngine.slow) { pullEngine.slow = !busy; pullEngine(); }
+  }, 30000);
   // Движок мог подняться уже после открытия страницы: человек уходит
   // варить кофе, а заявка так и лежит неотправленной. Раз в минуту —
   // дёшево и незаметно, зато заявка уходит без второго нажатия.
@@ -698,6 +711,66 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
         // о каждой неудачной попытке — значит превратить окно в тревогу.
       }).then(function () { delete sending[k]; });
     });
+  }
+
+  // Заявки, которые знает движок. Без этого список был памятью ОДНОГО браузера:
+  // владелец открыл страницу и не нашёл там Болонью, потому что заявку заводили
+  // не с этого устройства. Теперь витрина общая — телефон, офис, ноутбук видят
+  // одно и то же, а состояние берётся у движка, а не с чужих слов.
+  function needKeyNote() {
+    if (!hempty) { return; }
+    hempty.style.display = '';
+    hempty.textContent = 'Заявки есть, но движок просит ключ. ';
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'btn tri';
+    b.textContent = 'Ввести ключ';
+    b.onclick = function () { askKey(function () { pullEngine(); }); };
+    hempty.appendChild(b);
+  }
+
+  function pullEngine() {
+    var base = LOCAL ? '' : TUNNEL;
+    if (!LOCAL && !base) { return Promise.resolve(); }
+    return fetch(base + '/api/trips', {cache: 'no-store', headers: hdrs()})
+      .then(function (r) {
+        // Без ключа движок молчит, и список остаётся пустым. Пустой список
+        // без объяснения — это ровно то, из-за чего владелец не нашёл свою
+        // заявку и решил, что её нет вовсе. Поэтому причина называется вслух.
+        if (r.status === 401) { needKeyNote(); return null; }
+        return r.ok ? r.json() : null;
+      })
+      .then(function (j) {
+        if (!j || !j.trips) { return; }
+        var a = hload(), changed = false;
+        j.trips.forEach(function (t) {
+          if (SERVICE.test(t.slug || '')) { return; }
+          var d = {place: t.asked || t.city, from_date: t.d_from, to_date: t.d_to};
+          if (!d.place || !d.from_date) { return; }
+          var k = hkey(d), row = null;
+          for (var i = 0; i < a.length; i++) {
+            if (hkey(a[i]) === k) { row = a[i]; break; }
+          }
+          if (!row) {
+            row = {place: d.place, from_date: d.from_date, to_date: d.to_date,
+                   adults: t.pax || 2, saved: String(t.saved || '').slice(0, 10)};
+            a.unshift(row);
+            changed = true;
+          }
+          // Готовую страницу открываем с сайта: она там лежит постоянно и
+          // доступна, даже когда домашний компьютер выключен.
+          var page = t.public || (t.page ? (base || '') + t.page : '');
+          var state = ENGINE_STATE[t.state] || t.state || '';
+          if (row.state !== state || row.page !== page || row.slug !== t.slug
+              || (t.theme && row.theme !== t.theme)) {
+            row.state = state; row.page = page; row.slug = t.slug;
+            if (t.theme) { row.theme = t.theme; }
+            changed = true;
+          }
+        });
+        if (changed) { hstore(a); hrender(); }
+      })
+      .catch(function () {});
   }
 
   function checkPending() {
@@ -1024,7 +1097,7 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
 
   // Десять последних заявок. Живут в этом браузере: бэкенда у страницы нет,
   // а держать историю поисков на сервере ради шести человек — лишнее.
-  var HKEY = 'find_travel_history', HMAX = 10;
+  var HKEY = 'find_travel_history', HMAX = 20;
   var hlist = $('#histlist'), hempty = $('#histempty');
 
   function hload() {
@@ -1091,9 +1164,16 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     'собирается': 'собирается',
     'готово': 'готово',
     'не отправлена': 'ждёт отправки — движок недоступен, отправлю сам, когда появится',
-    'не дошла': 'ждёт отправки — движок недоступен, отправлю сам, когда появится'
+    'не дошла': 'ждёт отправки — движок недоступен, отправлю сам, когда появится',
+    'сломалось': 'сборка сломалась',
+    'не собралась': 'заведена, но не собрана'
   };
   var WAITING = ['ждёт отправки', 'не отправлена', 'не дошла'];
+  // Движок говорит о себе своими словами; на странице у заявки свой словарь.
+  var ENGINE_STATE = {'работает': 'собирается', 'готово': 'готово',
+                      'собрано': 'готово', 'сломалось': 'сломалось',
+                      'не собрано': 'не собралась'};
+  var SERVICE = /^(fixture|audit|test|probe|tmp|gatecheck)/;
 
   function markQueued(d) {
     var a = hload();
@@ -1133,15 +1213,15 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     b.dataset.a = 'load';
     var n = nights(d.from_date, d.to_date);
     var th = (THEMES[d.theme] || THEMES.rest).name;
-    b.innerHTML = '<b></b><span></span>';
-    b.firstChild.textContent = d.place || '—';
+    b.innerHTML = '<b><i class="hdot"></i><span class="hplace"></span></b><span></span>';
+    b.querySelector('.hplace').textContent = d.place || '—';
     var state = d.state ? (STATE_RU[d.state] || d.state) : '';
     b.lastChild.textContent = dmy(d.from_date) + ' — ' + dmy(d.to_date)
       + (n > 0 ? ' · ' + n + ' ' + nightword(n) : '')
       + ' · ' + (d.adults || '?') + ' чел. · ' + th
       + (state ? ' · ' + state : '')
       + (d.queued ? ' · ссылка взята ' + queuedRu(d.queued) : '');
-    if (d.state) { b.dataset.state = d.state; }
+    if (d.state) { b.dataset.s = d.state; }
     if (d.state === 'готово' && d.page) {
       var open = document.createElement('button');
       open.type = 'button';

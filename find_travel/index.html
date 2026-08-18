@@ -183,6 +183,9 @@ fieldset{border:0;padding:0;display:grid;gap:var(--s2)}
 .row b{font:400 var(--f0)/1.4 var(--mono);color:var(--tx2);font-weight:400}
 .row span{font:400 var(--f1)/1.4 var(--mono);text-align:right;overflow-wrap:anywhere}
 .note{font-size:var(--f0);color:var(--tx2)}
+.hopen{border:1px solid var(--line);background:none;color:inherit;border-radius:.5rem;
+  padding:.25rem .6rem;font:inherit;font-size:var(--f0);cursor:pointer;white-space:nowrap}
+.hopen:hover{border-color:currentColor}
 /* Состояние движка видно до заявки: точка зелёная — соберётся здесь, серая —
    придётся уносить на пульт. Раньше человек узнавал это только после нажатия. */
 .enginestate{margin-top:.4rem}
@@ -274,7 +277,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
   <svg class="mark" viewBox="0 0 100 100" aria-hidden="true"><clipPath id="dl"><circle cx="50" cy="50" r="43"/></clipPath><g clip-path="url(#dl)"><rect width="100" height="100" fill="#FFFFFF"/><circle cx="50" cy="42" r="14" fill="#BC5858"/><path d="M-4 72 C16 52 30 57 50 63 C69 57 84 52 104 72 L104 104 L-4 104Z" fill="#D24F4F"/><path d="M2 82 C22 76 34 86 50 82 C67 78 80 86 98 82" fill="none" stroke="#F7DEDE" stroke-width="4" stroke-linecap="round"/></g><circle cx="50" cy="50" r="45" fill="none" stroke="#BC5858" stroke-width="3"/></svg>
   <span class="wordmark" translate="no">Drivit&nbsp;Travel</span>
   <span class="engname" translate="no">find_travel</span>
-  <span class="vchip">версия <b>1.9.1</b></span>
+  <span class="vchip">версия <b>1.9.3</b></span>
   <span class="spacer"></span>
   <button class="theme" id="theme" type="button">тёмная</button>
 </header>
@@ -420,7 +423,7 @@ footer{padding-top:var(--s6);color:var(--tx2);font-size:var(--f0)}
 </div>
 
 <footer>
-  1.9.1 — 17 августа 2026<br>
+  1.9.3 — 18 августа 2026<br>
   Создано <strong>bruno studio</strong>
 </footer>
 </div>
@@ -602,7 +605,31 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
   // Дальше — обычный путь с кнопкой «Открыть пульт и собрать».
   var TUNNEL_ASKED = false;
 
-  findEngine();
+  findEngine().then(checkPending);
+
+  // Сборка идёт четверть часа, и страницу на это время обычно закрывают.
+  // Без этой проверки заявка навсегда оставалась бы «собирается», а готовый
+  // результат — недостижимым: именно так и выглядит «запрос есть, а результата
+  // нет». Спрашиваем движок один раз при открытии и дописываем, чем кончилось.
+  function checkPending() {
+    var base = LOCAL ? '' : TUNNEL;
+    if (!LOCAL && !base) { return; }
+    hload().forEach(function (d) {
+      if (d.state !== 'собирается' || !d.slug) { return; }
+      var api = d.engine || base;
+      fetch(api + '/api/run/' + encodeURIComponent(d.slug), {headers: hdrs()})
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          if (!j || !j.state || j.state === 'работает') { return; }
+          if (j.page) {
+            hmark(d, {state: 'готово', page: (api || '') + j.page});
+          } else {
+            hmark(d, {state: 'не дошла'});
+          }
+        })
+        .catch(function () {});
+    });
+  }
 
   function hdrs() {
     var h = {'Content-Type': 'application/json'};
@@ -654,6 +681,7 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
 
   function sendLocal(d, say, base) {
     var API = base === undefined ? ENGINE : base;
+    waitFor = d;
     // Сервер пульта: сначала заводим поездку, потом запускаем сбор. Оба адреса
     // уже есть в API, и придумывать свои не нужно.
     waitOpen(d, null, 'local');
@@ -671,6 +699,7 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     }).then(function (j) {
       if (!j || !j.slug) { throw new Error((j && j.error) || 'движок не дал адрес поездки'); }
       W.head.textContent = 'Собираю ' + (d.place || j.slug);
+      hmark(d, {state: 'собирается', slug: j.slug, engine: API || ''});
       return fetch(API + '/api/run/' + encodeURIComponent(j.slug), {
         method: 'POST', headers: hdrs(), body: '{}'
       }).then(function () { waitWatch(j.slug, API); say('сбор запущен: ' + j.slug); });
@@ -678,6 +707,7 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
       if (e && e.needKey) {
         return askKey(function () { sendLocal(d, say, API); });
       }
+      hmark(d, {state: 'не дошла'});
       W.line.textContent = 'движок не ответил: ' + e.message
         + '. Проверьте, что пульт запущен (ярлык «Drivit Travel — пульт»).';
     });
@@ -942,6 +972,29 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
       + ' ' + two(t.getHours()) + ':' + two(t.getMinutes());
   }
 
+  // Состояние заявки. Без него запись в истории появлялась ДО отправки и
+  // ничем не отличалась от собранной: человек видел «Болонья» в списке, жал
+  // на неё и получал только заполненный опросник — ни результата, ни объяснения,
+  // почему его нет. Теперь у записи есть состояние и, когда есть, адрес готовой
+  // страницы.
+  function hmark(d, patch) {
+    var a = hload(), k = hkey(d);
+    for (var i = 0; i < a.length; i++) {
+      if (hkey(a[i]) === k) {
+        for (var f in patch) { if (patch.hasOwnProperty(f)) { a[i][f] = patch[f]; } }
+        hstore(a); hrender();
+        return;
+      }
+    }
+  }
+
+  var STATE_RU = {
+    'не отправлена': 'не отправлена — движок был недоступен',
+    'собирается': 'собирается',
+    'готово': 'готово',
+    'не дошла': 'не дошла до движка'
+  };
+
   function markQueued(d) {
     var a = hload();
     var k = hkey(d);
@@ -982,10 +1035,30 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     var th = (THEMES[d.theme] || THEMES.rest).name;
     b.innerHTML = '<b></b><span></span>';
     b.firstChild.textContent = d.place || '—';
+    var state = d.state ? (STATE_RU[d.state] || d.state) : '';
     b.lastChild.textContent = dmy(d.from_date) + ' — ' + dmy(d.to_date)
       + (n > 0 ? ' · ' + n + ' ' + nightword(n) : '')
       + ' · ' + (d.adults || '?') + ' чел. · ' + th
+      + (state ? ' · ' + state : '')
       + (d.queued ? ' · ссылка взята ' + queuedRu(d.queued) : '');
+    if (d.state) { b.dataset.state = d.state; }
+    if (d.state === 'готово' && d.page) {
+      var open = document.createElement('button');
+      open.type = 'button';
+      open.className = 'hopen';
+      open.dataset.a = 'open';
+      open.textContent = 'Результат';
+      wrap.appendChild(b);
+      wrap.appendChild(open);
+      var xd = document.createElement('button');
+      xd.type = 'button';
+      xd.className = 'hdel';
+      xd.dataset.a = 'del';
+      xd.setAttribute('aria-label', 'Убрать из истории');
+      xd.textContent = '×';
+      wrap.appendChild(xd);
+      return wrap;
+    }
     var x = document.createElement('button');
     x.type = 'button';
     x.className = 'hdel';
@@ -1016,12 +1089,24 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
       ev.preventDefault();
       a.splice(i, 1); hstore(a); hrender();
       toast('Убрано из истории');
+    } else if (btn.dataset.a === 'open') {
+      ev.preventDefault();
+      window.open(d.page, '_blank', 'noopener');
     } else if (btn.dataset.a === 'load') {
       ev.preventDefault();
       hfill(d);
       form.scrollIntoView({ block: 'start' });
       if (form.elements.place) form.elements.place.focus();
-      toast('Заявка в форме — правьте и отправляйте');
+      // Раньше здесь было просто «заявка в форме», и человек, нажавший на
+      // запись без результата, видел только заполненный опросник и не понимал,
+      // почему результата нет. Теперь причина называется.
+      if (d.state === 'не отправлена' || d.state === 'не дошла') {
+        toast('Эта заявка до движка не дошла — отправьте её ещё раз');
+      } else if (d.state === 'собирается') {
+        toast('Заявка была отправлена; результат появится в списке, когда сборка кончится');
+      } else {
+        toast('Заявка в форме — правьте и отправляйте');
+      }
     }
   });
 
@@ -1044,6 +1129,7 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
     var e = bad(d);
     if (e.length) { $('#why').textContent = 'Заполните: ' + e.join(', ') + '.'; return; }
     hpush(d);
+    hmark(d, {state: 'не отправлена', slug: '', page: '', engine: ''});
     var say = function (m) { $('#why').textContent = m; };
     if (LOCAL) { sendLocal(d, say); } else { sendRemote(d, say); }
   });
@@ -1192,6 +1278,9 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
   // и окно навсегда оставалось с оценочным таймером вместо настоящего хода
   // сборки. То есть даже при доступном движке человек видел симуляцию.
   var watchFails = 0;
+  // Какая заявка сейчас собирается: waitWatch знает слаг, но не знает записи
+  // в истории, а пометить готовой надо именно её.
+  var waitFor = null;
 
   function waitWatch(slug, base) {
     var API = base === undefined ? ENGINE : base;
@@ -1220,6 +1309,7 @@ var ETA = {"stages": [["Место, погода, карта", 170], ["Жиль�
               // в тот момент, когда сборка наконец готова.
               var href = (API || '') + j.page;
               W.open.onclick = function () { window.open(href, '_blank', 'noopener'); };
+              if (waitFor) { hmark(waitFor, {state: 'готово', page: href}); }
               W.open.style.display = '';
             }
           }

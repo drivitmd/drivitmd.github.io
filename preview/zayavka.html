@@ -1,0 +1,56 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Заявка — Drivit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,600&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="hub.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23FFFFFF'/%3E%3Ccircle cx='50' cy='42' r='15' fill='%23BC5858'/%3E%3Cpath d='M-4 74 C16 54 30 59 50 65 C69 59 84 54 104 74 L104 104 L-4 104Z' fill='%23D24F4F'/%3E%3Ccircle cx='50' cy='50' r='47' fill='none' stroke='%23BC5858' stroke-width='3'/%3E%3C/svg%3E">
+</head><body>
+
+<header class="hdr"><div class="wrap">
+  <a class="logo" href="index.html"><svg viewBox="0 0 100 100"><clipPath id="he"><circle cx="50" cy="50" r="46"/></clipPath><circle cx="50" cy="50" r="46" fill="#fff"/><g clip-path="url(#he)"><circle cx="50" cy="41" r="13.5" fill="#BC5858"/><path d="M-2 73 C17 54 31 59 50 64 C69 59 83 54 102 73 L102 103 L-2 103Z" fill="#D24F4F"/><path d="M3 83 C24 77 37 87 50 83 C63 79 78 87 97 82" fill="none" stroke="#F7DEDE" stroke-width="3" stroke-linecap="round"/></g><circle cx="50" cy="50" r="47" fill="none" stroke="#BC5858" stroke-width="2.6"/></svg>Drivit</a>
+  <nav class="nav"><a href="retreat.html">Ретриты</a><a href="genesis.html">Игра «Генезис»</a><a href="o-nas.html">О нас</a><a href="otzyvy.html">Отзывы</a><a href="kontakty.html">Контакты</a></nav>
+  <div class="htools"><a class="btn btn-primary" href="zayavka.html">Записаться</a><button class="burger" aria-label="Меню" onclick="mopen()"><span></span><span></span><span></span></button></div>
+</div></header>
+<div class="mmenu" id="mm"><button class="close" onclick="mclose()">✕</button><a href="retreat.html">Ретриты</a><a href="genesis.html">Игра «Генезис»</a><a href="o-nas.html">О нас</a><a href="otzyvy.html">Отзывы</a><a href="jurnal.html">Журнал</a><a href="partneram.html">Партнёрам</a><a href="kontakty.html">Контакты</a><a href="zayavka.html">Записаться</a></div>
+
+<div class="phero"><div class="wrap">
+  <div class="crumb"><a href="index.html">Главная</a> › Заявка</div>
+  <div class="kick" style="margin-top:12px">Заявка</div>
+  <h1>Оставь заявку — и мы свяжемся</h1>
+  <p>Дальше — короткая беседа-знакомство. Ни к чему не обязывает. Оплата (если решишь) — только после беседы.</p>
+</div></div>
+
+<section><div class="wrap">
+  <form class="form" id="af">
+    <input type="hidden" name="_subject" value="Новая заявка — Drivit">
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+    <div class="fld"><label>Что тебе интересно? <span class="req">*</span></label>
+      <div class="opts">
+        <label><input type="radio" name="interes" value="Ретрит" required>Женский ретрит</label>
+        <label><input type="radio" name="interes" value="Игра Генезис">Игра «Генезис»</label>
+        <label><input type="radio" name="interes" value="Лист ожидания">Следующий ретрит (лист ожидания)</label>
+      </div>
+    </div>
+    <div class="fld"><label>Имя и фамилия <span class="req">*</span></label><input type="text" name="name" autocomplete="name" required></div>
+    <div class="fld"><label>Возраст</label><input type="number" name="age" min="18" max="99" inputmode="numeric"></div>
+    <div class="fld"><label>Контакт для связи <span class="req">*</span></label><input type="text" name="contact" placeholder="телефон / Telegram / WhatsApp / email" required></div>
+    <div class="fld"><label>Что для тебя сейчас важнее всего?</label><textarea name="expect"></textarea></div>
+    <button type="submit" class="btn btn-primary">Отправить заявку</button>
+    <p style="color:var(--muted);font-size:.88rem;margin-top:12px">Твои контакты нужны только для связи. Никакого спама.</p>
+  </form>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div class="fbrand"><b>Drivit</b><p>Женское психологическое пространство. Ретриты, игры, круги. Кишинёв, Молдова.</p></div>
+    <div><h4>Направления</h4><a href="retreat.html">Ретриты</a><a href="genesis.html">Игра «Генезис»</a><a href="otzyvy.html">Отзывы</a></div>
+    <div><h4>Компания</h4><a href="o-nas.html">О нас</a><a href="jurnal.html">Журнал</a><a href="partneram.html">Партнёрам</a><a href="kontakty.html">Контакты</a></div>
+    <div><h4>Мы на связи</h4><a href="https://instagram.com/drivit.md" target="_blank" rel="noopener">Instagram @drivit.md</a><a href="https://wa.me/37369210185" target="_blank" rel="noopener">WhatsApp</a><a href="tel:+37369378898">Telegram / Viber</a></div>
+  </div>
+  <div class="fbot"><span>© 2026 Drivit · Кишинёв</span><span>RU · RO</span></div>
+</div></footer>
+<script src="hub.js"></script>
+<script>(function(){var f=document.getElementById('af');if(!f)return;f.addEventListener('submit',function(e){e.preventDefault();if(!f.reportValidity())return;var b=f.querySelector('button[type=submit]');b.disabled=true;fetch('https://formspree.io/f/maqragky',{method:'POST',body:new FormData(f),headers:{'Accept':'application/json'}}).then(function(r){if(r.ok){f.innerHTML='<div style="text-align:center;padding:20px 0"><div style="font-size:2.6rem">🤍</div><h3 class=serif style="font-size:1.8rem;margin:.3em 0">Заявка принята</h3><p style="color:var(--muted)">Мы свяжемся с тобой в ближайшее время — в удобном канале. Никакой оплаты прямо сейчас: сначала просто познакомимся.</p></div>';}else{b.disabled=false;alert('Не удалось отправить. Напиши нам в WhatsApp или Instagram @drivit.md');}}).catch(function(){b.disabled=false;alert('Ошибка сети. Напиши нам в WhatsApp или Instagram @drivit.md');});});})();</script>
+</body></html>

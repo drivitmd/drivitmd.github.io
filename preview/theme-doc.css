@@ -170,3 +170,49 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
 .gal figure .soon{position:absolute;right:clamp(1.2rem,4vw,3rem);bottom:clamp(1.4rem,4vh,2.6rem);
   left:auto;top:auto;z-index:3}
 @media(max-width:640px){.gal figure{height:min(62svh,460px)}}
+
+/* ================================================================
+   СИНХРОНИЗАЦИЯ ФОТО И КАРТОЧЕК
+   Было пять радиусов (26/24/16/14/0) и три несовместимые пропорции
+   кадра (1.19 / 2.32 / 0.80) на одной странице — низ читался как
+   другой сайт. Документальный язык не терпит скруглений: край острый,
+   кадр один и тот же, подпись под кадром одинаковая везде.
+   ================================================================ */
+
+/* один край на все контейнеры; кнопки остаются пилюлями — это действия */
+.dir,.ccard,.host,.jcard,.jcard .top,.igcard,.offer,.tcard,.sub,.stats,.form,
+.pricebox,.adslot,.media,.photo,.gal figure,.split .media,.contact-grid > *{
+  border-radius:0}
+.dir,.jcard,.host,.igcard,.offer,.tcard,.sub,.form,.pricebox{
+  box-shadow:none;border:1px solid var(--line)}
+
+/* карточки направлений — тот же кадр, что и в ленте: 3:2 и та же подпись */
+.dirs,.cards{gap:2px}
+/* min-height:440 из базового стиля заставлял aspect-ratio считать ШИРИНУ от
+   высоты (440×1.5=660), а колонка 1fr не может сжаться ниже min-content — сетка
+   прорывалась на мобильном. Снимаем минимум: высота считается от ширины. */
+.dir{aspect-ratio:3/2;min-height:0;height:auto;min-width:0}
+.dir img{width:100%;height:100%;object-fit:cover}
+/* карточка стала ниже (3:2), текст поднялся — градиент должен темнеть раньше,
+   иначе надглавие ложится на светлое небо (замер давал 4.21 при норме 4.5) */
+.dir .sc{background:linear-gradient(180deg,rgba(16,12,9,.26) 0%,rgba(16,12,9,.02) 20%,rgba(16,12,9,.58) 50%,rgba(16,12,9,.94) 100%)}
+.dir .tg{text-shadow:0 1px 10px rgba(0,0,0,.75)}
+/* поверх фотографии акцентная терракота даёт всего 3,6 — на снимке надглавие
+   должно быть светлым, как на карточках соцсетей. Терракота остаётся там, где
+   под ней плашка, а не кадр. */
+.dir .tg{color:#F3D9C0;letter-spacing:.16em;text-transform:uppercase;font-size:.7rem;font-weight:700}
+
+/* ведущие — портрет 4:5 и подпись под кадром, а не крошечная плашка сбоку */
+.hosts{display:grid;gap:2px;grid-template-columns:1fr}
+@media(min-width:720px){.hosts{grid-template-columns:1fr 1fr}}
+.host{display:block;padding:0;border:1px solid var(--line);background:var(--paper)}
+.host img,.host picture{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;
+  object-position:50% 22%;display:block;border-radius:0;max-width:none}
+.host .role,.host h3,.host p{padding-inline:20px}
+.host h3{margin-top:18px}
+.host p:last-child{padding-bottom:20px}
+
+/* Instagram — та же плотность, что у остальных карточек */
+.igcard{padding:22px 20px}
+
+/* сетка кадров ленты не меняется: она и есть образец, к которому всё сводим */

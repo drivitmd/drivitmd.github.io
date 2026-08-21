@@ -33,3 +33,10 @@ docs/
 
 # stray source screenshot in repo root (keep local, never serve)
 /new1.PNG
+
+# build-скрипты: держим на диске, не раздаём с сайта
+/launch.py
+/build_jurnal.py
+/update_facts.py
+/retitle_next.py
+/ogcard_gen.mjs

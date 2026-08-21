@@ -1,0 +1,172 @@
+/* ================================================================
+   DRIVIT · ТЕМА «ДОКУМЕНТАЛЬНАЯ» (вариант 2)
+   Подключается ПОСЛЕ hub.css и переопределяет только токены и те
+   компоненты, что должны читаться на тёмном. Разметка не меняется —
+   значит тема снимается одной строкой в <head>, если передумаем.
+
+   Замысел: сайт как фоторепортаж. Кадр несёт смысл, текст его
+   подписывает. Поэтому фон уходит в почти-чёрный, фотографии
+   становятся полноэкранными, а типографика — подписью под кадром.
+   ================================================================ */
+
+:root{
+  /* поверхности */
+  --cream:#100C09;          /* основной фон страницы */
+  --bg2:#171210;            /* полосатые секции .band */
+  --paper:#1B1512;          /* карточки и формы */
+  --card:#1B1512;
+
+  /* текст */
+  --ink:#F5EFE6;            /* заголовки */
+  --ink2:#D9CFC3;           /* основной текст */
+  --muted:#A2968A;          /* подписи и второстепенное */
+
+  /* акценты, поднятые для тёмного фона */
+  --head:#E0736A;
+  --rose:#D4544C;
+  --rose-d:#E88A82;
+  --terra:#D69A63;
+  --gold:#D9AE63;
+  --sand:#3A2C23;
+
+  --line:rgba(245,239,230,.15);
+  --dark:#0B0806;
+  --sh-sm:0 14px 30px -24px rgba(0,0,0,.9);
+  --sh:0 44px 90px -54px rgba(0,0,0,.95);
+}
+
+body{background:var(--cream);color:var(--ink2)}
+
+/* ---------- шапка: стекло поверх кадра ---------- */
+.hdr{background:linear-gradient(180deg,rgba(16,12,9,.86),rgba(16,12,9,.34) 62%,rgba(16,12,9,0));
+     border-bottom:0;backdrop-filter:blur(6px)}
+.hdr .nav a,.hdr .logo{color:var(--ink)}
+.hdr .nav a:hover{color:var(--head)}
+.lang{border-color:var(--line)}
+.lang .on{background:var(--rose);color:#fff}
+.lang a{color:var(--muted)}
+.mmenu{background:var(--dark)}
+.mmenu a{color:var(--ink)}
+.burger span{background:var(--ink)}
+
+/* ---------- герой: кадр во весь экран ---------- */
+.hero .scrim,.hero .bg + .scrim{
+  background:linear-gradient(180deg,rgba(16,12,9,.62) 0%,rgba(16,12,9,.06) 30%,rgba(16,12,9,.30) 62%,rgba(16,12,9,.94) 100%)}
+.hero h1{text-shadow:0 4px 30px rgba(0,0,0,.6)}
+.hero p{color:rgba(245,239,230,.92)}
+.hero .meta{color:var(--terra)}
+.hero .meta::before{background:var(--terra)}
+
+/* внутренние «шапки» страниц — тоже тёмные, без светлой полосы */
+.phero{background:var(--bg2);border-bottom:1px solid var(--line)}
+.crumb,.crumb a{color:var(--muted)}
+.crumb a:hover{color:var(--head)}
+
+/* ---------- фотографии: полноэкранные пластины ---------- */
+.gal figure,.media,.split .media,.photo{border-radius:0;overflow:hidden;position:relative}
+.gal figure img,.media img{filter:saturate(.96) contrast(1.02)}
+.gal{gap:2px}
+/* нумерация кадров, как в фотоочерке */
+.gal{counter-reset:plate}
+.gal figure{counter-increment:plate}
+.gal figure::after{
+  content:counter(plate,decimal-leading-zero);
+  position:absolute;left:14px;bottom:12px;z-index:3;
+  font-size:.7rem;letter-spacing:.16em;color:rgba(245,239,230,.86);
+  text-shadow:0 2px 10px rgba(0,0,0,.8);font-variant-numeric:tabular-nums}
+.gal figure .soon{background:rgba(16,12,9,.82);color:var(--ink);border:1px solid var(--line)}
+
+/* ---------- карточки на тёмном ---------- */
+.dir,.ccard,.host,.jcard,.pricebox,.form,.adslot,.igcard,.offer,.tcard,.sub,.stats div,.contact-grid > *{
+  background:var(--paper);border-color:var(--line)}
+.dir .c,.jcard .b{background:transparent}
+.jcard{border:1px solid var(--line)}
+.jcard .top::after{background:linear-gradient(180deg,rgba(16,12,9,0) 40%,rgba(16,12,9,.55) 100%)}
+.day,.st,.flist li,.sched td,.sched th{color:var(--ink2)}
+.sched th{color:var(--muted);border-color:var(--line)}
+.sched td{border-color:var(--line)}
+.band{background:var(--bg2)}
+
+/* ---------- типографика подписи ---------- */
+.shead h2,.serif,h1,h2,h3{color:var(--ink)}
+.shead p,.prose p,.fine,.note,.reassure,.cap{color:var(--muted)}
+.prose p{color:var(--ink2)}
+.prose a{color:var(--head);text-decoration-color:rgba(224,115,106,.5)}
+.prose a:hover{text-decoration-color:var(--head)}
+.eyebrow,.lab,.cat,.tg{color:var(--terra)}
+
+/* ---------- FAQ и списки ---------- */
+.faq{border-top-color:var(--line)}
+.faq details{border-bottom-color:var(--line)}
+.faq summary{color:var(--ink)}
+.faq summary::after{color:var(--head)}
+.faq p{color:var(--muted)}
+.offer dt{color:var(--ink)}
+.offer dd{color:var(--ink2)}
+.stats b{color:var(--head)}
+.stats span{color:var(--muted)}
+.stats{background:var(--line);border-color:var(--line)}
+.steps .st::before{border-color:var(--head);color:var(--head)}
+.steps .st::after{background:var(--line)}
+.steps p{color:var(--muted)}
+.theme-line{color:var(--ink2)}
+.theme-line b{color:var(--head)}
+
+/* ---------- кнопки ---------- */
+.btn-primary{background:var(--rose);color:#fff}
+.btn-primary:hover{filter:brightness(1.1)}
+.btn-line,.btn-ghost{border-color:rgba(245,239,230,.45);color:var(--ink)}
+.btn-line:hover,.btn-ghost:hover{background:rgba(245,239,230,.1);border-color:var(--ink)}
+.arrow{color:var(--ink)}
+.arrow:hover{color:var(--head)}
+
+/* ---------- формы ---------- */
+.fld label{color:var(--ink2)}
+.fld input,.fld textarea,.fld select{
+  background:var(--dark);border-color:var(--line);color:var(--ink)}
+.fld input::placeholder,.fld textarea::placeholder{color:#6E6055}
+.fld input:focus,.fld textarea:focus{border-color:var(--head);outline-color:var(--head)}
+
+/* ---------- липкая панель ---------- */
+.actionbar{background:rgba(16,12,9,.92);border-top-color:var(--line)}
+.actionbar .wa{border-color:var(--head);color:var(--head)}
+
+/* ---------- подвал ---------- */
+.fbot,footer{background:var(--dark);color:var(--muted);border-top-color:var(--line)}
+.fgrid a,.fbrand{color:var(--ink2)}
+.fgrid a:hover{color:var(--head)}
+.fgrid h3{color:var(--terra)}
+
+/* ---------- фокус ---------- */
+a:focus-visible,button:focus-visible,summary:focus-visible,
+input:focus-visible,textarea:focus-visible,select:focus-visible{
+  outline:2px solid var(--terra);outline-offset:3px}
+
+/* На очень длинных текстах чистый почти-чёрный утомляет — статьи
+   получают чуть приподнятую подложку и увеличенный интерлиньяж. */
+.prose{line-height:1.78}
+.prose h2{color:var(--ink);margin-top:1.9em}
+
+/* ---------- ГЛАВНОЕ: кадры во весь разворот с подписями ----------
+   Сетка миниатюр превращается в вертикальную ленту кадров: один кадр —
+   одна мысль, под ним подпись с номером, как в фотоочерке. Это и есть
+   подпись документального варианта. */
+.gal{display:block;counter-reset:plate}
+.gal figure{
+  counter-increment:plate;position:relative;margin:0 0 0;
+  width:100vw;margin-left:calc(50% - 50vw);   /* вырываемся из .wrap на всю ширину */
+  height:min(76svh,620px)}
+.gal figure img,.gal figure picture{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.gal figure::before{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(16,12,9,.28) 0%,rgba(16,12,9,0) 26%,rgba(16,12,9,.72) 100%)}
+.gal figure::after{left:auto;right:clamp(1.2rem,4vw,3rem);bottom:auto;top:clamp(1rem,3vw,2rem);
+  font-size:.78rem;letter-spacing:.2em;color:var(--terra)}
+.gal figcaption{position:absolute;left:clamp(1.2rem,4vw,3rem);right:clamp(1.2rem,4vw,3rem);
+  bottom:clamp(1.4rem,4vh,2.6rem);z-index:2;max-width:46ch;
+  color:rgba(245,239,230,.94);font-size:clamp(.95rem,1.5vw,1.06rem);line-height:1.55;
+  text-shadow:0 2px 16px rgba(0,0,0,.75)}
+.gal figcaption b{color:#fff;font-weight:600}
+.gal figure .soon{position:absolute;right:clamp(1.2rem,4vw,3rem);bottom:clamp(1.4rem,4vh,2.6rem);
+  left:auto;top:auto;z-index:3}
+@media(max-width:640px){.gal figure{height:min(62svh,460px)}}

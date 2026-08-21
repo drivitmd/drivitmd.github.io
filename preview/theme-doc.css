@@ -216,3 +216,52 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
 .igcard{padding:22px 20px}
 
 /* сетка кадров ленты не меняется: она и есть образец, к которому всё сводим */
+
+/* ================================================================
+   ПОЛИШИНГ: типографическая шкала и ритм
+   Замер показал 14 разных кеглей текста, из них семь в диапазоне
+   14–17px — это не шкала, а шум: 15.2 / 15.36 / 15.68 / 16 / 16.32 /
+   16.96 / 17.28. Глазом такие различия не читаются как замысел,
+   но делают набор неопрятным. Сводим к пяти ступеням.
+   ================================================================ */
+:root{
+  --t-lede:1.28rem;   /* подводка под заголовком */
+  --t-body:1rem;      /* основной текст */
+  --t-sec:.94rem;     /* второстепенный: подписи, сноски, шаги */
+  --t-label:.78rem;   /* надглавия и метки */
+  --t-micro:.7rem;    /* самые мелкие метки */
+}
+.offer dd,.faq p,.tcard figcaption,.iginvite li{font-size:var(--t-body)}
+.offer dt,.steps p,.steps h3,.col p,.fine,.reassure,.note,.sub2,
+.host p,.dir p,.jcard p,.shead p{font-size:var(--t-sec)}
+.offer h3,.eyebrow,.lab,.cat,.tg,.stats span,.faq summary::after{font-size:var(--t-label)}
+.stats span,.gal figure::after{font-size:var(--t-micro)}
+.faq summary{font-size:var(--t-body)}
+.phero p,.theme-line{font-size:var(--t-lede)}
+
+/* зазоры сеток были 0 / 1 / 20 / 26 — тоже сводим к двум значениям:
+   кадры примыкают друг к другу, содержательные блоки дышат одинаково */
+.gal,.dirs,.cards,.hosts,.stats{gap:2px}
+.days,.steps,.tgrid,.jgrid,.offer dl{gap:24px}
+.faq{gap:0}
+/* остатки вне шкалы: списки в дневной программе и в блоке «для кого» */
+.flist li{font-size:var(--t-body)}
+.day li,.days li{font-size:var(--t-sec)}
+.offer .fine{font-size:var(--t-sec)}
+
+/* ---------- цели нажатия на телефоне ----------
+   Замер дал закрывающий крестик 36×31 и пункты меню высотой 36 — ниже
+   порога уверенного попадания пальцем (44). Промах в меню раздражает
+   сильнее, чем где-либо ещё: человек уже решил уйти на другую страницу. */
+.mmenu .close{width:48px;height:48px;display:flex;align-items:center;justify-content:center}
+.mmenu a{min-height:48px;display:flex;align-items:center}
+.crumb a{display:inline-block;padding:9px 0}
+.arrow{min-height:44px;display:inline-flex;align-items:center}
+/* подвал на телефоне: ссылки были 36px — на десктопе плотность уместна,
+   пальцем же промахиваешься. Поднимаем только на узких экранах. */
+@media(max-width:760px){
+  .fgrid a{min-height:44px;display:flex;align-items:center}
+  .hdr .logo{min-height:44px}
+}
+/* последняя строка подвала — тоже кликабельна, тоже нужен палец */
+@media(max-width:760px){.fbot a{min-height:44px;display:inline-flex;align-items:center}}

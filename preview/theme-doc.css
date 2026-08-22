@@ -299,3 +299,37 @@ p,dd,li,h1,h2,h3{overflow-wrap:break-word}
   .hero h1,.hero p,.hero .meta,.hero .cta{opacity:1!important;transform:none!important}
   .scrolldot{display:none}
 }
+
+/* ================================================================
+   ПОДГОНКА ЗАПАСНЫХ ШРИФТОВ
+   Смещение вёрстки шло не от медленной загрузки — шрифты
+   предзагружены и приходят за 420 мс, — а от САМОЙ ПОДМЕНЫ: запасной
+   шрифт шире или уже настоящего, и в момент замены текст
+   перекомпоновывается (в шапке ретритов прыжок был 66 пикселей).
+   Замер ширины одной и той же строки в 100px дал:
+     Cormorant Garamond / Times New Roman = 95,1 %
+     Montserrat        / Arial            = 114,5 %
+   Задаём запасным ровно эти коэффициенты — подмена становится
+   незаметной, потому что метрики совпадают.
+   ================================================================ */
+@font-face{
+  font-family:'CG-fallback';
+  src:local('Times New Roman'),local('Tinos'),local('Liberation Serif');
+  size-adjust:95.1%;
+  ascent-override:95%;
+  descent-override:25%;
+  line-gap-override:0%;
+}
+@font-face{
+  font-family:'MS-fallback';
+  src:local('Arial'),local('Helvetica'),local('Liberation Sans');
+  size-adjust:114.5%;
+  ascent-override:85%;
+  descent-override:22%;
+  line-gap-override:0%;
+}
+body,p,li,dd,dt,summary,label,input,textarea,button,.btn,.nav a,.fgrid a{
+  font-family:Montserrat,'MS-fallback','Segoe UI',system-ui,sans-serif}
+h1,h2,h3.serif,.serif,.hero h1,.phero h1,.shead h2,.stats b,.offer h3,
+.tcard blockquote,.steps .st::before,.gal figure::after{
+  font-family:'Cormorant Garamond','CG-fallback',Georgia,serif}

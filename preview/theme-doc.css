@@ -265,3 +265,37 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{
 }
 /* последняя строка подвала — тоже кликабельна, тоже нужен палец */
 @media(max-width:760px){.fbot a{min-height:44px;display:inline-flex;align-items:center}}
+
+/* ================================================================
+   ПОЛИШИНГ НАБОРА
+   Замер: строка местами доходит до 79 знаков при комфортных 45–75,
+   а balance не стоит ни на одном заголовке — крупный дисплейный набор
+   от этого ломается некрасиво, последним словом на отдельной строке.
+   ================================================================ */
+
+/* заголовки переносим по смыслу, а не по остатку строки */
+h1,h2,.shead h2,.serif{text-wrap:balance}
+/* в абзацах убираем висячие слова */
+p,li,dd,figcaption,.fine,.reassure{text-wrap:pretty}
+
+/* мера строки: держим текст в читаемом коридоре */
+.shead p,.offer dd,.faq p,.iginvite li,.steps p{max-width:64ch}
+.phero p{max-width:56ch}
+.prose{max-width:66ch}
+
+/* переносы длинных слов и адресов, чтобы не рвать сетку на узком экране */
+p,dd,li,h1,h2,h3{overflow-wrap:break-word}
+
+/* ---------- уважение к отключённой анимации ----------
+   Базовый стиль гасит только reveal и фон героя, но четыре анимации
+   продолжали работать: выезд заголовка, подводки, кнопок и точка
+   прокрутки. Для человека с вестибулярными нарушениями это не мелочь. */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+    scroll-behavior:auto!important}
+  .hero h1,.hero p,.hero .meta,.hero .cta{opacity:1!important;transform:none!important}
+  .scrolldot{display:none}
+}
